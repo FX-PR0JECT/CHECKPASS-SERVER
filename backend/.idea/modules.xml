@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS.test.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.test.iml" filepath="$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.CHECKPASS.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.CHECKPASS.test.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.CHECKPASS.test.iml" />
+    </modules>
+  </component>
+</project>
