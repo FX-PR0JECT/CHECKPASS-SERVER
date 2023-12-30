@@ -115,7 +115,7 @@
       <recent name="FXPROJECT.CHECKPASS.domain.entity" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ConnectionTest (1)">
+  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
     <configuration name="ConnectionTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend.CHECKPASS.test" />
       <extension name="coverage">
@@ -197,8 +197,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ConnectionTest (1)" />
         <item itemvalue="Spring Boot.CheckpassApplication" />
+        <item itemvalue="JUnit.ConnectionTest (1)" />
         <item itemvalue="JUnit.ConnectionTest" />
         <item itemvalue="JUnit.ConnectionTest.test" />
       </list>
