@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="" />
+    <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,7 +80,22 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
+  <component name="RunManager" selected="JUnit.ConnectionTest (1)">
+    <configuration name="ConnectionTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend.CHECKPASS.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.common" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.common.ConnectionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS.test" />
       <extension name="coverage">
@@ -145,6 +163,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ConnectionTest (1)" />
         <item itemvalue="JUnit.ConnectionTest" />
         <item itemvalue="JUnit.ConnectionTest.test" />
       </list>
@@ -162,7 +181,7 @@
       <workItem from="1703817791580" duration="10666000" />
       <workItem from="1703833694040" duration="257000" />
       <workItem from="1703901619664" duration="120000" />
-      <workItem from="1703901774906" duration="7000" />
+      <workItem from="1703901774906" duration="441000" />
     </task>
     <servers />
   </component>
