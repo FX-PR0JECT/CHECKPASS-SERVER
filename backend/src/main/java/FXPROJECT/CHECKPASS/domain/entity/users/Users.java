@@ -1,9 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.entity.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
+import FXPROJECT.CHECKPASS.domain.enums.Job;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,5 +36,9 @@ public abstract class Users {
 
     @Column(nullable = false , length = 5)
     private String userName;
+
+    @Column(nullable = false)
+    @Enumerated
+    private Job userJob;
 
 }
