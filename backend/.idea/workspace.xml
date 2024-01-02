@@ -5,12 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/enums/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/QuerydslConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Professor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Professor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Staff.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Staff.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Students.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Students.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Professor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Professor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Students.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Students.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,15 +199,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CheckpassApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="CHECKPASS-SERVER.backend.CHECKPASS.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="FXPROJECT.CHECKPASS.CheckpassApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CheckpassApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="backend.CHECKPASS.main" />
+      <module name="CHECKPASS-SERVER.backend.CHECKPASS.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="FXPROJECT.CHECKPASS.CheckpassApplication" />
       <extension name="coverage">
         <pattern>
@@ -216,7 +235,8 @@
       <workItem from="1703901619664" duration="120000" />
       <workItem from="1703901774906" duration="2122000" />
       <workItem from="1703906037145" duration="27000" />
-      <workItem from="1704012078153" duration="1617000" />
+      <workItem from="1704012078153" duration="2984000" />
+      <workItem from="1704156787644" duration="3180000" />
     </task>
     <servers />
   </component>
