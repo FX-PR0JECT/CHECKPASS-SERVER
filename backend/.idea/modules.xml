@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.test.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CHECKPASS.test.iml" filepath="$PROJECT_DIR$/.idea/modules/CHECKPASS.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FX-PROJECT.CHECKPASS.main.iml" />

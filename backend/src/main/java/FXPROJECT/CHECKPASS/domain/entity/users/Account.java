@@ -1,8 +1,13 @@
 package FXPROJECT.CHECKPASS.domain.entity.users;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Entity
+@Getter
 public class Account {
 
     @Id
@@ -13,4 +18,7 @@ public class Account {
     @Column(nullable = false, length = 15)
     private String password;
 
+    public Account() {
+
+    }
 }

@@ -3,10 +3,14 @@ package FXPROJECT.CHECKPASS.domain.entity.users;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
-@DiscriminatorValue("Student")
+@Setter
+@Getter
+@DiscriminatorValue("STUDENT")
 public class Students extends Users{
 
     @Range(min = 1, max = 5)
