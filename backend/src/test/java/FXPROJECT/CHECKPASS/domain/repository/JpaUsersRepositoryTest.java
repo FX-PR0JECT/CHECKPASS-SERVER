@@ -116,5 +116,34 @@ class JpaUsersRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("SuperClassTest")
+    public void superClass(){
+        Account accountA = new Account();
+        accountA.setPassword("test");
+
+        accountRepository.save(accountA);
+
+        Professor professor = new Professor().builder()
+                .account(accountA)
+                .userId(2126000L)
+                .userAge(23)
+                .userCollege("structure")
+                .userName("Lee")
+                .userJob(Job.PROFESSOR)
+                .userDepartment("software")
+                .HIREDATE(LocalDate.now())
+                .userEmail("test@gmail.com")
+                .build();
+
+        Users user = professor;
+
+        Users savedUser = usersRepository.save(user);
+
+        Professor pr = (Professor) savedUser;
+        log.info(" super User : {} , HireDate : {} " , pr.getUserId(),pr.getHIREDATE());
+
+    }
+
 
 }
