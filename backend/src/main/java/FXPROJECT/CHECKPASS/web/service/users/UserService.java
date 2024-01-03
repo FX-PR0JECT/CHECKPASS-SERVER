@@ -11,12 +11,9 @@ import FXPROJECT.CHECKPASS.web.form.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.StudentSignUpForm;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.procedure.internal.PostgreSQLCallableStatementSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -27,6 +24,9 @@ public class UserService {
     private final JpaUsersRepository jpaUsersRepository;
     private final JpaAccountRepository jpaAccountRepository;
 
+    public boolean existsUser(Long userId) {
+        return jpaUsersRepository.existsById(userId);
+    }
     /**
      * 회원 가입
      * @param user 저장할 users 객체
@@ -35,7 +35,7 @@ public class UserService {
     @Transactional
     public Users join(Users user){
 
-        if (!jpaUsersRepository.existsById(user.getUserId())){
+        if (existsUser(user.getUserId())){
             return jpaUsersRepository.save(user);
         }else{
             throw new DupleUsers("이미 가입된 유저입니다.");
@@ -202,5 +202,6 @@ public class UserService {
         jpaAccountRepository.save(account);
         return account;
     }
+
 
 }

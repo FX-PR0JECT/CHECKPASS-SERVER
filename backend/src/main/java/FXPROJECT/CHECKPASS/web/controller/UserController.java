@@ -1,5 +1,9 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
+import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
+import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
+import FXPROJECT.CHECKPASS.domain.common.constant.State;
+import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.web.form.ProfessorSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.StudentSignUpForm;
@@ -27,23 +31,19 @@ public class UserController {
 
         Users users = userService.transferToStudent(form);
 
-        Users joinUser = userService.join(users);
+        userService.join(users);
 
         ResultForm resultForm = new ResultForm();
 
-        if(joinUser != null){
+        if(userService.existsUser(users.getUserId())){
             return resultForm.builder()
-                    .state("success")
+                    .state(State.SUCCESS)
                     .code("")
-                    .resultSet(joinUser)
+                    .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
                     .build();
+        }else {
+            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getCode());
         }
-
-        return resultForm.builder()
-                .state("fail")
-                .code("SU0001")
-                .resultSet("회원 가입 실패")
-                .build();
 
     }
 
@@ -60,20 +60,16 @@ public class UserController {
 
         if(joinUser != null){
             return resultForm.builder()
-                    .state("success")
+                    .state(State.SUCCESS)
                     .code("")
-                    .resultSet(joinUser)
+                    .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
                     .build();
+        }else {
+            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getCode());
         }
-
-        return resultForm.builder()
-                .state("fail")
-                .code("SU0001")
-                .resultSet("회원 가입 실패")
-                .build();
     }
 
 
-    
+
 
 }
