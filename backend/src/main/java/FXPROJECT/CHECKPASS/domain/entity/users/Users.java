@@ -2,7 +2,6 @@ package FXPROJECT.CHECKPASS.domain.entity.users;
 
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -26,9 +25,6 @@ public abstract class Users {
 
     @OneToOne
     private Account account;
-
-    @Column(nullable = false , length = 3)
-    private int userAge;
 
     @Column(nullable = false)
     private String userCollege;

@@ -27,23 +27,17 @@ public class QStudents extends EntityPathBase<Students> {
     // inherited
     public final QAccount account;
 
-    public final ComparablePath<Character> dayOrNigth = createComparable("dayOrNigth", Character.class);
+    public final StringPath dayOrNight = createString("dayOrNight");
 
-    public final NumberPath<Integer> studentGrade = createNumber("studentGrade", Integer.class);
+    public final StringPath studentGrade = createString("studentGrade");
 
     public final StringPath studentSemester = createString("studentSemester");
-
-    //inherited
-    public final NumberPath<Integer> userAge;
 
     //inherited
     public final StringPath userCollege;
 
     //inherited
     public final StringPath userDepartment;
-
-    //inherited
-    public final StringPath userEmail;
 
     //inherited
     public final NumberPath<Long> userId;
@@ -74,10 +68,8 @@ public class QStudents extends EntityPathBase<Students> {
         super(type, metadata, inits);
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
-        this.userAge = _super.userAge;
         this.userCollege = _super.userCollege;
         this.userDepartment = _super.userDepartment;
-        this.userEmail = _super.userEmail;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

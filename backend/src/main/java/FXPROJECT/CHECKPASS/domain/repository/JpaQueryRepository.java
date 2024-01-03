@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
-import FXPROJECT.CHECKPASS.domain.entity.users.QUsers;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

@@ -5,21 +5,24 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Setter
 @Getter
-@DiscriminatorValue("STUDENT")
+@SuperBuilder
+@DiscriminatorValue("STUDENTS")
 public class Students extends Users{
 
-    @Range(min = 1, max = 5)
-    private int studentGrade;
+    private String studentGrade;
 
-    @Column(length = 1)
-    private char dayOrNight;
+    @Column(length = 5)
+    private String dayOrNight;
 
     @Column(length = 3)
     private String studentSemester;
 
+    public Students() {
+
+    }
 }
