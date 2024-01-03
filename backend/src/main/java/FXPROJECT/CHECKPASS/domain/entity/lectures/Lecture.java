@@ -5,6 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.validator.constraints.Range;
 
 /**
@@ -13,6 +16,10 @@ import org.hibernate.validator.constraints.Range;
  */
 
 @Entity
+@Getter @Setter
+@DynamicInsert
+@Builder
+@AllArgsConstructor @NoArgsConstructor
 public class Lecture {
 
     @Id
@@ -45,9 +52,9 @@ public class Lecture {
     @Column(nullable = false, length = 3)
     private int lectureFull;
 
-    @Column(nullable = false, length = 3)
+    @ColumnDefault("0")
     private int lectureCount;
 
-    @Column(nullable = false, length = 1)
-    private char dayOrNight;
+    @Column(nullable = false, length = 5)
+    private String dayOrNight;
 }
