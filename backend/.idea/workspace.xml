@@ -5,7 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/CHECKPASS-SERVER.backend.CHECKPASS.test.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Enrollment.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/JpaUsersRepository.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Lecture.class.uniqueId15" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Professor$ProfessorBuilder.class.uniqueId20" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Professor$ProfessorBuilderImpl.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Professor.class.uniqueId18" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QEnrollment.class.uniqueId16" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QEnrollment.java.uniqueId5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QLecture.class.uniqueId14" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QLecture.java.uniqueId7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QProfessor.class.uniqueId8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QProfessor.java.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QStaff.class.uniqueId21" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QStaff.java.uniqueId17" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QStudents.class.uniqueId13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QStudents.java.uniqueId12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QUsers.class.uniqueId9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QUsers.java.uniqueId10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Staff.class.uniqueId19" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Students.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Users$UsersBuilder.class.uniqueId6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Users.class.uniqueId11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/JpaUsersRepositoryTest.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/CheckpassApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/CheckpassApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Students.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Students.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,8 +84,8 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -97,6 +141,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="FXPROJECT.CHECKPASS.web.service.users" />
       <recent name="FXPROJECT.CHECKPASS.domain.repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -110,38 +155,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.JpaUsersRepositoryTest.superClass">
-    <configuration name="ConnectionTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend.CHECKPASS.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.common.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.common" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.common.ConnectionTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="CHECKPASS.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.common.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.common" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.common.ConnectionTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JpaUsersRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
+    <configuration name="JpaUsersRepositoryTest.deleteByUserId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
@@ -151,22 +166,54 @@
       </extension>
       <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.domain.repository" />
       <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepositoryTest" />
+      <option name="METHOD_NAME" value="deleteByUserId" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JpaUsersRepositoryTest.superClass" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.count" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.domain.repository.*" />
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.domain.repository" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepositoryTest" />
-      <option name="METHOD_NAME" value="superClass" />
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
+      <option name="METHOD_NAME" value="count" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.countUsers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
+      <option name="METHOD_NAME" value="countUsers" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -181,13 +228,6 @@
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="backend" />
       <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CheckpassApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="FX-PROJECT.CHECKPASS.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="FXPROJECT.CHECKPASS.CheckpassApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -207,11 +247,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.JpaUsersRepositoryTest.superClass" />
-        <item itemvalue="JUnit.JpaUsersRepositoryTest" />
         <item itemvalue="Spring Boot.CheckpassApplication" />
-        <item itemvalue="JUnit.ConnectionTest (1)" />
-        <item itemvalue="JUnit.ConnectionTest" />
+        <item itemvalue="JUnit.UserServiceTest.count" />
+        <item itemvalue="JUnit.UserServiceTest.countUsers" />
+        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.JpaUsersRepositoryTest.deleteByUserId" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +271,8 @@
       <workItem from="1703906037145" duration="27000" />
       <workItem from="1704012078153" duration="2984000" />
       <workItem from="1704156787644" duration="8461000" />
-      <workItem from="1704180833522" duration="1651000" />
+      <workItem from="1704180833522" duration="9969000" />
+      <workItem from="1704193812278" duration="1467000" />
     </task>
     <servers />
   </component>

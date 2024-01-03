@@ -31,18 +31,15 @@ public abstract class Users {
     private int userAge;
 
     @Column(nullable = false)
-    private String userEmail;
-
-    @Column(nullable = false)
     private String userCollege;
 
     @Column(nullable = false)
     private String userDepartment;
 
-    @Column(nullable = false , length = 5)
+    @Column(nullable = false , length = 30)
     private String userName;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(insertable = false, updatable = false)
     private Job userJob;
 

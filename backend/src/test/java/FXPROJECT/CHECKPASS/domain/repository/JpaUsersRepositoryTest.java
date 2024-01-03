@@ -59,7 +59,7 @@ class JpaUsersRepositoryTest {
         log.info("job : {}",professor.getUserJob());
         assertThat(savedProfessor.getUserId()).isEqualTo(2126037L);
 
-        //findByUserId
+        //getUser
         Optional<Users> byId = usersRepository.findById(professor.getUserId());
 
         Users target = null;
@@ -145,5 +145,35 @@ class JpaUsersRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("사용자 아이디로 존재하는 지 확인하기")
+    public void deleteByUserId(){
+
+        Account accountA = new Account();
+        accountA.setPassword("test");
+
+        accountRepository.save(accountA);
+
+        Professor professor = new Professor().builder()
+                .account(accountA)
+                .userId(2126000L)
+                .userAge(23)
+                .userCollege("structure")
+                .userName("Lee")
+                .userJob(Job.PROFESSOR)
+                .userDepartment("software")
+                .HIREDATE(LocalDate.now())
+                .userEmail("test@gmail.com")
+                .build();
+
+        usersRepository.save(professor);
+
+        boolean exists = usersRepository.existsById(professor.getUserId());
+
+        log.info("exists : {}", exists);
+
+        assertThat(exists).isTrue();
+
+    }
 
 }

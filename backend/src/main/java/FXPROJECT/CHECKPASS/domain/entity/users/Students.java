@@ -17,7 +17,7 @@ public class Students extends Users{
     private int studentGrade;
 
     @Column(length = 1)
-    private char dayOrNigth;
+    private char dayOrNight;
 
     @Column(length = 3)
     private String studentSemester;
