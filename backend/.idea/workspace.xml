@@ -5,27 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/aspects/SignupAspect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/aspects/SignupAspect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/ProfessorSignUpForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/SignUpForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/StudentSignUpForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/resultForm/ResultForm$ResultFormBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/resultForm/ResultForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/aspects/SignupAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/aspects/SignupAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/ProfessorSignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/ProfessorSignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/SignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/StudentSignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/StudentSignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/resultForm/ResultForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,7 +227,7 @@
       <workItem from="1704012078153" duration="2984000" />
       <workItem from="1704156787644" duration="8461000" />
       <workItem from="1704180833522" duration="9969000" />
-      <workItem from="1704193812278" duration="36560000" />
+      <workItem from="1704193812278" duration="36613000" />
     </task>
     <servers />
   </component>

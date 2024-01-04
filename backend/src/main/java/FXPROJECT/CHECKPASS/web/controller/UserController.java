@@ -25,7 +25,7 @@ public class UserController {
 
     private final UserService userService;
 
-/*    private Users getUser(Long userId){
+    private Users getUser(Long userId){
         if (!userService.existsUser(userId)){
             throw new NoSuchUser();
         }
@@ -62,7 +62,7 @@ public class UserController {
                 .code("")
                 .resultSet(sui)
                 .build();
-    }*/
+    }
 
 
     @PostMapping("/duplication/{userId}")
