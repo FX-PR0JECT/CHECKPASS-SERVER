@@ -4,7 +4,8 @@ public enum ErrorCode {
 
     DUPLICATION_USERS(404,"USERS-001","이미 존재하는 회원입니다."),
     FAIL_JOIN(500,"JOIN-001","회원 가입 실패"),
-
+    NO_SUCH_USER(404,"USERS-002","존재하지 않는 유저입니다."),
+    INTERNAL_ERROR(500,"SERVER-001","서버에서 처리할 수 없습니다.")
     ;
 
     private final int status;

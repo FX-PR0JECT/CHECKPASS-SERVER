@@ -1,4 +1,4 @@
-package FXPROJECT.CHECKPASS.web.form;
+package FXPROJECT.CHECKPASS.web.form.requestForm;
 
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import lombok.Getter;

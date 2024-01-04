@@ -1,4 +1,4 @@
-package FXPROJECT.CHECKPASS.web.form;
+package FXPROJECT.CHECKPASS.web.form.requestForm;
 
 import lombok.Getter;
 import lombok.Setter;

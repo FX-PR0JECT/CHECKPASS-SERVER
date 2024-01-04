@@ -1,7 +1,11 @@
 package FXPROJECT.CHECKPASS.domain.common.exception.advice;
 
+import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
+import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
-import FXPROJECT.CHECKPASS.web.form.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,9 +21,32 @@ public class ExceptionAdvice {
     public ResultForm exceptionModel(Exception e){
         log.error("[exceptionHandle] ex" , e);
         return new ResultForm().builder()
-                .state(HttpStatus.BAD_REQUEST.toString())
-                .code("SU0001")
-                .resultSet("이미 존재하는 회원입니다.")
+                .state(State.FAIL)
+                .code(ErrorCode.DUPLICATION_USERS.getCode())
+                .resultSet(ErrorCode.DUPLICATION_USERS.getDescription())
                 .build();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchUser.class)
+    public ResultForm noSuchUserException(Exception e){
+        log.error("[exception] ex" , e);
+        return new ResultForm().builder()
+                .state(State.FAIL)
+                .code(ErrorCode.NO_SUCH_USER.getCode())
+                .resultSet(ErrorCode.NO_SUCH_USER.getDescription())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(InternalException.class)
+    public ResultForm InternalException(Exception e){
+        log.error("[exception] ex",e);
+        return new ResultForm().builder()
+                .state(State.FAIL)
+                .code(ErrorCode.INTERNAL_ERROR.getCode())
+                .resultSet(ErrorCode.INTERNAL_ERROR.getDescription())
+                .build();
+    }
+
 }

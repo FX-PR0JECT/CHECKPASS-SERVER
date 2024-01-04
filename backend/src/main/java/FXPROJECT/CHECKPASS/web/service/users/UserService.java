@@ -1,18 +1,25 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
+import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
+import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
+import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.JpaQueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepository;
-import FXPROJECT.CHECKPASS.web.form.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.SignUpForm;
-import FXPROJECT.CHECKPASS.web.form.StudentSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.ProfessorSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.SignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.StudentSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -24,9 +31,6 @@ public class UserService {
     private final JpaUsersRepository jpaUsersRepository;
     private final JpaAccountRepository jpaAccountRepository;
 
-    public boolean existsUser(Long userId) {
-        return jpaUsersRepository.existsById(userId);
-    }
     /**
      * 회원 가입
      * @param user 저장할 users 객체
@@ -35,24 +39,25 @@ public class UserService {
     @Transactional
     public Users join(Users user){
 
-        if (existsUser(user.getUserId())){
+        if (!existsUser(user.getUserId())){
             return jpaUsersRepository.save(user);
         }else{
-            throw new DupleUsers("이미 가입된 유저입니다.");
+            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getDescription());
         }
 
     }
 
-//    /**
-//     * 사용자 아이디를 이용한 사용자 정보 조회 : 단일 조회
-//     * @param userId User id
-//     * @return User 객체
-//     */
-//    public Users getUser(Long userId){
-//        Optional<Users> target = jpaUsersRepository.findById(userId);
-//        return target.orElse(null);
-//    }
-//
+
+    /**
+     * 사용자 아이디를 이용한 사용자 정보 조회 : 단일 조회
+     * @param userId User id
+     * @return User 객체
+     */
+    public Users getUser(Long userId){
+        Optional<Users> target = jpaUsersRepository.findById(userId);
+        return target.orElse(null);
+    }
+
 //    public List<Users> getUserList(){
 //        return jpaQueryUsersRepository.findAll();
 //    }
@@ -63,28 +68,29 @@ public class UserService {
 //     * @return true : 삭제 완료, false : 문제 발생 -> 예외로 변경 필요
 //     */
 //    @Transactional
-//    public Boolean secessionUser(Long userId){
+//    public ResultForm secessionUser(Long userId){
 //
-//        Boolean existsById = existsUser(userId);
-//
-//        if (existsById) {
-//            jpaUsersRepository.deleteById(userId);
-//            return true;
+//        if (!existsUser(userId)) {
+//            throw new NoSuchUser();
 //        }
 //
-//        //회원 정보가 존재 하지 않으면 예외 처리 필요
-//        return false;
+//        jpaUsersRepository.deleteById(userId);
+//        return new ResultForm().builder()
+//                .state(State.SUCCESS)
+//                .code("")
+//                .resultSet(CommonMessage.COMPLETE_DELETE.getDescription())
+//                .build();
 //    }
 //
-//    /**
-//     * 사용자 아이디를 이용해서 존재하는지 확인
-//     * @param userId User id
-//     * @return true : 존재, false : 존재하지 않음
-//     */
-//    public Boolean existsUser(Long userId){
-//        return jpaUsersRepository.existsById(userId);
-//    }
-//
+    /**
+     * 사용자 아이디를 이용해서 존재하는지 확인
+     * @param userId User id
+     * @return true : 존재, false : 존재하지 않음
+     */
+    public Boolean existsUser(Long userId){
+        return jpaUsersRepository.existsById(userId);
+    }
+
 //    /**
 //     * 사용자 정보 수정 Method
 //     * @param userId User id
@@ -92,10 +98,10 @@ public class UserService {
 //     * @return 수정된 사용자 정보
 //     */
 //    @Transactional
-//    public Users editUserInfo(Long userId, Users param){
+//    public Users editUserInformation(Long userId, Users param){
 //
 //        if (!existsUser(userId)){
-//            return null;
+//            throw new NoSuchUser();
 //        }
 //
 //        Users users = updateAllData(jpaUsersRepository.findById(userId).get(), param);
