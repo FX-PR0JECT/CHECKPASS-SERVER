@@ -4,12 +4,11 @@ import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
+import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.web.form.requestForm.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.StudentSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.UpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.SimpleUserInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
@@ -135,17 +134,28 @@ public class UserController {
         return userService.secessionUser(userId);
     }
 
-/*    @PatchMapping("/{job}/{userId}")
-    public ResultForm editUserInformation(@PathVariable("job") Job job, @PathVariable("userId") Long userId, @RequestBody UpdateForm form){
+    @PatchMapping("/professor/{userId}")
+    public ResultForm editProfessorInformation(@PathVariable("userId") Long userId, @RequestBody ProfessorUpdateForm form){
 
-        if (job == Job.PROFESSOR || job == Job.STAFF){
+        Users users = userService.editProfessorInformation(userId, form);
 
-        } else if (job == Job.STUDENTS) {
+        return ResultForm.builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(CommonMessage.COMPLETE_UPDATE.getDescription())
+                .build();
+    }
 
-        }
+    @PatchMapping("/student/{userId}")
+    public ResultForm editStudentInformation(@PathVariable("userId") Long userId, @RequestBody StudentUpdateForm form){
 
-        throw new
+        Users users = userService.editStudentInformation(userId, form);
 
-    }*/
+        return ResultForm.builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(CommonMessage.COMPLETE_UPDATE.getDescription())
+                .build();
+    }
 
 }

@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class UpdateForm {
 
-    private Long updateId;
     private String updatePassword;
     private String updateName;
     private String updateCollege;

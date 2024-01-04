@@ -4,6 +4,7 @@ import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
+import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRequest;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,17 @@ public class ExceptionAdvice {
                 .state(State.FAIL)
                 .code(ErrorCode.INTERNAL_ERROR.getCode())
                 .resultSet(ErrorCode.INTERNAL_ERROR.getDescription())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidRequest.class)
+    public ResultForm InvalidRequest(Exception e){
+        log.info("[exception] ex",e);
+        return new ResultForm().builder()
+                .state(State.FAIL)
+                .code(ErrorCode.INVALID_REQUEST.getCode())
+                .resultSet(ErrorCode.INVALID_REQUEST.getDescription())
                 .build();
     }
 

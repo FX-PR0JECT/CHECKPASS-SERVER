@@ -12,11 +12,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class StudentUpdateForm extends UpdateForm{
 
-    private String studentGrade;
+    private String updateStudentGrade;
 
-    private String dayOrNight;
+    private String updateDayOrNight;
 
-    private String studentSemester;
+    private String updateStudentSemester;
 
 
 }

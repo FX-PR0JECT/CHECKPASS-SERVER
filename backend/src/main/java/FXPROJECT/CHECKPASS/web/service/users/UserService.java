@@ -4,15 +4,14 @@ import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
+import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRequest;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.JpaQueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepository;
-import FXPROJECT.CHECKPASS.web.form.requestForm.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.SignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.StudentSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,63 +90,104 @@ public class UserService {
         return jpaUsersRepository.existsById(userId);
     }
 
-//    /**
-//     * 사용자 정보 수정 Method
-//     * @param userId User id
-//     * @param param 사용자 정보 수정 Parameter
-//     * @return 수정된 사용자 정보
-//     */
-//    @Transactional
-//    public Users editUserInformation(Long userId, Users param){
-//
-//        if (!existsUser(userId)){
-//            throw new NoSuchUser();
-//        }
-//
-//        Users users = updateAllData(jpaUsersRepository.findById(userId).get(), param);
-//
-//        jpaUsersRepository.save(users);
-//
-//        return jpaUsersRepository.findById(userId).get();
-//
-//    }
-//
-//    /**
-//     * 저장된 사용자 정보를 param Data 로 Update
-//     * @param target 수정할 사용자 정보
-//     * @param param 수정될 정보
-//     * @return 수정 된 최종 정보
-//     */
-//    private Users updateAllData(Users target, Users param) {
-//
-//        target.setUserId(param.getUserId());
-//        target.setUserJob(param.getUserJob());
-//        target.setUserName(param.getUserName());
-//        target.setUserDepartment(param.getUserDepartment());
-//        target.setAccount(param.getAccount());
-//        target.setUserCollege(param.getUserCollege());
-//
-//        if (target instanceof Professor){
-//            Professor downcastProfessor = (Professor) target;
-//            Professor updateParam = (Professor) param;
-//            downcastProfessor.setHIREDATE(updateParam.getHIREDATE());
-//            return downcastProfessor;
-//        } else if (target instanceof Staff) {
-//            Staff downcastStaff = (Staff) target;
-//            Staff updateParam = (Staff) target;
-//            downcastStaff.setHIREDATE(updateParam.getHIREDATE());
-//            return downcastStaff;
-//        } else if (target instanceof Students) {
-//            Students downcastStudent = (Students) target;
-//            Students updateParam = (Students) param;
-//            downcastStudent.setDayOrNight(updateParam.getDayOrNight());
-//            downcastStudent.setStudentGrade(updateParam.getStudentGrade());
-//            downcastStudent.setStudentSemester(updateParam.getStudentSemester());
-//            return downcastStudent;
-//        }else{
-//            return target;
-//        }
-//    }
+    /**
+     * 사용자 정보 수정 Method
+     * @param userId User id
+     * @param param 사용자 정보 수정 Parameter
+     * @return 수정된 사용자 정보
+     */
+    @Transactional
+    public Users editProfessorInformation(Long userId, ProfessorUpdateForm param){
+
+        if (!existsUser(userId)){
+            throw new NoSuchUser();
+        }
+
+        Users target = jpaUsersRepository.findById(userId).get();
+
+        if (target.getUserJob() != Job.PROFESSOR && target.getUserJob() != Job.STAFF){
+            throw new InvalidRequest();
+        }
+
+        Users users = updateAllProfessorAndStaff(target, param);
+
+        jpaUsersRepository.save(users);
+
+        return users;
+
+    }
+
+    /**
+     * 사용자 정보 수정 Method
+     * @param userId User id
+     * @param param 사용자 정보 수정 Parameter
+     * @return 수정된 사용자 정보
+     */
+    @Transactional
+    public Users editStudentInformation(Long userId, StudentUpdateForm param){
+
+        if (!existsUser(userId)){
+            throw new NoSuchUser();
+        }
+
+        Users target = jpaUsersRepository.findById(userId).get();
+
+        if (target.getUserJob() != Job.STUDENTS){
+            throw new InvalidRequest();
+        }
+
+        Users users = updateAllStudent(target, param);
+
+        jpaUsersRepository.save(users);
+
+        return jpaUsersRepository.findById(userId).get();
+
+    }
+
+    /**
+     * 저장된 사용자 정보를 param Data 로 Update
+     * @param target 수정할 사용자 정보
+     * @param param 수정될 정보
+     * @return 수정 된 최종 정보
+     */
+    private Users updateAllProfessorAndStaff(Users target, ProfessorUpdateForm param) {
+
+
+        target.setUserName(param.getUpdateName());
+        target.setUserDepartment(param.getUpdateDepartment());
+        target.getAccount().setPassword(param.getUpdatePassword());
+        target.setUserCollege(param.getUpdateCollege());
+
+        if (target instanceof Professor){
+            Professor downcastProfessor = (Professor) target;
+            ProfessorUpdateForm updateParam = (ProfessorUpdateForm) param;
+            downcastProfessor.setHIREDATE(updateParam.getUpdateHireDate());
+            return downcastProfessor;
+        } else if (target instanceof Staff) {
+            Staff downcastStaff = (Staff) target;
+            ProfessorUpdateForm updateParam = (ProfessorUpdateForm) param;
+            downcastStaff.setHIREDATE(updateParam.getUpdateHireDate());
+            return downcastStaff;
+        }else{
+            return target;
+        }
+    }
+
+    private Users updateAllStudent(Users target, StudentUpdateForm param) {
+
+        target.setUserName(param.getUpdateName());
+        target.setUserDepartment(param.getUpdateDepartment());
+        target.getAccount().setPassword(param.getUpdatePassword());
+        target.setUserCollege(param.getUpdateCollege());
+
+        Students downcastStudent = (Students) target;
+        StudentUpdateForm updateParam = (StudentUpdateForm) param;
+        downcastStudent.setStudentGrade(updateParam.getUpdateStudentGrade());
+        downcastStudent.setDayOrNight(updateParam.getUpdateDayOrNight());
+        downcastStudent.setStudentSemester(updateParam.getUpdateStudentSemester());
+        return downcastStudent;
+
+    }
 
     public Users transferToProfessorOrStaff(SignUpForm form) {
 
