@@ -61,27 +61,27 @@ public class UserService {
 //    public List<Users> getUserList(){
 //        return jpaQueryUsersRepository.findAll();
 //    }
-//
-//    /**
-//     * 사용자 아이디를 이용한 사용자 정보 삭제
-//     * @param userId User id
-//     * @return true : 삭제 완료, false : 문제 발생 -> 예외로 변경 필요
-//     */
-//    @Transactional
-//    public ResultForm secessionUser(Long userId){
-//
-//        if (!existsUser(userId)) {
-//            throw new NoSuchUser();
-//        }
-//
-//        jpaUsersRepository.deleteById(userId);
-//        return new ResultForm().builder()
-//                .state(State.SUCCESS)
-//                .code("")
-//                .resultSet(CommonMessage.COMPLETE_DELETE.getDescription())
-//                .build();
-//    }
-//
+
+    /**
+     * 사용자 아이디를 이용한 사용자 정보 삭제
+     * @param userId User id
+     * @return true : 삭제 완료, false : 문제 발생 -> 예외로 변경 필요
+     */
+    @Transactional
+    public ResultForm secessionUser(Long userId){
+
+        if (!existsUser(userId)) {
+            throw new NoSuchUser();
+        }
+
+        jpaUsersRepository.deleteById(userId);
+        return new ResultForm().builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(CommonMessage.COMPLETE_DELETE.getDescription())
+                .build();
+    }
+
     /**
      * 사용자 아이디를 이용해서 존재하는지 확인
      * @param userId User id

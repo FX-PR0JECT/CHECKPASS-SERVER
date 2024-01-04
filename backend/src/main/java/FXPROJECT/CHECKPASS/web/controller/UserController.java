@@ -130,10 +130,10 @@ public class UserController {
         }
     }
 
-//    @DeleteMapping("/{userId}")
-//    public ResultForm secessionUser(@PathVariable("userId") Long userId){
-//        return userService.secessionUser(userId);
-//    }
+    @DeleteMapping("/{userId}")
+    public ResultForm secessionUser(@PathVariable("userId") Long userId){
+        return userService.secessionUser(userId);
+    }
 
 /*    @PatchMapping("/{job}/{userId}")
     public ResultForm editUserInformation(@PathVariable("job") Job job, @PathVariable("userId") Long userId, @RequestBody UpdateForm form){
