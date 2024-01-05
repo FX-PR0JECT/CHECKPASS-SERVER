@@ -53,6 +53,10 @@ public class JpaQueryRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
+        if (result.size() == 0){
+            throw new SearchFail();
+        }
+
         return result;
     }
 
@@ -73,6 +77,10 @@ public class JpaQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
+        if (result.size() == 0){
+            throw new SearchFail();
+        }
 
         return result;
     }
