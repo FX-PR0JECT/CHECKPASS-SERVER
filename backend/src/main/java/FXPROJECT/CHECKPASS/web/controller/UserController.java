@@ -1,20 +1,23 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
+import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
+import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
-import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
-import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.SimpleUserInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -31,7 +34,6 @@ public class UserController {
 
         return userService.getUser(userId);
     }
-
 
     @GetMapping("/{userId}")
     public ResultForm showUserInformation(@PathVariable("userId") Long userId){
@@ -64,7 +66,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/duplication/{userId}")
+    @GetMapping("/duplication/{userId}")
     public ResultForm duplicationCheck(@PathVariable("userId") Long userId){
 
         log.info("userId : {} " , userId);
@@ -155,6 +157,42 @@ public class UserController {
                 .state(State.SUCCESS)
                 .code("")
                 .resultSet(CommonMessage.COMPLETE_UPDATE.getDescription())
+                .build();
+    }
+
+    @GetMapping("/professor")
+    public ResultForm getProfessorList(@RequestBody ProfessorSearchCondition condition, Pageable pageable){
+
+        List<Professor> professors = userService.getProfessorList(condition,pageable);
+
+        return new ResultForm().builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(professors)
+                .build();
+    }
+
+    @GetMapping("/staff")
+    public ResultForm getStaffList(@RequestBody ProfessorSearchCondition condition,Pageable pageable){
+
+        List<Staff> staff = userService.getStaffList(condition,pageable);
+
+        return new ResultForm().builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(staff)
+                .build();
+    }
+
+    @GetMapping("/student")
+    public ResultForm getStudentList(@RequestBody StudentSearchCondition condition,Pageable pageable){
+
+        List<Students> students = userService.getStudentList(condition,pageable);
+
+        return new ResultForm().builder()
+                .state(State.SUCCESS)
+                .code("")
+                .resultSet(students)
                 .build();
     }
 

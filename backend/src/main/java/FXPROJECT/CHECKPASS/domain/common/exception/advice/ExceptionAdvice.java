@@ -2,10 +2,7 @@ package FXPROJECT.CHECKPASS.domain.common.exception.advice;
 
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
-import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
-import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
-import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRequest;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -58,6 +55,17 @@ public class ExceptionAdvice {
                 .state(State.FAIL)
                 .code(ErrorCode.INVALID_REQUEST.getCode())
                 .resultSet(ErrorCode.INVALID_REQUEST.getDescription())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(SearchFail.class)
+    public ResultForm searchFail(Exception e){
+        log.info("[exception] ex", e);
+        return new ResultForm().builder()
+                .state(State.FAIL)
+                .code(ErrorCode.SERCH_FAIL.getCode())
+                .resultSet(ErrorCode.SERCH_FAIL.getDescription())
                 .build();
     }
 

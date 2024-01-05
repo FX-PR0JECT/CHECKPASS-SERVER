@@ -1,5 +1,7 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
+import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
+import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
@@ -15,11 +17,12 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
-
 
 @Slf4j
 @Service
@@ -249,5 +252,16 @@ public class UserService {
         return account;
     }
 
+    public List<Professor> getProfessorList(ProfessorSearchCondition condition, Pageable pageable) {
+        return jpaQueryUsersRepository.getProfessorList(condition,pageable);
+    }
+
+    public List<Staff> getStaffList(ProfessorSearchCondition condition,Pageable pageable) {
+        return jpaQueryUsersRepository.getStaffList(condition,pageable);
+    }
+
+    public List<Students> getStudentList(StudentSearchCondition condition,Pageable pageable) {
+        return jpaQueryUsersRepository.getStudentList(condition,pageable);
+    }
 
 }

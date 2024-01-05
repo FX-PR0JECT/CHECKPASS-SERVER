@@ -13,8 +13,11 @@ import lombok.experimental.SuperBuilder;
 public class UpdateForm {
 
     private String updatePassword;
+
     private String updateName;
+
     private String updateCollege;
+
     private String updateDepartment;
 
 }
