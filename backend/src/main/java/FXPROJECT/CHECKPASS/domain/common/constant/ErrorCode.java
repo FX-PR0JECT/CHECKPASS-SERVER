@@ -7,7 +7,8 @@ public enum ErrorCode {
     NO_SUCH_USER(404,"USERS-002","존재하지 않는 유저입니다."),
     INTERNAL_ERROR(500,"SERVER-001","서버에서 처리할 수 없습니다."),
     INVALID_REQUEST(404,"INVALID-001","유효하지 않은 요청입니다."),
-    SERCH_FAIL(404,"SEARCH-0001","검색 결과가 존재하지 않습니다.")
+    SERCH_FAIL(404,"SEARCH-0001","검색 결과가 존재하지 않습니다."),
+    NO_AUTHENTICATION(404,"AUTH-0001","인증되지 않은 사용자")
     ;
 
     private final int status;

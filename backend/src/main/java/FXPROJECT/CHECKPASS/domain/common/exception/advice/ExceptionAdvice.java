@@ -69,4 +69,15 @@ public class ExceptionAdvice {
                 .build();
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(NoAuthentication.class)
+    public ResultForm noAuthentication(Exception e){
+        log.info("[exception] ex", e);
+        return new ResultForm().builder()
+                .state(State.FAIL)
+                .code(ErrorCode.NO_AUTHENTICATION.getCode())
+                .resultSet(ErrorCode.NO_AUTHENTICATION.getDescription())
+                .build();
+    }
+
 }
