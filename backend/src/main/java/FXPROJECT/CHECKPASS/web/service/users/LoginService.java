@@ -1,6 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepository;
 import FXPROJECT.CHECKPASS.web.form.requestForm.LoginForm;
@@ -33,15 +33,15 @@ public class LoginService {
                 if (form.getLoginPassword().equals(password)){
                     return user;
                 }else{
-                    throw new NoSuchUser();
+                    throw new UnauthenticatedUser();
                 }
 
             }else{
-                throw new NoSuchUser();
+                throw new UnauthenticatedUser();
             }
 
         }else{
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
     }
 

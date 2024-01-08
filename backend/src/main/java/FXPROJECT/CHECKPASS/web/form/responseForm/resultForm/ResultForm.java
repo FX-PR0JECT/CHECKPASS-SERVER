@@ -10,8 +10,9 @@ import lombok.Getter;
 public class ResultForm {
 
     private String state;
-    private String code;
+    private Integer code;
     private Object resultSet;
+    private String title;
 
     public ResultForm() {
     }

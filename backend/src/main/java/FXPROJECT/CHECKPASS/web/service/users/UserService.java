@@ -5,9 +5,9 @@ import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
-import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
-import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRequest;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
+import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRoleRequest;
+import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.JpaAccountRepository;
@@ -44,7 +44,7 @@ public class UserService {
         if (!existsUser(user.getUserId())){
             return jpaUsersRepository.save(user);
         }else{
-            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getDescription());
+            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getDescription());
         }
 
     }
@@ -73,7 +73,7 @@ public class UserService {
     public ResultForm secessionUser(Long userId){
 
         if (!existsUser(userId)) {
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
 
         jpaUsersRepository.deleteById(userId);
@@ -103,13 +103,13 @@ public class UserService {
     public Users editProfessorInformation(Long userId, ProfessorUpdateForm param){
 
         if (!existsUser(userId)){
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
 
         Users target = jpaUsersRepository.findById(userId).get();
 
         if (target.getUserJob() != Job.PROFESSOR && target.getUserJob() != Job.STAFF){
-            throw new InvalidRequest();
+            throw new InvalidRoleRequest();
         }
 
         Users users = updateAllProfessorAndStaff(target, param);
@@ -130,13 +130,13 @@ public class UserService {
     public Users editStudentInformation(Long userId, StudentUpdateForm param){
 
         if (!existsUser(userId)){
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
 
         Users target = jpaUsersRepository.findById(userId).get();
 
         if (target.getUserJob() != Job.STUDENTS){
-            throw new InvalidRequest();
+            throw new InvalidRoleRequest();
         }
 
         Users users = updateAllStudent(target, param);

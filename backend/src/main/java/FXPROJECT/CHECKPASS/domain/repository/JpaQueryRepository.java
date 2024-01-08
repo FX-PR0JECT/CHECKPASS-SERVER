@@ -2,7 +2,7 @@ package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.exception.SearchFail;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -54,7 +54,7 @@ public class JpaQueryRepository {
                 .fetch();
 
         if (result.size() == 0){
-            throw new SearchFail();
+            throw new NoSearchResultsFound();
         }
 
         return result;
@@ -79,7 +79,7 @@ public class JpaQueryRepository {
                 .fetch();
 
         if (result.size() == 0){
-            throw new SearchFail();
+            throw new NoSearchResultsFound();
         }
 
         return result;
@@ -111,7 +111,7 @@ public class JpaQueryRepository {
                 .fetch();
 
         if (result.size() == 0){
-            throw new SearchFail();
+            throw new NoSearchResultsFound();
         }
 
         return result;

@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.common.intercepter;
 
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoAuthentication;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +21,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null){
             log.info("미인증 사용자 요청");
-            throw new NoAuthentication();
+            throw new NoPermission();
         }
 
         return true;

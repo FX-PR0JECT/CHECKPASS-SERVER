@@ -9,8 +9,7 @@ public enum CommonMessage {
     NOT_FOUNT("찾을 수 없습니다."),
     SUCCESS_LOGIN("로그인 성공!"),
     FAIL_LOGIN("로그인 실패"),
-    SUCCESS_LOGOUT("로그아웃 완료!")
-    ;
+    SUCCESS_LOGOUT("로그아웃 완료!");
 
 
     private final String description;

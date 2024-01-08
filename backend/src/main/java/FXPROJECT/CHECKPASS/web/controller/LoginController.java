@@ -3,7 +3,7 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.web.form.requestForm.LoginForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
 @RestController
@@ -30,7 +29,7 @@ public class LoginController {
         Users loginUser = loginService.login(form);
 
         if (loginUser == null){
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
 
 

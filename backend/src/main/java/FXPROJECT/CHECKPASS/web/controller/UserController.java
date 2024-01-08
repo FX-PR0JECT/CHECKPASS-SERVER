@@ -5,8 +5,8 @@ import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
-import FXPROJECT.CHECKPASS.domain.common.exception.DupleUsers;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
+import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.SimpleUserInformation;
@@ -29,7 +29,7 @@ public class UserController {
 
     private Users getUser(Long userId){
         if (!userService.existsUser(userId)){
-            throw new NoSuchUser();
+            throw new UnauthenticatedUser();
         }
 
         return userService.getUser(userId);
@@ -80,7 +80,7 @@ public class UserController {
                     .resultSet(CommonMessage.AVAILABLE.getDescription())
                     .build();
         }else {
-            throw new DupleUsers();
+            throw new ExistingUSER();
         }
 
 
@@ -104,7 +104,7 @@ public class UserController {
                     .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
                     .build();
         }else {
-            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getCode());
+            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getCode());
         }
 
     }
@@ -127,7 +127,7 @@ public class UserController {
                     .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
                     .build();
         }else {
-            throw new DupleUsers(ErrorCode.DUPLICATION_USERS.getCode());
+            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getCode());
         }
     }
 
