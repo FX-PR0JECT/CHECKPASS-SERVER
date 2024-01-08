@@ -11,8 +11,8 @@ public class ResultForm {
 
     private String state;
     private Integer code;
-    private Object resultSet;
     private String title;
+    private Object resultSet;
 
     public ResultForm() {
     }

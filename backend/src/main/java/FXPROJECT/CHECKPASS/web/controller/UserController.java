@@ -8,6 +8,7 @@ import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
+import FXPROJECT.CHECKPASS.web.common.utils.ResultSetUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.*;
 import FXPROJECT.CHECKPASS.web.form.responseForm.SimpleUserInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
@@ -18,6 +19,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
+import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.SUCCESS_LOGIN;
+import static FXPROJECT.CHECKPASS.domain.common.constant.State.*;
+import static FXPROJECT.CHECKPASS.domain.common.constant.State.SUCCESS;
 
 @Slf4j
 @RestController
@@ -40,11 +46,7 @@ public class UserController {
 
         Users user = getUser(userId);
 
-        return new ResultForm().builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(user)
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),user,null);
     }
 
     @GetMapping("/simple/{userId}")
@@ -58,11 +60,7 @@ public class UserController {
                 .userDepartment(user.getUserDepartment())
                 .build();
 
-        return ResultForm.builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(sui)
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),sui,null);
     }
 
 
@@ -74,11 +72,7 @@ public class UserController {
         boolean existsUser = userService.existsUser(userId);
 
         if (!existsUser){
-            return ResultForm.builder()
-                    .state(State.SUCCESS)
-                    .code("")
-                    .resultSet(CommonMessage.AVAILABLE.getDescription())
-                    .build();
+            return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),AVAILABLE_ID.getDescription(),null);
         }else {
             throw new ExistingUSER();
         }
@@ -98,13 +92,9 @@ public class UserController {
         ResultForm resultForm = new ResultForm();
 
         if(userService.existsUser(users.getUserId())){
-            return resultForm.builder()
-                    .state(State.SUCCESS)
-                    .code("")
-                    .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
-                    .build();
+            return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),COMPLETE_JOIN.getDescription(),null);
         }else {
-            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getCode());
+            throw new ExistingUSER();
         }
 
     }
@@ -121,13 +111,9 @@ public class UserController {
         ResultForm resultForm = new ResultForm();
 
         if(joinUser != null){
-            return resultForm.builder()
-                    .state(State.SUCCESS)
-                    .code("")
-                    .resultSet(CommonMessage.COMPLETE_JOIN.getDescription())
-                    .build();
+            return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),COMPLETE_JOIN.getDescription(),null);
         }else {
-            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getCode());
+            throw new ExistingUSER();
         }
     }
 
@@ -141,11 +127,7 @@ public class UserController {
 
         Users users = userService.editProfessorInformation(userId, form);
 
-        return ResultForm.builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(CommonMessage.COMPLETE_UPDATE.getDescription())
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),COMPLETE_UPDATE.getDescription(),null);
     }
 
     @PatchMapping("/student/{userId}")
@@ -153,11 +135,7 @@ public class UserController {
 
         Users users = userService.editStudentInformation(userId, form);
 
-        return ResultForm.builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(CommonMessage.COMPLETE_UPDATE.getDescription())
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),COMPLETE_UPDATE.getDescription(),null);
     }
 
     @GetMapping("/professor")
@@ -165,11 +143,7 @@ public class UserController {
 
         List<Professor> professors = userService.getProfessorList(condition,pageable);
 
-        return new ResultForm().builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(professors)
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),professors,null);
     }
 
     @GetMapping("/staff")
@@ -177,11 +151,7 @@ public class UserController {
 
         List<Staff> staff = userService.getStaffList(condition,pageable);
 
-        return new ResultForm().builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(staff)
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),staff,null);
     }
 
     @GetMapping("/student")
@@ -189,11 +159,7 @@ public class UserController {
 
         List<Students> students = userService.getStudentList(condition,pageable);
 
-        return new ResultForm().builder()
-                .state(State.SUCCESS)
-                .code("")
-                .resultSet(students)
-                .build();
+        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(),students,null);
     }
 
 }

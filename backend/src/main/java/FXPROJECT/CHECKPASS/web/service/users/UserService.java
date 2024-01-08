@@ -44,7 +44,7 @@ public class UserService {
         if (!existsUser(user.getUserId())){
             return jpaUsersRepository.save(user);
         }else{
-            throw new ExistingUSER(ErrorCode.DUPLICATION_USERS.getDescription());
+            throw new ExistingUSER();
         }
 
     }
@@ -79,7 +79,8 @@ public class UserService {
         jpaUsersRepository.deleteById(userId);
         return new ResultForm().builder()
                 .state(State.SUCCESS)
-                .code("")
+                .code(ErrorCode.OK.getCode())
+                .title(ErrorCode.OK.getTitle())
                 .resultSet(CommonMessage.COMPLETE_DELETE.getDescription())
                 .build();
     }

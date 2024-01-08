@@ -5,30 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/ExistingUSER.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/InvalidRoleRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/MissingRequiredElement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/NoPermission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/NoSearchResultsFound.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/TimeOut.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/UnauthenticatedUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/utils/ResultSetUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/DupleUsers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/InvalidRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/NoAuthentication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/NoSuchUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/SearchFail.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm$ResultFormBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm$ResultFormBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/LoginService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/DupleUsers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/InvalidRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/NoAuthentication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/NoSuchUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/SearchFail.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/LoginService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -253,7 +252,7 @@
       <workItem from="1704156787644" duration="8461000" />
       <workItem from="1704180833522" duration="9969000" />
       <workItem from="1704193812278" duration="78836000" />
-      <workItem from="1704681190067" duration="8700000" />
+      <workItem from="1704681190067" duration="10653000" />
     </task>
     <servers />
   </component>
