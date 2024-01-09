@@ -22,7 +22,7 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public static final QLecture lecture = new QLecture("lecture");
 
-    public final ComparablePath<Character> dayOrNight = createComparable("dayOrNight", Character.class);
+    public final StringPath dayOrNight = createString("dayOrNight");
 
     public final NumberPath<Long> lectureCode = createNumber("lectureCode", Long.class);
 

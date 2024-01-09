@@ -27,19 +27,13 @@ public class QStaff extends EntityPathBase<Staff> {
     // inherited
     public final QAccount account;
 
-    public final DatePath<java.time.LocalDate> HIREDATE = createDate("HIREDATE", java.time.LocalDate.class);
-
-    //inherited
-    public final NumberPath<Integer> userAge;
+    public final StringPath HIREDATE = createString("HIREDATE");
 
     //inherited
     public final StringPath userCollege;
 
     //inherited
     public final StringPath userDepartment;
-
-    //inherited
-    public final StringPath userEmail;
 
     //inherited
     public final NumberPath<Long> userId;
@@ -70,10 +64,8 @@ public class QStaff extends EntityPathBase<Staff> {
         super(type, metadata, inits);
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
-        this.userAge = _super.userAge;
         this.userCollege = _super.userCollege;
         this.userDepartment = _super.userDepartment;
-        this.userEmail = _super.userEmail;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

@@ -24,13 +24,9 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final QAccount account;
 
-    public final NumberPath<Integer> userAge = createNumber("userAge", Integer.class);
-
     public final StringPath userCollege = createString("userCollege");
 
     public final StringPath userDepartment = createString("userDepartment");
-
-    public final StringPath userEmail = createString("userEmail");
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
