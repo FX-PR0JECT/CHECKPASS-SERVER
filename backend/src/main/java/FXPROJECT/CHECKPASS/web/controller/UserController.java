@@ -2,27 +2,28 @@ package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
-import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultSetUtils;
-import FXPROJECT.CHECKPASS.web.form.requestForm.*;
-import FXPROJECT.CHECKPASS.web.form.responseForm.SimpleUserInformation;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleUserInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
-import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.SUCCESS_LOGIN;
-import static FXPROJECT.CHECKPASS.domain.common.constant.State.*;
 import static FXPROJECT.CHECKPASS.domain.common.constant.State.SUCCESS;
 
 @Slf4j
@@ -81,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/studentSignup")
-    public ResultForm studentSignup(@RequestBody StudentSignUpForm form){
+    public ResultForm studentSignup(@RequestBody @Validated StudentSignUpForm form , BindingResult bindingResult){
 
         log.info("form : {}" , form.getSignUpGrade());
 

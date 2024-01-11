@@ -1,8 +1,8 @@
 package FXPROJECT.CHECKPASS.domain.common.aspects;
 
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.web.form.requestForm.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.SignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 

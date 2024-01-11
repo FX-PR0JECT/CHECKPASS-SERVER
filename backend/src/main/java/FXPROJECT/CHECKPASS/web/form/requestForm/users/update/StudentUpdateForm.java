@@ -1,7 +1,6 @@
-package FXPROJECT.CHECKPASS.web.form.requestForm;
+package FXPROJECT.CHECKPASS.web.form.requestForm.users.update;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentUpdateForm extends UpdateForm{
+public class StudentUpdateForm extends UpdateForm {
 
     private String updateStudentGrade;
 

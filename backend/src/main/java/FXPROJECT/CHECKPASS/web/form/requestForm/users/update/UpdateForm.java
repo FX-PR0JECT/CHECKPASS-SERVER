@@ -1,4 +1,4 @@
-package FXPROJECT.CHECKPASS.web.form.requestForm;
+package FXPROJECT.CHECKPASS.web.form.requestForm.users.update;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

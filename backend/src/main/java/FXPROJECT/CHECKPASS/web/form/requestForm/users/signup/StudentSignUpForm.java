@@ -1,11 +1,11 @@
-package FXPROJECT.CHECKPASS.web.form.requestForm;
+package FXPROJECT.CHECKPASS.web.form.requestForm.users.signup;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentSignUpForm extends SignUpForm{
+public class StudentSignUpForm extends SignUpForm {
 
     private String signUpGrade;
 
