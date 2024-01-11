@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,8 +119,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
-    <configuration name="JpaUsersRepositoryTest.deleteByUserId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.JpaLectureRepositoryTest.CRUD">
+    <configuration name="JpaLectureRepositoryTest.CRUD" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
@@ -122,8 +129,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.domain.repository" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepositoryTest" />
-      <option name="METHOD_NAME" value="deleteByUserId" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.domain.repository.JpaLectureRepositoryTest" />
+      <option name="METHOD_NAME" value="CRUD" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -204,11 +211,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.JpaLectureRepositoryTest.CRUD" />
         <item itemvalue="Spring Boot.CheckpassApplication" />
         <item itemvalue="JUnit.UserServiceTest.count" />
         <item itemvalue="JUnit.UserServiceTest.countUsers" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.JpaUsersRepositoryTest.deleteByUserId" />
       </list>
     </recent_temporary>
   </component>
@@ -234,6 +241,7 @@
       <workItem from="1704716984989" duration="2060000" />
       <workItem from="1704767092984" duration="225000" />
       <workItem from="1704936302688" duration="1249000" />
+      <workItem from="1704946652997" duration="3765000" />
     </task>
     <servers />
   </component>

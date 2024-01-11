@@ -45,13 +45,11 @@ class JpaUsersRepositoryTest {
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userAge(30)
                 .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
-                .userEmail("duddns119@gmail.com")
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         Professor savedProfessor = usersRepository.save(professor);
@@ -80,7 +78,7 @@ class JpaUsersRepositoryTest {
         assertThat(pTarget.getUserId()).isEqualTo(professor.getUserId());
 
         //update
-        pTarget.setUserAge(20);
+        pTarget.setHIREDATE("1994-12-23");
 
         //findAll
         Account accountA = new Account();
@@ -91,13 +89,11 @@ class JpaUsersRepositoryTest {
         Professor professorA = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userAge(23)
                 .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
-                .userEmail("test@gmail.com")
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         Professor savedProfessorA = usersRepository.save(professorA);
@@ -127,13 +123,11 @@ class JpaUsersRepositoryTest {
         Professor professor = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userAge(23)
                 .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
-                .userEmail("test@gmail.com")
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         Users user = professor;
@@ -157,13 +151,11 @@ class JpaUsersRepositoryTest {
         Professor professor = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userAge(23)
                 .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
-                .userEmail("test@gmail.com")
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         usersRepository.save(professor);

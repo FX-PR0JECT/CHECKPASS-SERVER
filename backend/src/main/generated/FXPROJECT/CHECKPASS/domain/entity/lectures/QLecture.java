@@ -62,7 +62,7 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public QLecture(Class<? extends Lecture> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor"), inits.get("professor")) : null;
+        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor")) : null;
     }
 
 }

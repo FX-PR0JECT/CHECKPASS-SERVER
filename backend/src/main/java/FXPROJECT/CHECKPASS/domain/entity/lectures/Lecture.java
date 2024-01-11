@@ -57,4 +57,5 @@ public class Lecture {
 
     @Column(nullable = false, length = 5)
     private String dayOrNight;
+
 }

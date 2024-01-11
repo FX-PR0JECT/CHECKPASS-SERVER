@@ -75,61 +75,24 @@ class JpaLectureRepositoryTest {
         assertThat(registeredLecture.getLectureCode()).isEqualTo(lecture.getLectureCode());
 
 
-        // findById
-        Optional<Lecture> findById = jpaLectureRepository.findById(lecture.getLectureCode());
+        //findByLectureCode
+        Lecture byLectureCode = jpaLectureRepository.findByLectureCode(registeredLecture.getLectureCode());
+        log.info("byLectureCode : {} , name : {} , dayOrNight : {} , Professor : {} " ,
+                byLectureCode.getLectureCode(),byLectureCode.getLectureName(),
+                byLectureCode.getDayOrNight(), byLectureCode.getProfessor().getUserName());
+        assertThat(byLectureCode).isNotNull();
+        assertThat(byLectureCode.getLectureCode()).isEqualTo(registeredLecture.getLectureCode());
 
-        Lecture target = null;
+        //IsExistsByLectureId
+        Boolean aBoolean = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
 
-        if(!findById.isEmpty()){
-            target = findById.get();
-        }
+        assertThat(aBoolean).isTrue();
 
-        log.info("TargetCode: {}, TargetName: {}", target.getLectureCode(), target.getLectureName());
-        assertThat(target.getLectureCode()).isEqualTo(lecture.getLectureCode());
+        // delete
+        jpaLectureRepository.deleteByLectureCode(byLectureCode.getLectureCode());
 
-
-        // findAll
-        Lecture lectureA = new Lecture().builder()
-                .lectureCode(141414L)
-                .professor(savedProfessor)
-                .lectureName("GIVE PROJECT")
-                .lectureTimes("(월 3A, 3B, 4A),(금 4A, 4B, 5A)")
-                .lectureRoom("미래융합정보관 (214)")
-                .lectureGrade(3)
-                .lectureKind("전선")
-                .lectureGrades(3)
-                .lectureFull(40)
-                .dayOrNight("day")
-                .build();
-
-        jpaLectureRepository.save(lectureA);
-
-        List<Lecture> findAll = jpaLectureRepository.findAll();
-        assertThat(findAll.size()).isEqualTo(2);
-
-
-        // Update
-        target.setLectureGrades(6);
-        jpaLectureRepository.save(target);
-
-        Optional<Lecture> ById = jpaLectureRepository.findById(target.getLectureCode());
-
-        Lecture targetA = null;
-
-        if(!ById.isEmpty()){
-            targetA = ById.get();
-        }
-
-        log.info("TargetGrades: {}, TargetA_Grades: {}", target.getLectureGrades(), targetA.getLectureGrades());
-        assertThat(targetA.getLectureGrades()).isEqualTo(target.getLectureGrades());
-
-
-        // Delete
-        jpaLectureRepository.deleteById(lecture.getLectureCode());
-        jpaLectureRepository.deleteById(lectureA.getLectureCode());
-
-        List<Lecture> result = jpaLectureRepository.findAll();
-        assertThat(result.size()).isEqualTo(0);
+        Boolean aBoolean1 = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
+        assertThat(aBoolean1).isFalse();
 
     }
 }

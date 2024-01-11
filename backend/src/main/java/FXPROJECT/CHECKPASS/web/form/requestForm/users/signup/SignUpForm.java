@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.users.signup;
 
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 

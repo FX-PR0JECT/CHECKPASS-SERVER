@@ -5,6 +5,7 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.JpaAccountRepository;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,30 +33,26 @@ class UserServiceTest {
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userAge(30)
                 .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         userService.join(professor);
 
-        Professor updateParam = new Professor().builder()
-                .account(account)
-                .userId(2126037L)
-                .userAge(20)
-                .userCollege("software")
-                .userName("shinywoon")
-                .userJob(Job.PROFESSOR)
-                .userDepartment("software")
-                .HIREDATE(LocalDate.now())
+        ProfessorUpdateForm updateParam = new ProfessorUpdateForm().builder()
+                .updatePassword("test")
+                .updateCollege("software")
+                .updateName("shinywoon")
+                .updateDepartment("software")
+                .updateHireDate(String.valueOf(LocalDate.now()))
                 .build();
 
         Users byUserId = userService.getUser(professor.getUserId());
 
-        userService.editUserInfo(byUserId.getUserId(),updateParam);
+        userService.editProfessorInformation(byUserId.getUserId(),updateParam);
 
     }
 
@@ -70,12 +67,11 @@ class UserServiceTest {
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userAge(30)
                 .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
                 .userDepartment("software")
-                .HIREDATE(LocalDate.now())
+                .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         userService.join(professor);
