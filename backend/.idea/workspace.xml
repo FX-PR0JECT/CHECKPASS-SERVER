@@ -5,12 +5,140 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/lectures/LectureSearchCondition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/CheckpassApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/OrderCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/ProfessorSearchCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/StudentSearchCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/aspects/SignupAspect.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/config/WebConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/constant/SessionConst.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/constant/State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/BadUriRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ExistingUSER.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ImageCapacityExceeded.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ImageFormatError.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/InformationDiscrepancy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/InternalException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/InvalidHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/InvalidRoleRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/MissingRequiredArgument.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/MissingRequiredElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/NoPermission.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/NoSearchResultsFound.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/NumberOfImagesExceeded.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/RequestCountExceeded.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/SanctionsUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ServerError.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ServerMaintenance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/ServiceTerminated.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/TimeOut.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/UnauthenticatedUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/UnderMaintenance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/UnknownServerError.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/Enrollment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture$LectureBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Account.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Professor$ProfessorBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Professor$ProfessorBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Professor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QAccount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Staff$StaffBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Staff$StaffBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Staff.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Students$StudentsBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Students$StudentsBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Students.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users$UsersBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/enums/Job.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaAccountRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/common/utils/ResultSetUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/LoginForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/ProfessorSignUpForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/ProfessorUpdateForm$ProfessorUpdateFormBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/ProfessorUpdateForm$ProfessorUpdateFormBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/ProfessorUpdateForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/SignUpForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/StudentSignUpForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/StudentUpdateForm$StudentUpdateFormBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/StudentUpdateForm$StudentUpdateFormBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/StudentUpdateForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/UpdateForm$UpdateFormBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/UpdateForm$UpdateFormBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/requestForm/UpdateForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/responseForm/SimpleUserInformation$SimpleUserInformationBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/responseForm/SimpleUserInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm$ResultFormBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/ResultForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/service/users/LoginService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/FXPROJECT/CHECKPASS/web/service/users/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/CheckpassApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/common/ConnectionTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QAccount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resolvedMainClassName" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/JpaQueryRepository.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/QuerydslConfig.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/UserService.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/UserServiceTest.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/OrderCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/ProfessorSearchCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/StudentSearchCondition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaAccountRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/lectures/LectureManagementService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/LoginService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/OrderCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/ProfessorSearchCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/ProfessorSearchCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/StudentSearchCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/StudentSearchCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/users/JpaAccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/lectures/JpaLectureRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/QueryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/users/JpaUsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureManagementService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" afterDir="false" />
@@ -28,12 +156,31 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="CHECKPASS" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CHECKPASS" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CHECKPASS" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CHECKPASS" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
             </expand>
             <select />
@@ -45,9 +192,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -104,6 +251,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="FXPROJECT.CHECKPASS.web.service.lectures" />
       <recent name="FXPROJECT.CHECKPASS.web.service.users" />
       <recent name="FXPROJECT.CHECKPASS.domain.repository" />
     </key>
@@ -119,7 +267,28 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.JpaLectureRepositoryTest.CRUD">
+  <component name="RunManager" selected="JUnit.LectureServiceTest">
+    <configuration name="backend [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="JpaLectureRepositoryTest.CRUD" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
@@ -136,49 +305,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JpaUsersRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.domain.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.domain.repository" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.count" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LectureServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.lectures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
-      <option name="METHOD_NAME" value="count" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceTest.countUsers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.users.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.users" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.users.UserServiceTest" />
-      <option name="METHOD_NAME" value="countUsers" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.lectures" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.lectures.LectureServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -211,15 +363,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LectureServiceTest" />
         <item itemvalue="JUnit.JpaLectureRepositoryTest.CRUD" />
         <item itemvalue="Spring Boot.CheckpassApplication" />
-        <item itemvalue="JUnit.UserServiceTest.count" />
-        <item itemvalue="JUnit.UserServiceTest.countUsers" />
-        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.JpaUsersRepositoryTest" />
+        <item itemvalue="Gradle.backend [clean]" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringBeansView">
+    <option name="beanDetailsProportion" value="0.4266118" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="" />
@@ -241,12 +396,22 @@
       <workItem from="1704716984989" duration="2060000" />
       <workItem from="1704767092984" duration="225000" />
       <workItem from="1704936302688" duration="1249000" />
-      <workItem from="1704946652997" duration="3765000" />
+      <workItem from="1704946652997" duration="10279000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

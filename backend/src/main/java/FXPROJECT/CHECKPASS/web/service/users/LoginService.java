@@ -2,7 +2,7 @@ package FXPROJECT.CHECKPASS.web.service.users;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
-import FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepository;
+import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.login.LoginForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

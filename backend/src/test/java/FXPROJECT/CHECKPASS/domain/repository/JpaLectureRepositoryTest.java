@@ -4,6 +4,9 @@ import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
+import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
+import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +17,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -28,12 +29,11 @@ class JpaLectureRepositoryTest {
 
     @Autowired
     private JpaLectureRepository jpaLectureRepository;
-
     @Autowired
     private JpaUsersRepository usersRepository;
-
     @Autowired
     private JpaAccountRepository accountRepository;
+
 
     @Test
     @Rollback(false)
@@ -89,10 +89,39 @@ class JpaLectureRepositoryTest {
         assertThat(aBoolean).isTrue();
 
         // delete
-        jpaLectureRepository.deleteByLectureCode(byLectureCode.getLectureCode());
+        jpaLectureRepository.deleteLectureByLectureCode(byLectureCode.getLectureCode());
 
         Boolean aBoolean1 = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
         assertThat(aBoolean1).isFalse();
+
+        Lecture lectureA = new Lecture().builder()
+                .lectureCode(121212L)
+                .professor(savedProfessor)
+                .lectureName("checkpass")
+                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                .lectureRoom("미래융합정보관 (225)")
+                .lectureGrade(1)
+                .lectureKind("전필")
+                .lectureGrades(3)
+                .lectureFull(40)
+                .dayOrNight("day")
+                .build();
+
+        Lecture lectureB = new Lecture().builder()
+                .lectureCode(121212L)
+                .professor(savedProfessor)
+                .lectureName("checkpass")
+                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                .lectureRoom("미래융합정보관 (225)")
+                .lectureGrade(2)
+                .lectureKind("전필")
+                .lectureGrades(3)
+                .lectureFull(40)
+                .dayOrNight("day")
+                .build();
+
+        jpaLectureRepository.save(lectureA);
+        jpaLectureRepository.save(lectureB);
 
     }
 }

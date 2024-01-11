@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
-import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
+import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
+import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;

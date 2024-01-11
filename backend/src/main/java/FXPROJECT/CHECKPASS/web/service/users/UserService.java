@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
-import FXPROJECT.CHECKPASS.domain.common.ProfessorSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.StudentSearchCondition;
+import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
+import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.State;
@@ -10,9 +10,9 @@ import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRoleRequest;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.domain.repository.JpaAccountRepository;
-import FXPROJECT.CHECKPASS.domain.repository.JpaQueryRepository;
-import FXPROJECT.CHECKPASS.domain.repository.JpaUsersRepository;
+import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
+import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
+import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
@@ -33,7 +33,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-    private final JpaQueryRepository jpaQueryUsersRepository;
+    private final QueryRepository jpaQueryUsersRepository;
     private final JpaUsersRepository jpaUsersRepository;
     private final JpaAccountRepository jpaAccountRepository;
 
