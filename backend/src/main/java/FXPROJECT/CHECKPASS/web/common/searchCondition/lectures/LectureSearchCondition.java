@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.common.searchCondition.lectures;
 
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class LectureSearchCondition {
 
-    private Integer grade;
-    /*private String kind;
-    private Integer grades;
+    private String grade;
+    private LectureKind kind;
+    private String grades;
     private String dayOrNight;
     private Long lectureCode;
-    private String lectureName;*/
+    private String lectureName;
 
 }
