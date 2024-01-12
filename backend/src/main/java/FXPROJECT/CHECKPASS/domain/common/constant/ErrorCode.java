@@ -21,6 +21,7 @@ public enum ErrorCode {
             "해결 방법 :  확인 후 재 요청"),
     EXISTING_USER(403,-21,"Existing user","Database 에 이미 존재하는 회원인 경우\n" +
             "해결 방법 :  확인 후 재 요청"),
+    EXISTING_LECTURE(403, -101, "Existing Lecture", "이미 등록된 강의입니다. \n" + "해결 방법 : 확인 후 재요청"),
     INVALID_ROLE_REQUEST(403,-22,"Invalid Role request","유효하지 않은 요청\n" +
             "해결 방법 : 회원 Job 확인 후 재 요청"),
     SANCTIONS_USER(403,-23,"sanctions user","계정이 제재된 경우나 해당 계정에 제재된 행동을 하는 경우"),

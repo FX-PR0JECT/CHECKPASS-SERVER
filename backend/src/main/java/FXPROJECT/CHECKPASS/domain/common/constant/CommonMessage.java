@@ -3,6 +3,8 @@ package FXPROJECT.CHECKPASS.domain.common.constant;
 public enum CommonMessage {
 
     COMPLETE_JOIN("가입이 완료되었습니다."),
+    COMPLETE_REGISTER("등록이 완료되었습니다."),
+    FAIL_REGISTER("등록 실패했습니다."),
     AVAILABLE_ID("사용 가능한 아이디입니다."),
     COMPLETE_DELETE("삭제가 완료 되었습니다."),
     COMPLETE_UPDATE("수정이 완료 되었습니다."),
@@ -10,6 +12,7 @@ public enum CommonMessage {
     SUCCESS_LOGIN("로그인 성공!"),
     FAIL_LOGIN("로그인 실패"),
     SUCCESS_LOGOUT("로그아웃 완료!");
+
 
 
     private final String description;
