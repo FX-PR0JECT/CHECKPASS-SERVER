@@ -2,9 +2,10 @@ package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
+import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
-import FXPROJECT.CHECKPASS.web.common.utils.ResultSetUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.login.LoginForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.LoginService;
@@ -35,11 +36,10 @@ public class LoginController {
             throw new UnauthenticatedUser();
         }
 
-
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginUser);
 
-        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(), SUCCESS_LOGIN.getDescription(),null);
+        return ResultFormUtils.getSuccessResultForm(SUCCESS_LOGIN.getDescription());
 
     }
 
@@ -50,9 +50,11 @@ public class LoginController {
 
         if (session != null){
             session.invalidate();
+            return ResultFormUtils.getSuccessResultForm(SUCCESS_LOGOUT.getDescription());
         }
 
-        return ResultSetUtils.getResultForm(SUCCESS,ErrorCode.OK.getCode(),ErrorCode.OK.getTitle(), SUCCESS_LOGOUT.getDescription(),null);
+        throw new InternalException();
+
     }
 
 }

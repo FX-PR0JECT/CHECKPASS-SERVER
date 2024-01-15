@@ -45,14 +45,11 @@ public class UserService {
     @Transactional
     public Users join(Users user){
 
-        if (!existsUser(user.getUserId())){
-            return jpaUsersRepository.save(user);
-        }else{
+        if (existsUser(user.getUserId())){
             throw new ExistingUSER();
         }
-
+        return jpaUsersRepository.save(user);
     }
-
 
     /**
      * 사용자 아이디를 이용한 사용자 정보 조회 : 단일 조회
@@ -74,19 +71,12 @@ public class UserService {
      * @return true : 삭제 완료, false : 문제 발생 -> 예외로 변경 필요
      */
     @Transactional
-    public ResultForm secessionUser(Long userId){
+    public void secessionUser(Long userId){
 
         if (!existsUser(userId)) {
             throw new UnauthenticatedUser();
         }
-
         jpaUsersRepository.deleteById(userId);
-        return new ResultForm().builder()
-                .state(State.SUCCESS)
-                .code(ErrorCode.OK.getCode())
-                .title(ErrorCode.OK.getTitle())
-                .resultSet(CommonMessage.COMPLETE_DELETE.getDescription())
-                .build();
     }
 
     /**

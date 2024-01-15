@@ -19,30 +19,26 @@ public class LoginService {
     private String secretKey;
     private Long expiredMs = 1000 * 60 * 60L;
 
-    @PostMapping("/login")
     public Users login(LoginForm form) {
 
-        if (jpaUsersRepository.existsById(form.getLoginId())){
+        if (!jpaUsersRepository.existsById(form.getLoginId())){
 
-            Users user = jpaUsersRepository.findByUserId(form.getLoginId());
-
-            if (user != null){
-
-                String password = user.getAccount().getPassword();
-
-                if (form.getLoginPassword().equals(password)){
-                    return user;
-                }else{
-                    throw new UnauthenticatedUser();
-                }
-
-            }else{
-                throw new UnauthenticatedUser();
-            }
-
-        }else{
             throw new UnauthenticatedUser();
         }
+
+        Users user = jpaUsersRepository.findByUserId(form.getLoginId());
+
+        if (user == null){
+            throw new UnauthenticatedUser();
+        }
+
+        String password = user.getAccount().getPassword();
+
+        if (form.getLoginPassword().equals(password)){
+            return user;
+        }
+
+        throw new UnauthenticatedUser();
     }
 
 }
