@@ -4,6 +4,7 @@ import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
@@ -21,23 +22,24 @@ import java.util.List;
 public class LectureServiceTest {
 
     @Autowired
-    private QueryRepository ur;
+    private QueryRepository queryRepository;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private JpaAccountRepository ar;
+    private LectureService lectureService;
 
     @Autowired
-    private JpaLectureRepository lr;
+    private JpaAccountRepository jpaAccountRepository;
+
 
     @Test
     public void test(){
 
         Account account = new Account();
         account.setPassword("1234");
-        ar.save(account);
+        jpaAccountRepository.save(account);
 
         Professor professor = new Professor().builder()
                 .account(account)
@@ -51,59 +53,60 @@ public class LectureServiceTest {
 
         userService.join(professor);
 
-        Lecture lecture = new Lecture().builder()
+        Lecture lecture_1 = new Lecture().builder()
                 .lectureCode(121212L)
                 .professor(professor)
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(3)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("3학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
 
-        Lecture lectureA = new Lecture().builder()
+        Lecture lecture_2 = new Lecture().builder()
                 .lectureCode(121213L)
                 .professor(professor)
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(1)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("1학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
 
-        Lecture lectureB = new Lecture().builder()
+        Lecture lecture_3 = new Lecture().builder()
                 .lectureCode(121214L)
                 .professor(professor)
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(2)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("2학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
 
-        lr.save(lectureA);
-        lr.save(lectureB);
-        lr.save(lecture);
+        lectureService.registerLecture(lecture_1);
+        lectureService.registerLecture(lecture_2);
+        lectureService.registerLecture(lecture_3);
+
 
         LectureSearchCondition con = new LectureSearchCondition();
-        con.setGrade(3);
-        List<Lecture> lectureList = ur.getLectureList(con);
+        con.setGrade("3학년");
+        List<Lecture> lectureList = queryRepository.getLectureList(con);
 
-        log.info("test : {}" , lectureList.size());
+        log.info("size : {}" , lectureList.size());
 
-        for (Lecture l : lectureList) {
-            log.info("lecture code : {} " , l.getLectureCode());
+        for (Lecture lec : lectureList) {
+            log.info("lecture code : {} " , lec.getLectureCode());
         }
 
-    }
 
+    }
 }

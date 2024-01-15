@@ -4,6 +4,7 @@ import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
@@ -62,9 +63,9 @@ class JpaLectureRepositoryTest {
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(3)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("3학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
@@ -75,7 +76,7 @@ class JpaLectureRepositoryTest {
         assertThat(registeredLecture.getLectureCode()).isEqualTo(lecture.getLectureCode());
 
 
-        //findByLectureCode
+        // findByLectureCode
         Lecture byLectureCode = jpaLectureRepository.findByLectureCode(registeredLecture.getLectureCode());
         log.info("byLectureCode : {} , name : {} , dayOrNight : {} , Professor : {} " ,
                 byLectureCode.getLectureCode(),byLectureCode.getLectureName(),
@@ -83,16 +84,16 @@ class JpaLectureRepositoryTest {
         assertThat(byLectureCode).isNotNull();
         assertThat(byLectureCode.getLectureCode()).isEqualTo(registeredLecture.getLectureCode());
 
-        //IsExistsByLectureId
-        Boolean aBoolean = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
+        // ExistsByLectureCode
+        Boolean bool = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
 
-        assertThat(aBoolean).isTrue();
+        assertThat(bool).isTrue();
 
         // delete
         jpaLectureRepository.deleteLectureByLectureCode(byLectureCode.getLectureCode());
 
-        Boolean aBoolean1 = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
-        assertThat(aBoolean1).isFalse();
+        bool = jpaLectureRepository.existsByLectureCode(byLectureCode.getLectureCode());
+        assertThat(bool).isFalse();
 
         Lecture lectureA = new Lecture().builder()
                 .lectureCode(121212L)
@@ -100,9 +101,9 @@ class JpaLectureRepositoryTest {
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(1)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("1학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
@@ -113,15 +114,23 @@ class JpaLectureRepositoryTest {
                 .lectureName("checkpass")
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
-                .lectureGrade(2)
-                .lectureKind("전필")
-                .lectureGrades(3)
+                .lectureGrade("2학년")
+                .lectureKind(LectureKind.MANDATORY)
+                .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
                 .build();
 
         jpaLectureRepository.save(lectureA);
         jpaLectureRepository.save(lectureB);
+
+        Lecture findLecture = jpaLectureRepository.findByLectureCode(lectureA.getLectureCode());
+        findLecture.setLectureGrades("2학점");
+        Lecture editLecture = jpaLectureRepository.save(findLecture);
+
+        log.info("findLecture Grades : {}, EditLecture Grades: {}", findLecture.getLectureGrades(), editLecture.getLectureGrades());
+
+        assertThat(findLecture.getLectureGrades()).isEqualTo(editLecture.getLectureGrades());
 
     }
 }
