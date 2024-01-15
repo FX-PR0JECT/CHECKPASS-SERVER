@@ -46,7 +46,7 @@ public class Lecture {
     private String lectureGrades;
 
     @Column(nullable = false, length = 3)
-    private Integer lectureFull;
+    private int lectureFull;
 
     @ColumnDefault("0")
     private Integer lectureCount;
