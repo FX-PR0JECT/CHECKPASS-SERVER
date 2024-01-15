@@ -42,6 +42,21 @@ public class LectureService {
         return true;
     }
 
+    /**
+     * 강의 삭제
+     * @param lectureCode 강의 코드
+     * @return 삭제 성공 시: 성공 ResultForm, 삭제 실패 시: 실패 ResultForm
+     */
+    @Transactional
+    public ResultForm deleteLecture(Long lectureCode){
+        if(!existsLecture(lectureCode)){
+            return ResultSetUtils.getResultForm(FAIL, NON_EXISTING_LECTURE.getCode(), NON_EXISTING_LECTURE.getTitle(), FAIL_DELETE.getDescription(), null);
+        }
+        jpaLectureRepository.deleteLectureByLectureCode(lectureCode);
+
+        return ResultSetUtils.getResultForm(SUCCESS, OK.getCode(), OK.getTitle(), COMPLETE_DELETE.getDescription(), null);
+    }
+
 
     /**
      * 강의 코드를 이용하여 등록된 강의인지 확인

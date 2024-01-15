@@ -38,4 +38,10 @@ public class LectureController {
         return ResultSetUtils.getResultForm(SUCCESS, OK.getCode(), OK.getTitle(), COMPLETE_REGISTER.getDescription(), null);
 
     }
+
+    @DeleteMapping("/{lectureCode}")
+    public ResultForm deleteLecture(@PathVariable("lectureCode") Long lectureCode){
+        return lectureService.deleteLecture(lectureCode);
+    }
+
 }
