@@ -1,14 +1,11 @@
 package FXPROJECT.CHECKPASS.domain.entity.lectures;
 
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.validator.constraints.Range;
 
 /**
  * CHECKPASS-19
@@ -38,22 +35,21 @@ public class Lecture {
     @Column(nullable = false, length = 20)
     private String lectureRoom;
 
-    @Range(min = 1, max = 5)
     @Column(nullable = false)
-    private int lectureGrade;
+    private String lectureGrade;
 
-    @Column(nullable = false, length = 2)
-    private String lectureKind;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private LectureKind lectureKind;
 
-    @Range(min = 1, max = 12)
-    @Column(nullable = false, length = 1)
-    private int lectureGrades;
+    @Column(nullable = false, length = 3)
+    private String lectureGrades;
 
     @Column(nullable = false, length = 3)
     private int lectureFull;
 
     @ColumnDefault("0")
-    private int lectureCount;
+    private Integer lectureCount;
 
     @Column(nullable = false, length = 5)
     private String dayOrNight;
