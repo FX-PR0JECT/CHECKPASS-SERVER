@@ -5,52 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/initdata/InitData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/college/Colleges.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/college/Departments.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/enums/DepartmentsEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/college/JpaCollegesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/college/JpaDepartmentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture$LectureBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture$LectureBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/Users$UsersBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/Users$UsersBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/users/Users.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/QueryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/repository/QueryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/lectures/LectureSearchCondition.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/lectures/LectureSearchCondition.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm$UpdateFormBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm$UpdateFormBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/users/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/CheckpassApplicationTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/common/ConnectionTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QProfessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QStaff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QStudents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/users/QUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/users/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/enums/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/enums/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/QueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/repository/QueryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/lectures/LectureSearchCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/lectures/LectureSearchCondition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/signup/SignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/SimpleUserInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/responseForm/resultForm/SimpleUserInformation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/users/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaUsersRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/users/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +136,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserServiceTest">
+  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
     <configuration name="JpaLectureRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
@@ -265,11 +225,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.CheckpassApplication" />
         <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.LectureServiceTest" />
         <item itemvalue="JUnit.JpaLectureRepositoryTest" />
         <item itemvalue="JUnit.JpaUsersRepositoryTest" />
-        <item itemvalue="Spring Boot.CheckpassApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -305,7 +265,7 @@
       <workItem from="1705396070653" duration="132000" />
       <workItem from="1705454985253" duration="1345000" />
       <workItem from="1705456638965" duration="3262000" />
-      <workItem from="1705459908039" duration="13993000" />
+      <workItem from="1705459908039" duration="14831000" />
     </task>
     <servers />
   </component>
