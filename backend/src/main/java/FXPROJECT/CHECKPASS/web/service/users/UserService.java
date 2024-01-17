@@ -179,9 +179,7 @@ public class UserService {
     }
 
     private Optional<Departments> getDepartments(String departmentName) {
-        DepartmentsEnum departmentsEnum = DepartmentsEnum.valueOf(departmentName);
-        log.info("get Departments : {}" , departmentsEnum.getDepartment());
-        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentsEnum.getDepartment());
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentName);
         return byDepartment;
     }
 

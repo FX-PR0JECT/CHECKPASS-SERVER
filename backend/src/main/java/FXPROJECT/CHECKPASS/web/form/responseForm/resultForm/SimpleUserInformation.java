@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.form.responseForm.resultForm;
 
+import FXPROJECT.CHECKPASS.domain.enums.Job;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,5 +17,7 @@ public class SimpleUserInformation {
     private String userName;
 
     private String userDepartment;
+
+    //private Job userJob;
 
 }
