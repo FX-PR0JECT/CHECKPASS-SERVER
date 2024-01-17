@@ -1,9 +1,13 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Slf4j
 @SpringBootTest
@@ -21,6 +26,10 @@ class UserServiceTest {
     private UserService userService;
     @Autowired
     private JpaAccountRepository accountRepository;
+    @Autowired
+    private JpaDepartmentRepository jpaDepartmentRepository;
+    @Autowired
+    private JpaCollegesRepository jpaCollegesRepository;
 
     @Test
     void updateUsers() {
@@ -30,29 +39,43 @@ class UserServiceTest {
 
         accountRepository.save(account);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         userService.join(professor);
 
+        Optional<Departments> updateDeparment = jpaDepartmentRepository.findByDepartment("항공기계설계학과");
+
+        if (updateDeparment.isEmpty()){
+            log.info("error department");
+        }
+
         ProfessorUpdateForm updateParam = new ProfessorUpdateForm().builder()
                 .updatePassword("test")
-                .updateCollege("software")
                 .updateName("shinywoon")
-                .updateDepartment("software")
+                .updateDepartment(updateDeparment.get().getDepartment())
                 .updateHireDate(String.valueOf(LocalDate.now()))
                 .build();
 
         Users byUserId = userService.getUser(professor.getUserId());
 
-        userService.editProfessorInformation(byUserId.getUserId(),updateParam);
+        Users users = userService.editProfessorInformation(byUserId.getUserId(), updateParam);
+
+        log.info("users : {} , {}", users.getDepartments().getDepartment() , users.getDepartments().getColleges());
+
+        userService.secessionUser(professor.getUserId());
 
     }
 
@@ -64,17 +87,24 @@ class UserServiceTest {
 
         accountRepository.save(account);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         userService.join(professor);
+
+        userService.secessionUser(professor.getUserId());
 
     }
 

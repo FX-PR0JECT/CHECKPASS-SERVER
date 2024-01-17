@@ -84,7 +84,7 @@ public class UserController {
         SimpleUserInformation sui = new SimpleUserInformation().builder()
                 .userId(user.getUserId())
                 .userName(user.getUserName())
-                .userDepartment(user.getUserDepartment())
+                .userDepartment(user.getDepartments().getDepartment())
                 .build();
 
         return ResultFormUtils.getSuccessResultForm(sui);

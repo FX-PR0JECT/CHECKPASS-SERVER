@@ -1,21 +1,30 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
+import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @SpringBootTest
@@ -33,6 +42,10 @@ public class LectureServiceTest {
     @Autowired
     private JpaAccountRepository jpaAccountRepository;
 
+    @Autowired
+    private JpaDepartmentRepository jpaDepartmentRepository;
+    @Autowired
+    private JpaCollegesRepository jpaCollegesRepository;
 
     @Test
     public void test(){
@@ -41,13 +54,18 @@ public class LectureServiceTest {
         account.setPassword("1234");
         jpaAccountRepository.save(account);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(account)
                 .userJob(Job.PROFESSOR)
                 .userName("test")
                 .userId(2126000L)
-                .userDepartment("software")
-                .userCollege("tech")
+                .departments(byDepartment.get())
                 .HIREDATE("1993-12-12")
                 .build();
 
@@ -109,4 +127,5 @@ public class LectureServiceTest {
 
 
     }
+
 }

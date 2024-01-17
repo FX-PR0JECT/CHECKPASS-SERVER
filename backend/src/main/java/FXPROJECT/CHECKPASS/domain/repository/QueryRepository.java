@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.*;
-import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.*;
+import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.professor;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStaff.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStudents.*;
 
@@ -122,7 +122,7 @@ public class QueryRepository {
 
     public List<Lecture> getLectureList(LectureSearchCondition con){
 
-        Integer grade = con.getGrade();
+        String grade = con.getGrade();
 
         return query.select(lecture)
                 .from(lecture)
@@ -131,8 +131,8 @@ public class QueryRepository {
 
     }
 
-    private BooleanExpression eqGrade(Integer grade) {
-        if (grade != null && grade > 0){
+    private BooleanExpression eqGrade(String grade) {
+        if (grade != null){
             return lecture.lectureGrade.eq(grade);
         }
 
@@ -142,42 +142,42 @@ public class QueryRepository {
 
     private BooleanExpression equalProfessorCollege(String userCollege){
         if (StringUtils.hasText(userCollege)){
-            return professor.userCollege.eq(userCollege);
+            return professor.departments.colleges.college.eq(userCollege);
         }
         return null;
     }
 
     private BooleanExpression equalProfessorDepartment(String department){
         if (StringUtils.hasText(department)){
-            return professor.userDepartment.eq(department);
+            return professor.departments.department.eq(department);
         }
         return null;
     }
 
     private BooleanExpression equalStaffCollege(String userCollege){
         if (StringUtils.hasText(userCollege)){
-            return staff.userCollege.eq(userCollege);
+            return staff.departments.colleges.college.eq(userCollege);
         }
         return null;
     }
 
     private BooleanExpression equalStaffDepartment(String department){
         if (StringUtils.hasText(department)){
-            return staff.userDepartment.eq(department);
+            return staff.departments.department.eq(department);
         }
         return null;
     }
 
     private BooleanExpression equalStudentCollege(String userCollege){
         if (StringUtils.hasText(userCollege)){
-            return students.userCollege.eq(userCollege);
+            return students.departments.colleges.college.eq(userCollege);
         }
         return null;
     }
 
     private BooleanExpression equalStudentDepartment(String department){
         if (StringUtils.hasText(department)){
-            return students.userDepartment.eq(department);
+            return students.departments.department.eq(department);
         }
         return null;
     }

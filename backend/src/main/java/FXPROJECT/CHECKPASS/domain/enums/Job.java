@@ -13,4 +13,5 @@ public enum Job {
     public String getJob() {
         return job;
     }
+
 }
