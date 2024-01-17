@@ -18,6 +18,6 @@ public class SimpleUserInformation {
 
     private String userDepartment;
 
-    //private Job userJob;
+    private Job userJob;
 
 }
