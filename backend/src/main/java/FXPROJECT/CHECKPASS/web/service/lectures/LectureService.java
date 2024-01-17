@@ -1,12 +1,16 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +32,7 @@ public class LectureService {
      * @return true: 등록 성공, false: 등록 실패
      */
     @Transactional
-    public Boolean registerLecture(Lecture lecture){
+    public boolean registerLecture(Lecture lecture){
 
         if(existsLecture(lecture.getLectureCode())){
             return false;
@@ -37,6 +41,31 @@ public class LectureService {
         jpaLectureRepository.save(lecture);
 
         return true;
+    }
+
+
+    /**
+     * 강의 수정
+     * @param lectureCode 강의 코드
+     * @param param 강의 정보 수정 Parameter
+     * @return 수정된 강의 정보
+     */
+    @Transactional
+    public Lecture editLectureInformation(Long lectureCode, LectureUpdateForm param){
+        if (!existsLecture(lectureCode)){
+            throw new NonExistingLecture();
+        }
+
+        Lecture target = jpaLectureRepository.findByLectureCode(lectureCode);
+
+        Lecture revisedLecture = updateLecture(target, param);
+
+        if (Objects.isNull(revisedLecture.getProfessor())){
+            throw new UnauthenticatedUser();
+        }
+
+        return jpaLectureRepository.save(revisedLecture);
+
     }
 
 
@@ -81,4 +110,18 @@ public class LectureService {
         return lecture;
     }
 
+    public Lecture updateLecture(Lecture target, LectureUpdateForm form) {
+
+        target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
+        target.setLectureName(form.getLectureName());
+        target.setLectureTimes(form.getLectureTimes());
+        target.setLectureRoom(form.getLectureRoom());
+        target.setLectureGrade(form.getLectureGrade());
+        target.setLectureKind(form.getLectureKind());
+        target.setLectureGrades(form.getLectureGrades());
+        target.setLectureFull(form.getLectureFull());
+        target.setDayOrNight(form.getDayOrNight());
+
+        return target;
+    }
 }

@@ -4,6 +4,7 @@ import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,14 @@ public class LectureController {
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_REGISTER.getDescription());
 
+    }
+
+    @PatchMapping("/{lectureCode}")
+    public ResultForm editLectureInformation(@PathVariable("lectureCode") Long lectureCode, @RequestBody LectureUpdateForm form) {
+
+        Lecture lecture = lectureService.editLectureInformation(lectureCode, form);
+
+        return ResultFormUtils.getSuccessResultForm(COMPLETE_UPDATE.getDescription());
     }
 
     @DeleteMapping("/{lectureCode}")
