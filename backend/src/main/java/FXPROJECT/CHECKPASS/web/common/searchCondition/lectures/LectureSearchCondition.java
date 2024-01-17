@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class LectureSearchCondition {
 
-    private Integer grade;
+    private String grade;
     /*private String kind;
     private Integer grades;
     private String dayOrNight;

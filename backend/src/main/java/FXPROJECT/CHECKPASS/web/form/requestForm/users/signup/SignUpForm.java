@@ -17,8 +17,6 @@ public class SignUpForm {
 
     protected Job signUpJob;
 
-    protected String signUpCollege;
-
     protected String signUpDepartment;
 
 }

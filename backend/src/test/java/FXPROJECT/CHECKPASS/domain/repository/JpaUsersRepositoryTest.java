@@ -1,18 +1,30 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Account;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
+import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -34,6 +46,11 @@ class JpaUsersRepositoryTest {
     @Autowired
     private JpaAccountRepository accountRepository;
 
+    @Autowired
+    private JpaDepartmentRepository jpaDepartmentRepository;
+    @Autowired
+    private JpaCollegesRepository jpaCollegesRepository;
+
     @Test
     @DisplayName("jpaTest")
     @Rollback(false)
@@ -44,13 +61,18 @@ class JpaUsersRepositoryTest {
 
         accountRepository.save(account);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(account)
                 .userId(2126037L)
-                .userCollege("soft")
                 .userName("shin")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
@@ -82,32 +104,60 @@ class JpaUsersRepositoryTest {
         //update
         pTarget.setHIREDATE("1994-12-23");
 
+        Professor editUser = (Professor) usersRepository.findById(professor.getUserId()).get();
+        log.info("target Id : {} , target HireDate : {} " , editUser.getUserId(),editUser.getHIREDATE());
+
         //findAll
         Account accountA = new Account();
         accountA.setPassword("test");
 
         accountRepository.save(accountA);
 
+        Optional<Departments> byDepartmentA = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.CommunicationDesign.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professorA = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
         Professor savedProfessorA = usersRepository.save(professorA);
+
+
 
         List<Users> result = usersRepository.findAll();
 
         assertThat(result.size()).isEqualTo(2);
 
 
+        Account accountB = new Account();
+        accountB.setPassword("test");
+
+        accountRepository.save(accountB);
+
+        Professor professorB = new Professor().builder()
+                .account(accountB)
+                .userId(2126001L)
+                .userName("Kim")
+                .userJob(Job.PROFESSOR)
+                .departments(byDepartmentA.get())
+                .HIREDATE(String.valueOf(LocalDate.now()))
+                .build();
+
+        Professor savedProfessorB = usersRepository.save(professorB);
+
         //delete
         usersRepository.deleteById(professorA.getUserId());
         usersRepository.deleteById(professor.getUserId());
+        usersRepository.deleteById(professorB.getUserId());
+
 
         result = usersRepository.findAll();
         assertThat(result.size()).isEqualTo(0);
@@ -122,13 +172,18 @@ class JpaUsersRepositoryTest {
 
         accountRepository.save(accountA);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
@@ -150,13 +205,18 @@ class JpaUsersRepositoryTest {
 
         accountRepository.save(accountA);
 
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.ComputerSoftware.getDepartment());
+
+        if (byDepartment.isEmpty()){
+            log.info("error department");
+        }
+
         Professor professor = new Professor().builder()
                 .account(accountA)
                 .userId(2126000L)
-                .userCollege("structure")
                 .userName("Lee")
                 .userJob(Job.PROFESSOR)
-                .userDepartment("software")
+                .departments(byDepartment.get())
                 .HIREDATE(String.valueOf(LocalDate.now()))
                 .build();
 
@@ -167,6 +227,43 @@ class JpaUsersRepositoryTest {
         log.info("exists : {}", exists);
 
         assertThat(exists).isTrue();
+
+    }
+
+    @TestConfiguration
+    static class UsersTestConfig{
+
+        @Autowired
+        private JpaDepartmentRepository jpaDepartmentRepository;
+        @Autowired
+        private JpaCollegesRepository jpaCollegesRepository;
+
+        @PostConstruct
+        private void initData(){
+
+            CollegesEnum[] collegesEnums = CollegesEnum.values();
+
+            for (CollegesEnum college : collegesEnums) {
+                log.info("college : {}", college.getCollege());
+                Colleges colleges = new Colleges();
+                colleges.setCollege(college.getCollege());
+                jpaCollegesRepository.save(colleges);
+            }
+
+            DepartmentsEnum[] departmentsEnums = DepartmentsEnum.values();
+
+            for (DepartmentsEnum department : departmentsEnums) {
+                log.info("department : {}", department.getDepartment());
+                Colleges colleges = new Colleges();
+                Optional<Colleges> findCollege = jpaCollegesRepository.findById(department.getCollegeCode());
+                log.info("findCollege : {}", findCollege.get().getCollege());
+                Departments departments = new Departments();
+                departments.setDepartment(department.getDepartment());
+                departments.setColleges(findCollege.get());
+                jpaDepartmentRepository.save(departments);
+            }
+
+        }
 
     }
 

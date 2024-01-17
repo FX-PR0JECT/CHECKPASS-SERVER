@@ -29,15 +29,12 @@ public class QStudents extends EntityPathBase<Students> {
 
     public final StringPath dayOrNight = createString("dayOrNight");
 
+    // inherited
+    public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
+
     public final StringPath studentGrade = createString("studentGrade");
 
     public final StringPath studentSemester = createString("studentSemester");
-
-    //inherited
-    public final StringPath userCollege;
-
-    //inherited
-    public final StringPath userDepartment;
 
     //inherited
     public final NumberPath<Long> userId;
@@ -68,8 +65,7 @@ public class QStudents extends EntityPathBase<Students> {
         super(type, metadata, inits);
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
-        this.userCollege = _super.userCollege;
-        this.userDepartment = _super.userDepartment;
+        this.departments = _super.departments;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

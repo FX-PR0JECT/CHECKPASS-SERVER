@@ -1,10 +1,12 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
-import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
-import FXPROJECT.CHECKPASS.domain.common.constant.State;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
 import FXPROJECT.CHECKPASS.domain.common.exception.InvalidRoleRequest;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
@@ -18,7 +20,6 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,8 @@ public class UserService {
     private final QueryRepository jpaQueryUsersRepository;
     private final JpaUsersRepository jpaUsersRepository;
     private final JpaAccountRepository jpaAccountRepository;
+    private final JpaCollegesRepository jpaCollegesRepository;
+    private final JpaDepartmentRepository jpaDepartmentRepository;
 
     /**
      * 회원 가입
@@ -60,10 +63,6 @@ public class UserService {
         Optional<Users> target = jpaUsersRepository.findById(userId);
         return target.orElse(null);
     }
-
-//    public List<Users> getUserList(){
-//        return jpaQueryUsersRepository.findAll();
-//    }
 
     /**
      * 사용자 아이디를 이용한 사용자 정보 삭제
@@ -150,11 +149,19 @@ public class UserService {
      */
     private Users updateAllProfessorAndStaff(Users target, ProfessorUpdateForm param) {
 
+        log.info("param data : {} " , param.getUpdateDepartment());
 
+        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(param.getUpdateDepartment());
+
+        log.info("update Professor : {}" , departments.get().getDepartment());
+
+        if (departments.isEmpty()){
+            log.info("departments Error");
+        }
+
+        target.setDepartments(departments.get());
         target.setUserName(param.getUpdateName());
-        target.setUserDepartment(param.getUpdateDepartment());
         target.getAccount().setPassword(param.getUpdatePassword());
-        target.setUserCollege(param.getUpdateCollege());
 
         if (target instanceof Professor){
             Professor downcastProfessor = (Professor) target;
@@ -171,12 +178,25 @@ public class UserService {
         }
     }
 
+    private Optional<Departments> getDepartments(String departmentName) {
+        DepartmentsEnum departmentsEnum = DepartmentsEnum.valueOf(departmentName);
+        log.info("get Departments : {}" , departmentsEnum.getDepartment());
+        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentsEnum.getDepartment());
+        return byDepartment;
+    }
+
     private Users updateAllStudent(Users target, StudentUpdateForm param) {
 
+        Optional<Departments> departments = getDepartments(param.getUpdateDepartment());
+
+        if (departments.isEmpty()){
+            log.info("departments Error");
+        }
+
+        target.setDepartments(departments.get());
         target.setUserName(param.getUpdateName());
-        target.setUserDepartment(param.getUpdateDepartment());
         target.getAccount().setPassword(param.getUpdatePassword());
-        target.setUserCollege(param.getUpdateCollege());
+
 
         Students downcastStudent = (Students) target;
         StudentUpdateForm updateParam = (StudentUpdateForm) param;
@@ -194,22 +214,34 @@ public class UserService {
         if (form instanceof ProfessorSignUpForm) {
             ProfessorSignUpForm professorSignUpForm = (ProfessorSignUpForm) form;
             if (form.getSignUpJob() == Job.PROFESSOR){
+
+                Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+
+                if (departments.isEmpty()){
+                    log.info("departments Error");
+                }
+
                 Professor professor = new Professor().builder()
                         .userId(professorSignUpForm.getSignUpId())
                         .userJob(professorSignUpForm.getSignUpJob())
-                        .userCollege(professorSignUpForm.getSignUpCollege())
-                        .userDepartment(professorSignUpForm.getSignUpDepartment())
+                        .departments(departments.get())
                         .userName(professorSignUpForm.getSignUpName())
                         .HIREDATE(professorSignUpForm.getSignUpHireDate())
                         .account(account)
                         .build();
                 return professor;
             }else {
+
+                Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+
+                if (departments.isEmpty()){
+                    log.info("departments Error");
+                }
+
                 Staff staff = new Staff().builder()
                         .userId(professorSignUpForm.getSignUpId())
                         .userJob(professorSignUpForm.getSignUpJob())
-                        .userCollege(professorSignUpForm.getSignUpCollege())
-                        .userDepartment(professorSignUpForm.getSignUpDepartment())
+                        .departments(departments.get())
                         .userName(professorSignUpForm.getSignUpName())
                         .HIREDATE(professorSignUpForm.getSignUpHireDate())
                         .account(account)
@@ -224,13 +256,18 @@ public class UserService {
 
         Account account = setAccount(form);
 
+        Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+
+        if (departments.isEmpty()){
+            log.info("departments Error");
+        }
+
         StudentSignUpForm stuForm = (StudentSignUpForm) form;
         Students student = new Students().builder()
                 .userId(stuForm.getSignUpId())
                 .userName(stuForm.getSignUpName())
                 .userJob(stuForm.getSignUpJob())
-                .userDepartment(stuForm.getSignUpDepartment())
-                .userCollege(stuForm.getSignUpCollege())
+                .departments(departments.get())
                 .account(account)
                 .dayOrNight(stuForm.getSignUpDayOrNight())
                 .studentGrade(stuForm.getSignUpGrade())

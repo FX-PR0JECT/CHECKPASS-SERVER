@@ -24,9 +24,7 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final QAccount account;
 
-    public final StringPath userCollege = createString("userCollege");
-
-    public final StringPath userDepartment = createString("userDepartment");
+    public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
@@ -53,6 +51,7 @@ public class QUsers extends EntityPathBase<Users> {
     public QUsers(Class<? extends Users> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.account = inits.isInitialized("account") ? new QAccount(forProperty("account")) : null;
+        this.departments = inits.isInitialized("departments") ? new FXPROJECT.CHECKPASS.domain.entity.college.QDepartments(forProperty("departments"), inits.get("departments")) : null;
     }
 
 }

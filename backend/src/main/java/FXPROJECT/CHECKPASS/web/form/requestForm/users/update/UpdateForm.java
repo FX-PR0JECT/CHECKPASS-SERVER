@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.users.update;
 
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -15,8 +15,6 @@ public class UpdateForm {
     private String updatePassword;
 
     private String updateName;
-
-    private String updateCollege;
 
     private String updateDepartment;
 

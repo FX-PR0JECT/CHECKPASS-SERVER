@@ -27,13 +27,10 @@ public class QProfessor extends EntityPathBase<Professor> {
     // inherited
     public final QAccount account;
 
+    // inherited
+    public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
+
     public final StringPath HIREDATE = createString("HIREDATE");
-
-    //inherited
-    public final StringPath userCollege;
-
-    //inherited
-    public final StringPath userDepartment;
 
     //inherited
     public final NumberPath<Long> userId;
@@ -64,8 +61,7 @@ public class QProfessor extends EntityPathBase<Professor> {
         super(type, metadata, inits);
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
-        this.userCollege = _super.userCollege;
-        this.userDepartment = _super.userDepartment;
+        this.departments = _super.departments;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

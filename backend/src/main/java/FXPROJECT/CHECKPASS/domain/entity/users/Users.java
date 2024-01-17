@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.entity.users;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,11 +27,9 @@ public abstract class Users {
     @OneToOne
     private Account account;
 
-    @Column(nullable = false)
-    private String userCollege;
-
-    @Column(nullable = false)
-    private String userDepartment;
+    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private Departments departments;
 
     @Column(nullable = false , length = 30)
     private String userName;
