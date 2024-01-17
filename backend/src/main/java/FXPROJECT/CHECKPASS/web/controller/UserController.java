@@ -85,7 +85,7 @@ public class UserController {
                 .userId(user.getUserId())
                 .userName(user.getUserName())
                 .userDepartment(user.getDepartments().getDepartment())
-                //.userJob(user.getUserJob())
+                .userJob(user.getUserJob())
                 .build();
 
         return ResultFormUtils.getSuccessResultForm(sui);
