@@ -6,6 +6,7 @@ import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -237,6 +238,26 @@ public class ExceptionAdvice {
                 ErrorCode.NO_PERMISSION.getCode(),
                 ErrorCode.NO_PERMISSION.getTitle(),
                 ErrorCode.NO_PERMISSION.getDescription(),
+                e);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ExistingLecture.class)
+    public ResultForm existingLecture(Exception e){
+        return ResultFormUtils.getFailResultForm(
+                ErrorCode.EXISTING_LECTURE.getCode(),
+                ErrorCode.EXISTING_LECTURE.getTitle(),
+                ErrorCode.EXISTING_LECTURE.getDescription(),
+                e);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResultForm notReadable(Exception e){
+        return ResultFormUtils.getFailResultForm(
+                ErrorCode.MISSING_REQUIRED_ARGUMENT.getCode(),
+                ErrorCode.MISSING_REQUIRED_ARGUMENT.getTitle(),
+                e.getMessage(),
                 e);
     }
 
