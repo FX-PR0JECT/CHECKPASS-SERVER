@@ -34,10 +34,10 @@ public class ViewElementController {
 
         CollegesEnum[] values = CollegesEnum.values();
 
-        List<String> collegeNames = new ArrayList<>();
+        Map<String,String> collegeNames = new HashMap<>();
 
         for (CollegesEnum collegesEnum :values) {
-            collegeNames.add(collegesEnum.getCollege());
+            collegeNames.put(collegesEnum.getCollege(),collegesEnum.name());
         }
 
         return ResultFormUtils.getSuccessResultForm(collegeNames);
@@ -52,15 +52,18 @@ public class ViewElementController {
 
             DepartmentsEnum[] departmentsEnums = DepartmentsEnum.values();
 
-            List<String> targetDepartments = new ArrayList<>();
+            List<List<String>> targetDepartments = new ArrayList<>();
 
             for (DepartmentsEnum departmentsEnum : departmentsEnums) {
                 if(departmentsEnum.getCollegeCode() == collegeByCollegeName){
-                    targetDepartments.add(departmentsEnum.getDepartment());
+                    List<String> oneDepartment = new ArrayList<>();
+                    oneDepartment.add(departmentsEnum.getDepartment());
+                    oneDepartment.add(departmentsEnum.name());
+                    targetDepartments.add(oneDepartment);
                 }
             }
 
-            Map<String,List<String>> departments = new HashMap<>();
+            Map<String,List<List<String>>> departments = new HashMap<>();
             departments.put(collegeName,targetDepartments);
 
             return ResultFormUtils.getSuccessResultForm(departments);
