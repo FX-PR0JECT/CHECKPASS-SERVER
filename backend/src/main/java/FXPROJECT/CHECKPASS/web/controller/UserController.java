@@ -5,6 +5,8 @@ import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
 import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginJob;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
@@ -77,7 +79,7 @@ public class UserController {
      */
     @GetMapping("/simple/{userId}")
     public ResultForm showUserSimpleInformation(@PathVariable("userId") Long userId){
-
+        
         Users user = getUser(userId);
 
         if (user == null){
