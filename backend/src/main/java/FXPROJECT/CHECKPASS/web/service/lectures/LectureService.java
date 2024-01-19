@@ -1,21 +1,12 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
-import FXPROJECT.CHECKPASS.domain.entity.users.Users;
-import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
-import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
-import java.util.Optional;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +19,6 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 @AllArgsConstructor
 public class LectureService {
 
-    private final JpaDepartmentRepository jpaDepartmentRepository;
     private final JpaLectureRepository jpaLectureRepository;
     private final UserService userService;
 
@@ -38,7 +28,7 @@ public class LectureService {
      * @return true: 등록 성공, false: 등록 실패
      */
     @Transactional
-    public boolean registerLecture(Lecture lecture){
+    public Boolean registerLecture(Lecture lecture){
 
         if(existsLecture(lecture.getLectureCode())){
             return false;
@@ -47,21 +37,6 @@ public class LectureService {
         jpaLectureRepository.save(lecture);
 
         return true;
-    }
-
-
-    /**
-     * 강의 수정
-     * @param target 수정할 강의 객체
-     * @param param 강의 정보 수정 Parameter
-     */
-    @Transactional
-    public void editLectureInformation(Lecture target, LectureUpdateForm param){
-
-        Lecture revisedLecture = updateLecture(target, param);
-
-        jpaLectureRepository.save(revisedLecture);
-
     }
 
 
@@ -91,12 +66,6 @@ public class LectureService {
     }
 
     public Lecture transferToLecture(LectureRegisterForm form) {
-        Optional<Departments> departments = getDepartments(form.getDepartments());
-
-        if (departments.isEmpty()){
-            log.info("departments Error");
-        }
-
         Lecture lecture = new Lecture().builder()
                 .lectureCode(form.getLectureCode())
                 .professor((Professor)userService.getUser(form.getProfessorId()))
@@ -108,48 +77,8 @@ public class LectureService {
                 .lectureKind(form.getLectureKind())
                 .lectureFull(form.getLectureFull())
                 .dayOrNight(form.getDayOrNight())
-                .departments(departments.get())
                 .build();
         return lecture;
     }
 
-    public Lecture updateLecture(Lecture target, LectureUpdateForm form) {
-
-        if (!userService.existsUser(form.getProfessorId())){
-            throw new UnauthenticatedUser();
-        }
-
-        target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
-        target.setLectureName(form.getLectureName());
-        target.setLectureTimes(form.getLectureTimes());
-        target.setLectureRoom(form.getLectureRoom());
-        target.setLectureGrade(form.getLectureGrade());
-        target.setLectureKind(form.getLectureKind());
-        target.setLectureGrades(form.getLectureGrades());
-        target.setLectureFull(form.getLectureFull());
-        target.setDayOrNight(form.getDayOrNight());
-
-        return target;
-    }
-
-    private Optional<Departments> getDepartments(DepartmentsEnum departmentName) {
-        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentName.getDepartment());
-        return byDepartment;
-    }
-
-    public boolean checkPermission(Users loggedInUser, Job job) {
-        return loggedInUser.getUserJob() == job;
-    }
-
-    public boolean checkPermission(Departments userDepartment, Departments lectureDepartment) {
-        return userDepartment.getDepartment().equals(lectureDepartment.getDepartment());
-    }
-
-    public boolean checkPermission(Users loggedInUser, Professor professor) {
-        return loggedInUser.getUserId().equals(professor.getUserId());
-    }
-
-    public Lecture getLecture(Long lectureCode){
-        return jpaLectureRepository.findByLectureCode(lectureCode);
-    }
 }
