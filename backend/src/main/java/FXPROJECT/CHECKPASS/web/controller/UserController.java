@@ -3,6 +3,8 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
+import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
@@ -12,6 +14,7 @@ import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleUserInformation;
@@ -117,6 +120,8 @@ public class UserController {
     @PostMapping("/studentSignup")
     public ResultForm studentSignup(@RequestBody @Validated StudentSignUpForm form , BindingResult bindingResult){
 
+        filterDepartments(form);
+
         Users users = userService.transferToStudent(form);
 
         userService.join(users);
@@ -129,6 +134,15 @@ public class UserController {
 
     }
 
+    private static void filterDepartments(SignUpForm form) {
+
+        DepartmentsEnum signUpDepartment = form.getSignUpDepartment();
+
+        if(signUpDepartment == null){
+            form.setSignUpDepartment(DepartmentsEnum.valueOf(String.valueOf(form.getSignUpCollege())));
+        }
+    }
+
     /**
      * 교수 등록하기
      * @param form 교수 전용 등록 Form
@@ -136,6 +150,8 @@ public class UserController {
      */
     @PostMapping("/professorSignup")
     public ResultForm professorSignup(@RequestBody ProfessorSignUpForm form){
+
+        filterDepartments(form);
 
         Users users = userService.transferToProfessorOrStaff(form);
 

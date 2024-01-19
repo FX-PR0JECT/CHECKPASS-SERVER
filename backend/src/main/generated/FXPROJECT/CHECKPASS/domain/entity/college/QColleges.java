@@ -10,7 +10,7 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QColleges is a Querydsl query type for CollegesEnum
+ * QColleges is a Querydsl query type for Colleges
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QColleges extends EntityPathBase<Colleges> {

@@ -1,5 +1,8 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.users.signup;
 
+import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
+import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -17,6 +20,8 @@ public class SignUpForm {
 
     protected Job signUpJob;
 
-    protected String signUpDepartment;
+    protected CollegesEnum signUpCollege;
+
+    protected DepartmentsEnum signUpDepartment;
 
 }
