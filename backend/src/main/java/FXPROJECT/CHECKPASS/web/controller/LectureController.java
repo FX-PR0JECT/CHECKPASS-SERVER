@@ -3,7 +3,6 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;

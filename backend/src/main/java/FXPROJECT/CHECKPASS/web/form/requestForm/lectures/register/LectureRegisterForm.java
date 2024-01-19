@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register;
 
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,4 +30,6 @@ public class LectureRegisterForm {
     private Integer lectureCount;
 
     private String dayOrNight;
+
+    private DepartmentsEnum departments;
 }

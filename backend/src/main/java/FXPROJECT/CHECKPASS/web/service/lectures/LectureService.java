@@ -92,7 +92,6 @@ public class LectureService {
 
     public Lecture transferToLecture(LectureRegisterForm form) {
         Optional<Departments> departments = getDepartments(form.getDepartments());
-
         if (departments.isEmpty()){
             log.info("departments Error");
         }
