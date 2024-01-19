@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QDepartments is a Querydsl query type for DepartmentsEnum
+ * QDepartments is a Querydsl query type for Departments
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QDepartments extends EntityPathBase<Departments> {

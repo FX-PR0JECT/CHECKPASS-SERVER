@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.domain.entity.lectures;
 
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import jakarta.persistence.*;
@@ -54,9 +53,5 @@ public class Lecture {
 
     @Column(nullable = false, length = 5)
     private String dayOrNight;
-
-    @ManyToOne
-    @Enumerated(EnumType.STRING)
-    private Departments departments;
 
 }

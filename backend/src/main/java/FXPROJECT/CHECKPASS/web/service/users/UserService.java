@@ -213,7 +213,7 @@ public class UserService {
             ProfessorSignUpForm professorSignUpForm = (ProfessorSignUpForm) form;
             if (form.getSignUpJob() == Job.PROFESSOR){
 
-                Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+                Optional<Departments> departments = getDepartments(form.getSignUpDepartment().getDepartment());
 
                 if (departments.isEmpty()){
                     log.info("departments Error");
@@ -230,7 +230,7 @@ public class UserService {
                 return professor;
             }else {
 
-                Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+                Optional<Departments> departments = getDepartments(form.getSignUpDepartment().getDepartment());
 
                 if (departments.isEmpty()){
                     log.info("departments Error");
@@ -254,7 +254,7 @@ public class UserService {
 
         Account account = setAccount(form);
 
-        Optional<Departments> departments = getDepartments(form.getSignUpDepartment());
+        Optional<Departments> departments = getDepartments(form.getSignUpDepartment().getDepartment());
 
         if (departments.isEmpty()){
             log.info("departments Error");

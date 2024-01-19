@@ -252,16 +252,6 @@ public class ExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NonExistingLecture.class)
-    public ResultForm nonExistingLecture(Exception e){
-        return ResultFormUtils.getFailResultForm(
-                ErrorCode.NON_EXISTING_LECTURE.getCode(),
-                ErrorCode.NON_EXISTING_LECTURE.getTitle(),
-                ErrorCode.NON_EXISTING_LECTURE.getDescription(),
-                e);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResultForm notReadable(Exception e){
         return ResultFormUtils.getFailResultForm(

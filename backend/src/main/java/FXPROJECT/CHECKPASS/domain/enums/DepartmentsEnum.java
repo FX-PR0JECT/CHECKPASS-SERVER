@@ -57,7 +57,10 @@ public enum DepartmentsEnum {
     SportsWelfare("스포츠복지학과",6l),
     WelfareManagement("복지경영학과",6l),
     SmartRailroadTransportationEngineering("스마트철도교통공학과",6l),
-    SecondaryBatteryEngineering("이차전지공학과",6l);
+    SecondaryBatteryEngineering("이차전지공학과",6l),
+    FacultyOfLiberalArts("교양학부",7l),
+    Free("자유전공학부",8l),
+    CreativeConvergence("창의융합학부",9l);
 
     private String department;
     private Long collegeCode;
