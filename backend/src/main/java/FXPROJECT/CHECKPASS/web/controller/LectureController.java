@@ -1,6 +1,8 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
+import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
