@@ -1,15 +1,12 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
-import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
-import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
-import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.web.common.annotation.LoginJob;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginDepartment;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
-import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
@@ -30,10 +27,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
-import static FXPROJECT.CHECKPASS.domain.common.constant.State.SUCCESS;
 
 @Slf4j
 @RestController

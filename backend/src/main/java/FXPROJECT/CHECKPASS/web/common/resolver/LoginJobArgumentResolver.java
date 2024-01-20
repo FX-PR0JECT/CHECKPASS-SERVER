@@ -1,9 +1,11 @@
 package FXPROJECT.CHECKPASS.web.common.resolver;
 
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
+import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.web.common.annotation.LoginJob;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginDepartment;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -20,19 +22,21 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
 
-        log.info("LoginJob Resolver support Parameter 실행");
+        log.info("LoginDepartment Resolver support Parameter 실행");
 
         boolean hasLoginAnnotation =
-                parameter.hasParameterAnnotation(LoginJob.class);
+                parameter.hasParameterAnnotation(LoginDepartment.class);
         boolean hasMemberType =
-                Job.class.isAssignableFrom(parameter.getParameterType());
+                Departments.class.isAssignableFrom(parameter.getParameterType());
         return hasLoginAnnotation && hasMemberType;
 
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+
         log.info("resolveArgument 실행");
+
         HttpServletRequest request = (HttpServletRequest)
                 webRequest.getNativeRequest();
         HttpSession session = request.getSession(false);
@@ -44,8 +48,12 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
 
         Job userJob = attribute.getUserJob();
 
-        log.info("userJob : {}", userJob);
+        if(userJob == Job.STUDENTS){
+            throw new NoPermission();
+        }
 
-        return userJob;
+        Departments departments = attribute.getDepartments();
+
+        return departments;
     }
 }

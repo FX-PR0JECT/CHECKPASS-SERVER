@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/annotation/LoginJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/resolver/LoginJobArgumentResolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/annotation/LoginJob.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginJobArgumentResolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginJobArgumentResolver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/annotation/LoginJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/annotation/LoginDepartment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/resolver/LoginJobArgumentResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/resolver/LoginJobArgumentResolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -267,7 +268,8 @@
       <workItem from="1705454985253" duration="1345000" />
       <workItem from="1705456638965" duration="3262000" />
       <workItem from="1705459908039" duration="18219000" />
-      <workItem from="1705627817089" duration="4679000" />
+      <workItem from="1705627817089" duration="4804000" />
+      <workItem from="1705722985502" duration="1336000" />
     </task>
     <servers />
   </component>
