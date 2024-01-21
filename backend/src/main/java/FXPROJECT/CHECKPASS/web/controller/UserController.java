@@ -2,9 +2,7 @@ package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
-import FXPROJECT.CHECKPASS.web.common.annotation.LoginDepartment;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;

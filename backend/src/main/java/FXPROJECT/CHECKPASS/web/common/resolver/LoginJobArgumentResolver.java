@@ -5,7 +5,7 @@ import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.web.common.annotation.LoginDepartment;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
         log.info("LoginDepartment Resolver support Parameter 실행");
 
         boolean hasLoginAnnotation =
-                parameter.hasParameterAnnotation(LoginDepartment.class);
+                parameter.hasParameterAnnotation(LoginUser.class);
         boolean hasMemberType =
                 Departments.class.isAssignableFrom(parameter.getParameterType());
         return hasLoginAnnotation && hasMemberType;
@@ -44,16 +44,14 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
             return null;
         }
 
-        Users attribute = (Users) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Users loggedInUser = (Users) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        Job userJob = attribute.getUserJob();
+        Job userJob = loggedInUser.getUserJob();
 
         if(userJob == Job.STUDENTS){
             throw new NoPermission();
         }
 
-        Departments departments = attribute.getDepartments();
-
-        return departments;
+        return loggedInUser;
     }
 }
