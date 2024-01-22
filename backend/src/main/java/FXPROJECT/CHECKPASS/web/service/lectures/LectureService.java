@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
+import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
@@ -15,6 +16,8 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegiste
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
+
+import java.util.List;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
@@ -48,6 +51,18 @@ public class LectureService {
         jpaLectureRepository.save(lecture);
 
         return true;
+    }
+
+    /**
+     * 강의 조회
+     */
+    public Lecture showLectureSimpleInformation(Long lectureCode){
+
+        if(!existsLecture(lectureCode)){
+            throw new NonExistingLecture();
+        }
+
+        return jpaLectureRepository.findByLectureCode(lectureCode);
     }
 
     /**
@@ -144,6 +159,11 @@ public class LectureService {
     }
 
     public Lecture getLecture(Long lectureCode){
+
+        if(!existsLecture(lectureCode)){
+            throw new NonExistingLecture();
+        }
+
         return jpaLectureRepository.findByLectureCode(lectureCode);
     }
 }

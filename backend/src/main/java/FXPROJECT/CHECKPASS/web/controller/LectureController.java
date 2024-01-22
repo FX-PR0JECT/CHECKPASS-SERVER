@@ -10,6 +10,7 @@ import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleLectureInformation;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,23 @@ public class LectureController {
         return ResultFormUtils.getSuccessResultForm(COMPLETE_REGISTER.getDescription());
 
     }
+
+    @GetMapping("/simple/{lectureCode}")
+    public ResultForm showLectureSimpleInformation(@PathVariable("lectureCode") Long lectureCode){
+
+        Lecture target = lectureService.getLecture(lectureCode);
+
+        SimpleLectureInformation simpleLecture = new SimpleLectureInformation().builder()
+                .lectureName(target.getLectureName())
+                .professorName(target.getProfessor().getUserName())
+                .lectureTimes(target.getLectureTimes())
+                .lectureRoom(target.getLectureRoom())
+                .build();
+
+        return ResultFormUtils.getSuccessResultForm(simpleLecture);
+
+    }
+
 
     @PatchMapping("/{lectureCode}")
     public ResultForm editLectureInformation(@PathVariable("lectureCode") Long lectureCode, @RequestBody LectureUpdateForm form, @LoginUser Users loggedInUser) {
