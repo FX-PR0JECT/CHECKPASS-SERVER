@@ -47,7 +47,6 @@ public class LectureService {
         return true;
     }
 
-
     /**
      * 강의 수정
      * @param target 수정할 강의 객체
@@ -61,7 +60,6 @@ public class LectureService {
         jpaLectureRepository.save(revisedLecture);
 
     }
-
 
     /**
      * 강의 삭제

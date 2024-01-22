@@ -24,6 +24,8 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public final StringPath dayOrNight = createString("dayOrNight");
 
+    public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
+
     public final NumberPath<Long> lectureCode = createNumber("lectureCode", Long.class);
 
     public final NumberPath<Integer> lectureCount = createNumber("lectureCount", Integer.class);
@@ -62,7 +64,8 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public QLecture(Class<? extends Lecture> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor"), inits.get("professor")) : null;
+        this.departments = inits.isInitialized("departments") ? new FXPROJECT.CHECKPASS.domain.entity.college.QDepartments(forProperty("departments"), inits.get("departments")) : null;
+        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor")) : null;
     }
 
 }
