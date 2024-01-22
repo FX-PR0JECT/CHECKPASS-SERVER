@@ -27,7 +27,7 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
         boolean hasLoginAnnotation =
                 parameter.hasParameterAnnotation(LoginUser.class);
         boolean hasMemberType =
-                Departments.class.isAssignableFrom(parameter.getParameterType());
+                Users.class.isAssignableFrom(parameter.getParameterType());
         return hasLoginAnnotation && hasMemberType;
 
     }
