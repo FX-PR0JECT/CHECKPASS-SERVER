@@ -39,9 +39,8 @@ public class Lecture {
     @Column(nullable = false)
     private String lectureGrade;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LectureKind lectureKind;
+    private String lectureKind;
 
     @Column(nullable = false, length = 3)
     private String lectureGrades;
