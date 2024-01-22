@@ -1,10 +1,13 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
+import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
@@ -113,6 +116,13 @@ public class LectureService {
 
         if (!userService.existsUser(form.getProfessorId())){
             throw new UnauthenticatedUser();
+        }
+
+        Users user = userService.getUser(form.getProfessorId());
+        Job userJob = user.getUserJob();
+
+        if(userJob == Job.STUDENTS){
+            throw new NoPermission();
         }
 
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
