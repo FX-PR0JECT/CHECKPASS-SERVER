@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
+import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
@@ -8,13 +9,18 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
+import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
+import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
+
+import java.util.List;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +38,7 @@ public class LectureService {
     private final JpaDepartmentRepository jpaDepartmentRepository;
     private final JpaLectureRepository jpaLectureRepository;
     private final UserService userService;
+    private final QueryRepository jpaQueryUsersRepository;
 
     /**
      * 강의 등록
@@ -50,6 +57,22 @@ public class LectureService {
         return true;
     }
 
+
+    /**
+     * 강의 조회
+     * @param lectureCode 강의 코드
+     * @return 강의 객체
+     */
+    public Lecture getLecture(Long lectureCode){
+
+        if(!existsLecture(lectureCode)){
+            throw new NonExistingLecture();
+        }
+
+        return jpaLectureRepository.findByLectureCode(lectureCode);
+    }
+
+
     /**
      * 강의 수정
      * @param target 수정할 강의 객체
@@ -63,6 +86,7 @@ public class LectureService {
         jpaLectureRepository.save(revisedLecture);
 
     }
+
 
     /**
      * 강의 삭제
@@ -104,7 +128,7 @@ public class LectureService {
                 .lectureTimes(form.getLectureTimes())
                 .lectureRoom(form.getLectureRoom())
                 .lectureGrades(form.getLectureGrades())
-                .lectureKind(form.getLectureKind())
+                .lectureKind(form.getLectureKind().getKind())
                 .lectureFull(form.getLectureFull())
                 .dayOrNight(form.getDayOrNight())
                 .departments(departments.get())
@@ -130,7 +154,7 @@ public class LectureService {
         target.setLectureTimes(form.getLectureTimes());
         target.setLectureRoom(form.getLectureRoom());
         target.setLectureGrade(form.getLectureGrade());
-        target.setLectureKind(form.getLectureKind());
+        target.setLectureKind(form.getLectureKind().getKind());
         target.setLectureGrades(form.getLectureGrades());
         target.setLectureFull(form.getLectureFull());
         target.setDayOrNight(form.getDayOrNight());
@@ -143,7 +167,8 @@ public class LectureService {
         return byDepartment;
     }
 
-    public Lecture getLecture(Long lectureCode){
-        return jpaLectureRepository.findByLectureCode(lectureCode);
+    public List<Lecture> getLectureList(LectureSearchCondition condition){
+        return jpaQueryUsersRepository.getLectureList(condition);
     }
+
 }

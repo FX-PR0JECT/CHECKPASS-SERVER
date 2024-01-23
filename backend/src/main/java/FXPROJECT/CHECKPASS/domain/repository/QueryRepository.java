@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
+import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
@@ -120,25 +121,69 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Lecture> getLectureList(LectureSearchCondition con){
+    public List<Lecture> getLectureList(LectureSearchCondition condition){
 
-        String grade = con.getGrade();
+        String lectureGrade = condition.getLectureGrade();
+        String lectureKind = condition.getLectureKind();
+        String lectureGrades = condition.getLectureGrades();
+        Long lectureCode = condition.getLectureCode();
+        String lectureName = condition.getLectureName();
+        String professorName = condition.getProfessorName();
 
-        return query.select(lecture)
+        List<Lecture> result = query
+                .select(lecture)
                 .from(lecture)
-                .where(eqGrade(grade))
+                .where(eqLectureGrade(lectureGrade), equalKind(lectureKind), equalGrades(lectureGrades),
+                        eqLectureCode(lectureCode), eqLectureName(lectureName), eqProfessorName(professorName))
                 .fetch();
 
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+        return result;
     }
 
-    private BooleanExpression eqGrade(String grade) {
-        if (grade != null){
-            return lecture.lectureGrade.eq(grade);
+    private BooleanExpression eqLectureGrade(String lectureGrade) {
+        if (StringUtils.hasText(lectureGrade)){
+            return lecture.lectureGrade.eq(lectureGrade);
         }
-
         return null;
     }
 
+    private BooleanExpression equalKind(String lectureKind) {
+        if (StringUtils.hasText(lectureKind)){
+            return lecture.lectureKind.eq(lectureKind);
+        }
+        return null;
+    }
+
+    private BooleanExpression equalGrades(String lectureGrades){
+        if (StringUtils.hasText(lectureGrades)) {
+            return lecture.lectureGrades.eq(lectureGrades);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqLectureCode(Long lectureCode){
+        if (lectureCode != null && lectureCode > 0){
+            return lecture.lectureCode.eq(lectureCode);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqLectureName(String lectureName){
+        if (StringUtils.hasText(lectureName)){
+            return lecture.lectureName.eq(lectureName);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqProfessorName(String professorName) {
+        if (StringUtils.hasText(professorName)){
+            return lecture.professor.userName.eq(professorName);
+        }
+        return null;
+    }
 
     private BooleanExpression equalProfessorCollege(String userCollege){
         if (StringUtils.hasText(userCollege)){
