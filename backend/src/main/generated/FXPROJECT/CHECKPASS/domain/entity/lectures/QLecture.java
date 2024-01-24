@@ -36,7 +36,7 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public final StringPath lectureGrades = createString("lectureGrades");
 
-    public final EnumPath<FXPROJECT.CHECKPASS.domain.enums.LectureKind> lectureKind = createEnum("lectureKind", FXPROJECT.CHECKPASS.domain.enums.LectureKind.class);
+    public final StringPath lectureKind = createString("lectureKind");
 
     public final StringPath lectureName = createString("lectureName");
 
@@ -65,7 +65,7 @@ public class QLecture extends EntityPathBase<Lecture> {
     public QLecture(Class<? extends Lecture> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.departments = inits.isInitialized("departments") ? new FXPROJECT.CHECKPASS.domain.entity.college.QDepartments(forProperty("departments"), inits.get("departments")) : null;
-        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor")) : null;
+        this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor"), inits.get("professor")) : null;
     }
 
 }

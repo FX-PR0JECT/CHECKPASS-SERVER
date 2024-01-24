@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/config/WebConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,6 +72,9 @@
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -90,6 +94,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CheckpassApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
@@ -274,7 +279,7 @@
       <workItem from="1705459908039" duration="18219000" />
       <workItem from="1705627817089" duration="4804000" />
       <workItem from="1705722985502" duration="1336000" />
-      <workItem from="1706014696010" duration="455000" />
+      <workItem from="1706014696010" duration="1638000" />
     </task>
     <servers />
   </component>
