@@ -11,8 +11,11 @@ import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 
@@ -38,10 +41,11 @@ public class EnrollmentService {
             return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED.getCode(), REQUEST_COUNT_EXCEEDED.getTitle(), "수강인원이 초과되었습니다.", null);
         }
 
-        Enrollment enrollment = new Enrollment().builder()
-                .student((Students) loggedInUser)
-                .lecture(target)
-                .build();
+        Enrollment enrollment = new Enrollment((Students) loggedInUser, target);
+
+        if (jpaEnrollmentRepository.existsById(enrollment.getEnrollmentId())){
+            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED.getCode(), REQUEST_COUNT_EXCEEDED.getTitle(), "이미 수강신청된 강의입니다.", null);
+        }
 
         jpaEnrollmentRepository.save(enrollment);
         target.setLectureCount(target.getLectureCount() + 1);
