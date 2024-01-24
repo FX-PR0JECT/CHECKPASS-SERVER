@@ -57,10 +57,7 @@ class JpaEnrollmentRepositoryTest {
         Students student = (Students) jpaUsersRepository.findByUserId(200000L);
         log.info("StudentId : {}", student.getUserId());
 
-        Enrollment enrollment = new Enrollment().builder()
-                .student(student)
-                .lecture(lecture)
-                .build();
+        Enrollment enrollment = new Enrollment(student, lecture);
 
         Enrollment enroll = jpaEnrollmentRepository.save(enrollment);
         lecture.setLectureCount(lecture.getLectureCount()+1);
@@ -68,7 +65,7 @@ class JpaEnrollmentRepositoryTest {
         log.info("enrollmentId : {}, studentId : {}, lectureCode : {}", enroll.getEnrollmentId(), enroll.getStudent().getUserId(), enroll.getLecture().getLectureCode());
         log.info("lectureCount : {}", lecture.getLectureCount());
 
-        Enrollment findByEnrollmentId = jpaEnrollmentRepository.findByEnrollmentId(1L);
+        Enrollment findByEnrollmentId = jpaEnrollmentRepository.findByEnrollmentId(200000121212L);
         log.info("LectureName : {}, studentId : {}", findByEnrollmentId.getLecture().getLectureName(), findByEnrollmentId.getStudent().getUserId());
 
         jpaEnrollmentRepository.deleteById(findByEnrollmentId.getEnrollmentId());
