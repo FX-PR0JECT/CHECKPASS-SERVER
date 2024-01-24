@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.common.config;
 
 import FXPROJECT.CHECKPASS.domain.common.intercepter.LoginCheckInterceptor;
-import FXPROJECT.CHECKPASS.web.common.resolver.LoginJobArgumentResolver;
+import FXPROJECT.CHECKPASS.web.common.resolver.LoginUserArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -32,6 +32,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new LoginJobArgumentResolver());
+        resolvers.add(new LoginUserArgumentResolver());
     }
 }

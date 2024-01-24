@@ -1,8 +1,6 @@
 package FXPROJECT.CHECKPASS.web.common.resolver;
 
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
@@ -16,7 +14,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Slf4j
-public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
+public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
 
     @Override
@@ -48,9 +46,9 @@ public class LoginJobArgumentResolver implements HandlerMethodArgumentResolver {
 
         Job userJob = loggedInUser.getUserJob();
 
-        if(userJob == Job.STUDENTS){
-            throw new NoPermission();
-        }
+//        if(userJob == Job.STUDENTS){
+//            throw new NoPermission();
+//        }
 
         return loggedInUser;
     }
