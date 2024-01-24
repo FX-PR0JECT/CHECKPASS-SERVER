@@ -8,7 +8,6 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
@@ -83,7 +82,7 @@ class JpaLectureRepositoryTest {
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("3학년")
-                .lectureKind(LectureKind.MANDATORY)
+                .lectureKind("전필")
                 .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
@@ -121,7 +120,7 @@ class JpaLectureRepositoryTest {
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("1학년")
-                .lectureKind(LectureKind.MANDATORY)
+                .lectureKind("전필")
                 .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
@@ -134,7 +133,7 @@ class JpaLectureRepositoryTest {
                 .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("2학년")
-                .lectureKind(LectureKind.MANDATORY)
+                .lectureKind("전필")
                 .lectureGrades("3학점")
                 .lectureFull(40)
                 .dayOrNight("day")
