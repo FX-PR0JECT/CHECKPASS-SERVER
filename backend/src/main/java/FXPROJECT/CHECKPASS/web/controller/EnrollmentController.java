@@ -8,10 +8,7 @@ import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -28,5 +25,14 @@ public class EnrollmentController {
             throw new NoPermission();
         }
         return enrollmentService.enrollment(lectureCode, loggedInUser);
+    }
+
+    @DeleteMapping("{lectureCode}")
+    public ResultForm cancelEnrollment(@PathVariable("lectureCode") Long lectureCode, @LoginUser Users loggedInUser){
+
+        if (loggedInUser.getUserJob() != Job.STUDENTS) {
+            throw new NoPermission();
+        }
+        return enrollmentService.cancelEnrollment(lectureCode, loggedInUser);
     }
 }
