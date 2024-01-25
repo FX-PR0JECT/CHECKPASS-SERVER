@@ -5,14 +5,19 @@ import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
+import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaEnrollmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
@@ -25,6 +30,7 @@ public class EnrollmentService {
     private final JpaEnrollmentRepository jpaEnrollmentRepository;
     private final JpaLectureRepository jpaLectureRepository;
     private final LectureService lectureService;
+    private final QueryRepository queryRepository;
 
     /**
      * 수강신청
@@ -77,6 +83,40 @@ public class EnrollmentService {
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_DELETE.getDescription());
     }
+
+
+    /**
+     * 수강신청 목록 조회
+     * @param loggedInUser 로그인 유저
+     * @return 로그인 유저의 수강신청한 강의 목록
+     */
+    public List<LectureInformation> getEnrollmentList(Users loggedInUser){
+
+        List<Lecture> enrollmentList =  queryRepository.getEnrollmentList(loggedInUser.getUserId());
+
+        List<LectureInformation> lectureInformationList = new ArrayList<>();
+
+        for (Lecture lecture : enrollmentList) {
+            LectureInformation lectureInformation = new LectureInformation().builder()
+                    .lectureCode(lecture.getLectureCode())
+                    .lectureName(lecture.getLectureName())
+                    .lectureGrade(lecture.getLectureGrade())
+                    .lectureKind(lecture.getLectureKind())
+                    .lectureGrades(lecture.getLectureGrades())
+                    .professorName(lecture.getProfessor().getUserName())
+                    .lectureRoom(lecture.getLectureRoom())
+                    .lectureTimes(lecture.getLectureTimes())
+                    .lectureFull(lecture.getLectureFull())
+                    .lectureCount(lecture.getLectureCount())
+                    .dayOrNight(lecture.getDayOrNight())
+                    .departments(lecture.getDepartments().getDepartment())
+                    .build();
+
+            lectureInformationList.add(lectureInformation);
+        }
+        return lectureInformationList;
+    }
+
 
     private Long idGenerator(Long lectureCode, Users loggedInUser){
         return Long.valueOf(loggedInUser.getUserId().toString() + lectureCode.toString());
