@@ -82,10 +82,7 @@ public class LectureController {
      */
     @GetMapping("/lectureList")
     public ResultForm getLectureList(@RequestBody LectureSearchCondition condition){
-
-        List<Lecture> lectures = lectureService.getLectureList(condition);
-
-        return ResultFormUtils.getSuccessResultForm(lectures);
+        return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList(condition));
     }
 
 
