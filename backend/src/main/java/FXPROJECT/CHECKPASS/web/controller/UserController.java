@@ -3,6 +3,7 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingUSER;
@@ -14,6 +15,7 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LoginUserForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleUserInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
@@ -46,6 +48,15 @@ public class UserController {
             throw new UnauthenticatedUser();
         }
         return userService.getUser(userId);
+    }
+
+    @GetMapping
+    public ResultForm showLoginUser(@LoginUser Users user){
+        LoginUserForm loginUserForm = new LoginUserForm().builder()
+                .userId(user.getUserId())
+                .userName(user.getUserName())
+                .build();
+        return ResultFormUtils.getSuccessResultForm(loginUserForm);
     }
 
     /**

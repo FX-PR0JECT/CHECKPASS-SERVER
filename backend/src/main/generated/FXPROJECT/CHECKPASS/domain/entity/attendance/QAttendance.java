@@ -29,6 +29,8 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     public final StringPath makeupClass = createString("makeupClass");
 
+    public final BooleanPath tardy = createBoolean("tardy");
+
     public QAttendance(String variable) {
         super(Attendance.class, forVariable(variable));
     }

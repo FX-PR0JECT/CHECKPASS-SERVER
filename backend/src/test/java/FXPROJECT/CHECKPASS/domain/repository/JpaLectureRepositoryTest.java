@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
+
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;

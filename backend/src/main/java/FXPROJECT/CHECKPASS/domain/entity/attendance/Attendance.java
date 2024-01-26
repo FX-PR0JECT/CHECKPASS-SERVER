@@ -29,4 +29,6 @@ public class Attendance {
 
     private LocalDateTime attendTime;
 
+    private Boolean tardy;
+
 }
