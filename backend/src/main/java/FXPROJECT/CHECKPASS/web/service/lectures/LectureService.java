@@ -9,7 +9,6 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
@@ -17,9 +16,11 @@ import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCond
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +71,40 @@ public class LectureService {
         }
 
         return jpaLectureRepository.findByLectureCode(lectureCode);
+    }
+
+
+    /**
+     * 강의 목록 조회 (조건 검색)
+     * @param condition 강의 검색 조건
+     * @return 조건에 따른 강의 목록
+     */
+    public List<LectureInformation> getLectureList(LectureSearchCondition condition){
+
+        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition);
+
+        List<LectureInformation> lectureInformationList = new ArrayList<>();
+
+        for (Lecture lecture : lectureList) {
+            LectureInformation lectureInformation = new LectureInformation().builder()
+                    .lectureCode(lecture.getLectureCode())
+                    .lectureName(lecture.getLectureName())
+                    .lectureGrade(lecture.getLectureGrade())
+                    .lectureKind(lecture.getLectureKind())
+                    .lectureGrades(lecture.getLectureGrades())
+                    .professorName(lecture.getProfessor().getUserName())
+                    .lectureRoom(lecture.getLectureRoom())
+                    .lectureTimes(lecture.getLectureTimes())
+                    .lectureFull(lecture.getLectureFull())
+                    .lectureCount(lecture.getLectureCount())
+                    .dayOrNight(lecture.getDayOrNight())
+                    .departments(lecture.getDepartments().getDepartment())
+                    .build();
+
+            lectureInformationList.add(lectureInformation);
+        }
+
+        return lectureInformationList;
     }
 
 
@@ -166,9 +201,4 @@ public class LectureService {
         Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentName.getDepartment());
         return byDepartment;
     }
-
-    public List<Lecture> getLectureList(LectureSearchCondition condition){
-        return jpaQueryUsersRepository.getLectureList(condition);
-    }
-
 }

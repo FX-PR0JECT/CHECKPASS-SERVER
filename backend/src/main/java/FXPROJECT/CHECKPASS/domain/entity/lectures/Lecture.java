@@ -2,7 +2,6 @@ package FXPROJECT.CHECKPASS.domain.entity.lectures;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
-import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -45,7 +44,7 @@ public class Lecture {
     @Column(nullable = false, length = 3)
     private String lectureGrades;
 
-    @Column(nullable = false, length = 3)
+    @Column(nullable = false)
     private int lectureFull;
 
     @ColumnDefault("0")

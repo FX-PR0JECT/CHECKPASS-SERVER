@@ -4,14 +4,12 @@ import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
+import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -21,6 +19,13 @@ public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
 
+    /**
+     * 수강신청
+     * URL : /enrollment/{lectureCode}
+     * @param lectureCode 강의코드
+     * @param loggedInUser 로그인 유저
+     * @return 성공 : 수강신청 완료 ResultForm  실패 : 수강신청 실패 ResultForm
+     */
     @PostMapping("/{lectureCode}")
     public ResultForm enrollment(@PathVariable("lectureCode") Long lectureCode, @LoginUser Users loggedInUser){
 
@@ -28,5 +33,33 @@ public class EnrollmentController {
             throw new NoPermission();
         }
         return enrollmentService.enrollment(lectureCode, loggedInUser);
+    }
+
+
+    /**
+     * 수강신청 취소
+     * @param lectureCode 강의코드
+     * @param loggedInUser 로그인 유저
+     * @return 성공 : 취소 완료 ResultForm  실패 : 잘못된 요청 ResultForm
+     */
+    @DeleteMapping("{lectureCode}")
+    public ResultForm cancelEnrollment(@PathVariable("lectureCode") Long lectureCode, @LoginUser Users loggedInUser){
+
+        if (loggedInUser.getUserJob() != Job.STUDENTS) {
+            throw new NoPermission();
+        }
+        return enrollmentService.cancelEnrollment(lectureCode, loggedInUser);
+    }
+
+
+    /**
+     * 수강신청 목록 조회
+     * @param loggedInUser 로그인 유저
+     * @return 로그인 유저가 수강신청한 강의 정보 목록
+     */
+    @GetMapping("/enrollmentList")
+    public ResultForm getEnrollmentList(@LoginUser Users loggedInUser){
+
+        return ResultFormUtils.getSuccessResultForm(enrollmentService.getEnrollmentList(loggedInUser));
     }
 }

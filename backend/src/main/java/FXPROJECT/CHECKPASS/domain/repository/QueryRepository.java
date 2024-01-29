@@ -1,7 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
-import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
@@ -21,8 +20,9 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.*;
 import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.*;
-import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.professor;
+import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStaff.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStudents.*;
 
@@ -121,6 +121,23 @@ public class QueryRepository {
         return result;
     }
 
+    public List<Lecture> getEnrollmentList(Long loggedInUserId) {
+
+        log.info("loggedInUserId : {}", loggedInUserId);
+
+        List<Lecture> result = query
+                .select(enrollment.lecture)
+                .from(enrollment)
+                .where(checkEnrollment(loggedInUserId))
+                .fetch();
+
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+
+        return result;
+    }
+
     public List<Lecture> getLectureList(LectureSearchCondition condition){
 
         String lectureGrade = condition.getLectureGrade();
@@ -141,6 +158,13 @@ public class QueryRepository {
             throw new NoSearchResultsFound();
         }
         return result;
+    }
+
+    private BooleanExpression checkEnrollment(Long userId) {
+        if (userId != null && userId > 0){
+            return enrollment.student.userId.eq(userId);
+        }
+        return null;
     }
 
     private BooleanExpression eqLectureGrade(String lectureGrade) {

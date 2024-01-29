@@ -1,19 +1,16 @@
 package FXPROJECT.CHECKPASS.domain.entity.lectures;
+
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Getter
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor
 public class Enrollment {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long enrollmentId;
 
         @ManyToOne
@@ -23,5 +20,11 @@ public class Enrollment {
         @JoinColumn(name = "lecture_code")
         @ManyToOne
         Lecture lecture;
+
+        public Enrollment(Students student, Lecture lecture) {
+                this.student = student;
+                this.lecture = lecture;
+                this.enrollmentId = Long.valueOf(student.getUserId().toString() + lecture.getLectureCode().toString());
+        }
 
 }
