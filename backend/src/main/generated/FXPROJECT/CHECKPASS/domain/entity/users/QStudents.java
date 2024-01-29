@@ -32,6 +32,9 @@ public class QStudents extends EntityPathBase<Students> {
     // inherited
     public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
 
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> joinDate;
+
     public final StringPath studentGrade = createString("studentGrade");
 
     public final StringPath studentSemester = createString("studentSemester");
@@ -66,6 +69,7 @@ public class QStudents extends EntityPathBase<Students> {
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
         this.departments = _super.departments;
+        this.joinDate = _super.joinDate;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

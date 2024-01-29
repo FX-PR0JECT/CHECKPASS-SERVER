@@ -33,6 +33,9 @@ public class QProfessor extends EntityPathBase<Professor> {
     public final StringPath HIREDATE = createString("HIREDATE");
 
     //inherited
+    public final DateTimePath<java.time.LocalDateTime> joinDate;
+
+    //inherited
     public final NumberPath<Long> userId;
 
     //inherited
@@ -62,6 +65,7 @@ public class QProfessor extends EntityPathBase<Professor> {
         this._super = new QUsers(type, metadata, inits);
         this.account = _super.account;
         this.departments = _super.departments;
+        this.joinDate = _super.joinDate;
         this.userId = _super.userId;
         this.userJob = _super.userJob;
         this.userName = _super.userName;

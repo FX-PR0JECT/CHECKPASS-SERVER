@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 
 /**
  * CHECKPASS-13
@@ -37,6 +41,9 @@ public abstract class Users {
     @Enumerated(EnumType.STRING)
     @Column(insertable = false, updatable = false)
     private Job userJob;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime joinDate;
 
     public Users() {
 

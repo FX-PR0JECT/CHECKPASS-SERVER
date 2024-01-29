@@ -26,6 +26,8 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
 
+    public final DateTimePath<java.time.LocalDateTime> joinDate = createDateTime("joinDate", java.time.LocalDateTime.class);
+
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public final EnumPath<FXPROJECT.CHECKPASS.domain.enums.Job> userJob = createEnum("userJob", FXPROJECT.CHECKPASS.domain.enums.Job.class);
