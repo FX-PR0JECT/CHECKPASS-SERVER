@@ -37,18 +37,14 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
         HttpServletRequest request = (HttpServletRequest)
                 webRequest.getNativeRequest();
+
         HttpSession session = request.getSession(false);
+
         if (session == null) {
             return null;
         }
 
         Users loggedInUser = (Users) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        Job userJob = loggedInUser.getUserJob();
-
-//        if(userJob == Job.STUDENTS){
-//            throw new NoPermission();
-//        }
 
         return loggedInUser;
     }
