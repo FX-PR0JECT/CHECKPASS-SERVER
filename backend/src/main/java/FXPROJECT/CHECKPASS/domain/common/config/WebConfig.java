@@ -8,28 +8,28 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static FXPROJECT.CHECKPASS.domain.common.constant.ConfigConst.*;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://127.0.0.1:3000","http://localhost:8080","http://127.0.0.1:8080","http://127.0.0.1:5500","http://localhost:5500")
-                .allowedMethods("POST", "PUT", "GET", "HEAD", "OPTIONS", "DELETE")
-                .allowCredentials(true)
-                .maxAge(300);
+        registry.addMapping(ALLOWED_ADD_MAPPING)
+                .allowedOrigins(ALLOWED_ORIGINS)
+                .allowedMethods(ALLOWED_METHODS)
+                .allowCredentials(ALLOW_CREDENTIALS)
+                .maxAge(ALLOW_MAX_AGE);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/","/login","/users/professorSignup","/users/studentSignup", "/users/duplication/*",
-                        "/logout","/css/**","/*.ico","/error","/viewElement/*","/viewElement/*/*");
+                .addPathPatterns(ALLOWED_ADD_MAPPING)
+                .excludePathPatterns(EXCLUDE_PATH_PATTERNS);
     }
 
     @Override
