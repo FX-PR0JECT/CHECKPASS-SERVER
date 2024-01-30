@@ -131,7 +131,7 @@ public class LectureService {
     @Transactional
     public ResultForm deleteLecture(Long lectureCode){
         if(!existsLecture(lectureCode)){
-            return ResultFormUtils.getFailResultForm(NON_EXISTING_LECTURE.getCode(), NON_EXISTING_LECTURE.getTitle(), FAIL_DELETE.getDescription(), null);
+            return ResultFormUtils.getFailResultForm(NON_EXISTING_LECTURE);
         }
         jpaLectureRepository.deleteLectureByLectureCode(lectureCode);
 

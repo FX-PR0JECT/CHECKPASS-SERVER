@@ -70,7 +70,7 @@ public class ViewElementController {
 
 
         }catch (Exception e){
-            return ResultFormUtils.getFailResultForm(MISSING_REQUIRED_ARGUMENT.getCode(), MISSING_REQUIRED_ARGUMENT.getTitle(), MISSING_REQUIRED_ARGUMENT.getDescription(), e);
+            return ResultFormUtils.getFailResultForm(MISSING_REQUIRED_ARGUMENT);
         }
 
 

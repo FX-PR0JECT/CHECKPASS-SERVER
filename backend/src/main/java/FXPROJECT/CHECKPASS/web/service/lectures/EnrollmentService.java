@@ -48,13 +48,13 @@ public class EnrollmentService {
         Lecture target = jpaLectureRepository.findLectureByLectureCode(lectureCode);
 
         if (target.getLectureFull() == target.getLectureCount()){
-            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED.getCode(), REQUEST_COUNT_EXCEEDED.getTitle(), "수강인원이 초과되었습니다.", null);
+            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED);
         }
 
         Enrollment enrollment = new Enrollment((Students) loggedInUser, target);
 
         if (jpaEnrollmentRepository.existsById(enrollment.getEnrollmentId())){
-            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED.getCode(), REQUEST_COUNT_EXCEEDED.getTitle(), "이미 수강신청된 강의입니다.", null);
+            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED);
         }
 
         jpaEnrollmentRepository.save(enrollment);
@@ -76,7 +76,7 @@ public class EnrollmentService {
         Long enrollmentId = idGenerator(lectureCode, loggedInUser);
 
         if (!jpaEnrollmentRepository.existsById(enrollmentId)){
-            return ResultFormUtils.getFailResultForm(BAD_URI_REQUEST.getCode(), BAD_URI_REQUEST.getTitle(), BAD_URI_REQUEST.getDescription(), null);
+            return ResultFormUtils.getFailResultForm(BAD_URI_REQUEST);
         }
 
         jpaEnrollmentRepository.deleteById(enrollmentId);
