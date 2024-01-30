@@ -9,6 +9,7 @@ import org.aspectj.lang.JoinPoint;
 @Slf4j
 //@Aspect
 //@Component
+@Deprecated
 public class SignupAspect {
 
     ///@Before("execution(* FXPROJECT.CHECKPASS.web.controller.UserController.signup(..))")
