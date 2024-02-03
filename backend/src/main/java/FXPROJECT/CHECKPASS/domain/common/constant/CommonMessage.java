@@ -7,6 +7,7 @@ public enum CommonMessage {
     COMPLETE_DELETE("삭제가 완료 되었습니다."),
     COMPLETE_UPDATE("수정이 완료 되었습니다."),
     COMPLETE_REGISTER("등록이 완료되었습니다."),
+    COMPLETE_ENROLLMENT("신청이 완료되었습니다."),
     NOT_FOUNT("찾을 수 없습니다."),
     SUCCESS_LOGIN("로그인 성공!"),
     FAIL_LOGIN("로그인 실패"),

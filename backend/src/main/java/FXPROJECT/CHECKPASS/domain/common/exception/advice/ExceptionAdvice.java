@@ -170,4 +170,22 @@ public class ExceptionAdvice {
         return ResultFormUtils.getFailResultForm(ErrorCode.MISSING_REQUIRED_ARGUMENT, e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberOfStudentsExceeded.class)
+    public ResultForm numberOfStudentsExceeded(Exception e){
+        return ResultFormUtils.getFailResultForm(ErrorCode.NUMBER_OF_STUDENTS_EXCEEDED);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OverlappingHours.class)
+    public ResultForm overlappingHours(Exception e){
+        return ResultFormUtils.getFailResultForm(ErrorCode.OVERLAPPING_HOURS);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RegisteredForLecture.class)
+    public ResultForm registeredForLecture(Exception e) {
+        return ResultFormUtils.getFailResultForm(ErrorCode.OVERLAPPING_HOURS);
+    }
+
 }

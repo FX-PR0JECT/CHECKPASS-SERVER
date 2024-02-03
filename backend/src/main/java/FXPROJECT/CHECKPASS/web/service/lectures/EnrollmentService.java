@@ -1,6 +1,9 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
+import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.NumberOfStudentsExceeded;
+import FXPROJECT.CHECKPASS.domain.common.exception.RegisteredForLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
@@ -48,19 +51,19 @@ public class EnrollmentService {
         Lecture target = jpaLectureRepository.findLectureByLectureCode(lectureCode);
 
         if (target.getLectureFull() == target.getLectureCount()){
-            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED);
+            throw new NumberOfStudentsExceeded();
         }
 
         Enrollment enrollment = new Enrollment((Students) loggedInUser, target);
 
         if (jpaEnrollmentRepository.existsById(enrollment.getEnrollmentId())){
-            return ResultFormUtils.getFailResultForm(REQUEST_COUNT_EXCEEDED);
+            throw new RegisteredForLecture();
         }
 
         jpaEnrollmentRepository.save(enrollment);
         target.setLectureCount(target.getLectureCount() + 1);
 
-        return ResultFormUtils.getSuccessResultForm("수강신청이 완료되었습니다.");
+        return ResultFormUtils.getSuccessResultForm(COMPLETE_ENROLLMENT.getDescription());
     }
 
 
