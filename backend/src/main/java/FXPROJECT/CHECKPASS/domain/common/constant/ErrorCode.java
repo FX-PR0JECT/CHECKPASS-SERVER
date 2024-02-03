@@ -21,8 +21,6 @@ public enum ErrorCode {
             "해결 방법 :  확인 후 재 요청"),
     EXISTING_USER(403,-21,"Existing user","Database 에 이미 존재하는 회원인 경우\n" +
             "해결 방법 :  확인 후 재 요청"),
-    NON_EXISTING_LECTURE(400, -100, "Non-Existing Lecture", "Database에 등록되지 않은 강의\n" + "해결 방법 : 확인 후 재 요청"),
-    EXISTING_LECTURE(400, -101, "Existing Lecture", "Database에 이미 등록된 강의\n" + "해결 방법 : 확인 후 재 요청"),
     INVALID_ROLE_REQUEST(403,-22,"Invalid Role request","유효하지 않은 요청\n" +
             "해결 방법 : 회원 Job 확인 후 재 요청"),
     SANCTIONS_USER(403,-23,"sanctions user","계정이 제재된 경우나 해당 계정에 제재된 행동을 하는 경우"),
@@ -36,6 +34,12 @@ public enum ErrorCode {
     SERVER_ERROR(500,-80,"Server Error","서버 내부에서 처리 중에 에러가 발생한 경우\n" +
             "해결 방법: 재시도"),
     UNKNOWN_SERVER_ERROR(500,-81,"Unknown server error","서버에서 처리 할 수 없음"),
+    NUMBER_OF_STUDENTS_EXCEEDED(400, -90, "Number of students exceeded", "수강인원이 초과되었습니다."),
+    REGISTERED_FOR_LECTURE(400, -91, "Registered for lecture", "이미 수강신청된 강의입니다."),
+    OVERLAPPING_HOURS(400, -92, "Overlapping hours", "강의 시간이 중복됩니다.\n" +
+            "강의 시간을 확인해 주세요."),
+    NON_EXISTING_LECTURE(400, -100, "Non-Existing Lecture", "Database에 등록되지 않은 강의\n" + "해결 방법 : 확인 후 재 요청"),
+    EXISTING_LECTURE(400, -101, "Existing Lecture", "Database에 이미 등록된 강의\n" + "해결 방법 : 확인 후 재 요청"),
     OK(200,-1000,"OK","OK");
 
     private final int status;
