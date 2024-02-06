@@ -14,7 +14,6 @@ import java.sql.SQLException;
 @SpringBootTest
 public class ConnectionTest {
 
-
     @Autowired
     DataSource ds;
 

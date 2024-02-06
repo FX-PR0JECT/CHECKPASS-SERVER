@@ -33,7 +33,7 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users") // API GATE WAY
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;

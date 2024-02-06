@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/utils/ResultFormUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/utils/ResultFormUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ConfigConst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ConfigConst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/common/ConnectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/common/ConnectionTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +125,7 @@
     &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;c7ac23d1d130433821ce3a3ae6260f57&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -306,7 +314,20 @@
       <workItem from="1706429445625" duration="646000" />
       <workItem from="1706494733200" duration="1673000" />
       <workItem from="1706514413112" duration="941000" />
-      <workItem from="1706579498127" duration="4364000" />
+      <workItem from="1706579498127" duration="5058000" />
+      <workItem from="1706614317893" duration="1252000" />
+      <workItem from="1706780403892" duration="130000" />
+      <workItem from="1706852070479" duration="58000" />
+      <workItem from="1706853516484" duration="355000" />
+      <workItem from="1706855603861" duration="15000" />
+      <workItem from="1706856152333" duration="531000" />
+      <workItem from="1706859057797" duration="18000" />
+      <workItem from="1706859182139" duration="261000" />
+      <workItem from="1706859899669" duration="98000" />
+      <workItem from="1706860146262" duration="40000" />
+      <workItem from="1706860413530" duration="93000" />
+      <workItem from="1706864661156" duration="229000" />
+      <workItem from="1707191889044" duration="258000" />
     </task>
     <servers />
   </component>
