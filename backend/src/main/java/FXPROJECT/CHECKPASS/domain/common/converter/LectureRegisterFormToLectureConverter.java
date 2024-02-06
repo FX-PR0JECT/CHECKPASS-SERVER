@@ -12,33 +12,32 @@ import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class LectureRegisterFormToLectureConverter implements Converter<LectureRegisterForm, Lecture> {
 
     private final UserService userService;
     private final JpaDepartmentRepository jpaDepartmentRepository;
+    private final LectureCodeUtils lectureCodeUtils;
 
     @Override
     public Lecture convert(LectureRegisterForm form) {
 
-        LectureTimeSource lectureTimeSource = new LectureTimeSource().builder()
-                .lectureTimes(form.getLectureTimes())
-                .lectureDays(form.getLectureDays())
-                .lectureStartTime(form.getLectureStartTime())
-                .build();
+        LectureTimeSource lectureTimeSource = extractionLectureTimeSource(form);
 
-        LectureCodeUtils lectureCodeUtils = new LectureCodeUtils();
+        Optional<Departments> departments = getDepartments(form.getDepartments());
 
-        Optional<Departments> departments = getDepartments(DepartmentsEnum.valueOf(form.getDepartments().getDepartment()));
+        Lecture lecture = transferFormToLecture(form, departments, lectureTimeSource);
 
-        if (departments.isEmpty()){
-            log.info("departments Error");
-        }
+        return lecture;
+    }
 
+    private Lecture transferFormToLecture(LectureRegisterForm form, Optional<Departments> departments, LectureTimeSource lectureTimeSource) {
         Lecture lecture = new Lecture().builder()
                 .lectureCode(form.getLectureCode())
                 .professor((Professor) userService.getUser(form.getProfessorId()))
@@ -53,8 +52,16 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
                 .departments(departments.get())
                 .lectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource))
                 .build();
-
         return lecture;
+    }
+
+    private static LectureTimeSource extractionLectureTimeSource(LectureRegisterForm form) {
+        LectureTimeSource lectureTimeSource = new LectureTimeSource().builder()
+                .lectureTimes(form.getLectureTimes())
+                .lectureDays(form.getLectureDays())
+                .lectureStartTime(form.getLectureStartTime())
+                .build();
+        return lectureTimeSource;
     }
 
     private Optional<Departments> getDepartments(DepartmentsEnum departmentName) {

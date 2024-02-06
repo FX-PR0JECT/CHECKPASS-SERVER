@@ -3,6 +3,8 @@ package FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update;
 import FXPROJECT.CHECKPASS.domain.enums.LectureKind;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,8 +14,6 @@ public class LectureUpdateForm {
     private Long professorId;
 
     private String lectureName;
-
-    private String lectureTimes;
 
     private String lectureRoom;
 
@@ -26,4 +26,11 @@ public class LectureUpdateForm {
     private Integer lectureFull;
 
     private String dayOrNight;
+
+    private List<String> lectureDays;
+
+    private List<String> lectureStartTime;
+
+    private List<Float> lectureTimes;
+
 }

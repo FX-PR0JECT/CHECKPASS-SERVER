@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class LectureInformation {
 
     private String lectureRoom;
 
-    private String lectureTimes;
+    private List<String> lectureTimes;
 
     private Integer lectureFull;
 

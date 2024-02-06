@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
@@ -13,8 +14,10 @@ import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
+import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
@@ -26,6 +29,7 @@ import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
@@ -36,10 +40,11 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 @AllArgsConstructor
 public class LectureService {
 
-    private final JpaDepartmentRepository jpaDepartmentRepository;
     private final JpaLectureRepository jpaLectureRepository;
     private final UserService userService;
     private final QueryRepository jpaQueryUsersRepository;
+    private final ConversionService conversionService;
+    private final LectureCodeUtils lectureCodeUtils;
 
     /**
      * 강의 등록
@@ -47,15 +52,13 @@ public class LectureService {
      * @return true: 등록 성공, false: 등록 실패
      */
     @Transactional
-    public boolean registerLecture(Lecture lecture){
+    public Lecture registerLecture(Lecture lecture){
 
         if(existsLecture(lecture.getLectureCode())){
-            return false;
+            throw new ExistingLecture();
         }
 
-        jpaLectureRepository.save(lecture);
-
-        return true;
+        return jpaLectureRepository.save(lecture);
     }
 
 
@@ -86,20 +89,8 @@ public class LectureService {
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
         for (Lecture lecture : lectureList) {
-            LectureInformation lectureInformation = new LectureInformation().builder()
-                    .lectureCode(lecture.getLectureCode())
-                    .lectureName(lecture.getLectureName())
-                    .lectureGrade(lecture.getLectureGrade())
-                    .lectureKind(lecture.getLectureKind())
-                    .lectureGrades(lecture.getLectureGrades())
-                    .professorName(lecture.getProfessor().getUserName())
-                    .lectureRoom(lecture.getLectureRoom())
-                    //.lectureTimes(lecture.getLectureTimeCode())
-                    .lectureFull(lecture.getLectureFull())
-                    .lectureCount(lecture.getLectureCount())
-                    .dayOrNight(lecture.getDayOrNight())
-                    .departments(lecture.getDepartments().getDepartment())
-                    .build();
+
+            LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
 
             lectureInformationList.add(lectureInformation);
         }
@@ -122,7 +113,6 @@ public class LectureService {
 
     }
 
-
     /**
      * 강의 삭제
      * @param lectureCode 강의 코드
@@ -130,6 +120,7 @@ public class LectureService {
      */
     @Transactional
     public ResultForm deleteLecture(Long lectureCode){
+
         if(!existsLecture(lectureCode)){
             return ResultFormUtils.getFailResultForm(NON_EXISTING_LECTURE);
         }
@@ -148,29 +139,6 @@ public class LectureService {
         return jpaLectureRepository.existsByLectureCode(lectureCode);
     }
 
-    public Lecture transferToLecture(Lecture form) {
-
-        Optional<Departments> departments = getDepartments(DepartmentsEnum.valueOf(form.getDepartments().getDepartment()));
-
-        if (departments.isEmpty()){
-            log.info("departments Error");
-        }
-
-        Lecture lecture = new Lecture().builder()
-                .lectureCode(form.getLectureCode())
-                .professor(form.getProfessor())
-                .lectureName(form.getLectureName())
-                .lectureGrade(form.getLectureGrade())
-                .lectureTimeCode(form.getLectureTimeCode())
-                .lectureRoom(form.getLectureRoom())
-                .lectureGrades(form.getLectureGrades())
-                .lectureKind(form.getLectureKind())
-                .lectureFull(form.getLectureFull())
-                .dayOrNight(form.getDayOrNight())
-                .departments(departments.get())
-                .build();
-        return lecture;
-    }
 
     public Lecture updateLecture(Lecture target, LectureUpdateForm form) {
 
@@ -179,15 +147,21 @@ public class LectureService {
         }
 
         Users user = userService.getUser(form.getProfessorId());
-        Job userJob = user.getUserJob();
 
-        if(userJob == Job.STUDENTS){
+        if (!isProfessor(user.getUserJob())){
             throw new NoPermission();
         }
 
+        return lectureAllFieldUpdate(target, form);
+    }
+
+    private Lecture lectureAllFieldUpdate(Lecture target, LectureUpdateForm form) {
+
+        LectureTimeSource lectureTimeSource = extractionLectureTimeSource(form);
+
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
         target.setLectureName(form.getLectureName());
-        //target.setLectureTimeCode(form.getLectureTimes());
+        target.setLectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource));
         target.setLectureRoom(form.getLectureRoom());
         target.setLectureGrade(form.getLectureGrade());
         target.setLectureKind(form.getLectureKind().getKind());
@@ -198,8 +172,21 @@ public class LectureService {
         return target;
     }
 
-    private Optional<Departments> getDepartments(DepartmentsEnum departmentName) {
-        Optional<Departments> byDepartment = jpaDepartmentRepository.findByDepartment(departmentName.getDepartment());
-        return byDepartment;
+    private static LectureTimeSource extractionLectureTimeSource(LectureUpdateForm form) {
+        LectureTimeSource lectureTimeSource = new LectureTimeSource().builder()
+                .lectureTimes(form.getLectureTimes())
+                .lectureDays(form.getLectureDays())
+                .lectureStartTime(form.getLectureStartTime())
+                .build();
+        return lectureTimeSource;
     }
+
+    private static Boolean isProfessor(Job job) {
+
+        if(job == Job.STUDENTS){
+            return false;
+        }
+        return true;
+    }
+
 }

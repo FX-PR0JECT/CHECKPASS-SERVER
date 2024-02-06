@@ -1,10 +1,10 @@
 package FXPROJECT.CHECKPASS.domain.common.config;
 
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureRegisterFormToLectureConverter;
+import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureInformationConverter;
+import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureSimpleInfoConverter;
 import FXPROJECT.CHECKPASS.domain.common.intercepter.LoginCheckInterceptor;
-import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.resolver.LoginUserArgumentResolver;
-import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -21,8 +21,11 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.ConfigConst.*;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final UserService userService;
-    private final JpaDepartmentRepository jpaDepartmentRepository;
+    private final LectureRegisterFormToLectureConverter lectureRegisterFormToLectureConverter;
+    private final LoginCheckInterceptor loginCheckInterceptor;
+    private final LoginUserArgumentResolver loginUserArgumentResolver;
+    private final LectureToLectureInformationConverter lectureInformationConverter;
+    private final LectureToLectureSimpleInfoConverter lectureToLectureSimpleInfoConverter;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -35,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
+        registry.addInterceptor(loginCheckInterceptor)
                 .order(1)
                 .addPathPatterns(ALLOWED_ADD_MAPPING)
                 .excludePathPatterns(EXCLUDE_PATH_PATTERNS);
@@ -43,11 +46,15 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new LoginUserArgumentResolver());
+        resolvers.add(loginUserArgumentResolver);
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new LectureRegisterFormToLectureConverter(userService,jpaDepartmentRepository));
+        registry.addConverter(lectureRegisterFormToLectureConverter);
+        registry.addConverter(lectureInformationConverter);
+        registry.addConverter(lectureToLectureSimpleInfoConverter);
     }
+
+
 }

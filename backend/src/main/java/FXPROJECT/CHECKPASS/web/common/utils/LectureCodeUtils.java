@@ -4,11 +4,13 @@ import FXPROJECT.CHECKPASS.domain.entity.lectures.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.enums.DaysEnum;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Component
 public class LectureCodeUtils {
 
     public List<LectureTimeCode> getLectureCode(LectureTimeSource lectureTimeSource){
@@ -19,11 +21,19 @@ public class LectureCodeUtils {
 
         List<String> lectureTimesCodeList = getLectureTimesCodeList(lectureTimeSource.getLectureTimes());
 
+        List<LectureTimeCode> timeCodeList = getLectureTimeCodeList(lectureDayCodeList, lectureStartTimeCodeList, lectureTimesCodeList);
+
+        return timeCodeList;
+
+    }
+
+    private List<LectureTimeCode> getLectureTimeCodeList(List<String> lectureDayCodeList, List<String> lectureStartTimeCodeList, List<String> lectureTimesCodeList) {
+
         List<LectureTimeCode> timeCodeList = new ArrayList<>();
 
-        LectureTimeCode lectureTimeCode = new LectureTimeCode();
+        for (int i = 0; i < lectureDayCodeList.size(); i++){
 
-        for (int i = 0 ; i < lectureDayCodeList.size(); i++){
+            LectureTimeCode lectureTimeCode = new LectureTimeCode();
 
             String timeCode = lectureDayCodeList.get(i) + lectureStartTimeCodeList.get(i) + lectureTimesCodeList.get(i);
 
@@ -33,7 +43,6 @@ public class LectureCodeUtils {
         }
 
         return timeCodeList;
-
     }
 
     private List<String> getLectureTimesCodeList(List<Float> lectureTimes) {

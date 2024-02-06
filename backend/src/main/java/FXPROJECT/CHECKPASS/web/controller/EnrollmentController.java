@@ -32,6 +32,7 @@ public class EnrollmentController {
         if (loggedInUser.getUserJob() != Job.STUDENTS) {
             throw new NoPermission();
         }
+
         return enrollmentService.enrollment(lectureCode, loggedInUser);
     }
 
@@ -59,7 +60,6 @@ public class EnrollmentController {
      */
     @GetMapping("/enrollmentList")
     public ResultForm getEnrollmentList(@LoginUser Users loggedInUser){
-
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getEnrollmentList(loggedInUser));
     }
 }

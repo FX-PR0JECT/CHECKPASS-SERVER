@@ -1,20 +1,23 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
+import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleLectureInformation;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,7 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 public class LectureController {
 
     private final LectureService lectureService;
+    private final ConversionService conversionService;
 
     /**
      * 강의 등록
@@ -36,18 +40,31 @@ public class LectureController {
      * @param bindingResult bindingResult 검증
      * @return 성공 : 등록이 완료 되었습니다. 실패 : Database에 이미 등록된 강의\n해결 방법 : 확인 후 재 요청
      */
-    @PostMapping("/registerLecture")
-    public ResultForm registerLecture(@RequestBody @Validated Lecture form, BindingResult bindingResult){
-        Lecture lecture = lectureService.transferToLecture(form);
+    @PostMapping
+    public ResultForm registerLecture(@LoginUser Users LoginUser, @RequestBody @Validated LectureRegisterForm form, BindingResult bindingResult){
 
-        if(!lectureService.registerLecture(lecture)){
-            throw new ExistingLecture();
+        if (LoginUser.getUserJob() != Job.PROFESSOR){
+            throw new NoPermission();
+        }
+
+        if (!isEqualDepartment(LoginUser, form)){
+            throw new NoPermission();
+        }
+
+        Lecture lecture = conversionService.convert(form, Lecture.class);
+
+        Lecture savedLecture = lectureService.registerLecture(lecture);
+
+        if (savedLecture == null){
+            throw new InternalException();
         }
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_REGISTER.getDescription());
-
     }
 
+    private static boolean isEqualDepartment(Users LoginUser, LectureRegisterForm form) {
+        return LoginUser.getDepartments().getDepartment().equals(form.getDepartments().getDepartment());
+    }
 
     /**
      * 강의 간략 정보 조회
@@ -60,17 +77,28 @@ public class LectureController {
 
         Lecture target = lectureService.getLecture(lectureCode);
 
-        SimpleLectureInformation simpleLecture = new SimpleLectureInformation().builder()
-                .lectureName(target.getLectureName())
-                .professorName(target.getProfessor().getUserName())
-                //.lectureTimes(target.getLectureTimeCode())
-                .lectureRoom(target.getLectureRoom())
-                .build();
+        SimpleLectureInformation simpleLectureInformation = conversionService.convert(target, SimpleLectureInformation.class);
 
-        return ResultFormUtils.getSuccessResultForm(simpleLecture);
+        return ResultFormUtils.getSuccessResultForm(simpleLectureInformation);
 
     }
 
+    /**
+     * 강의 정보 조회
+     * URL : /lectures/{lectureCode}
+     * @param lectureCode 강의 코드
+     * @return LectureInformation 객체 속성들
+     */
+    @GetMapping("/{lectureCode}")
+    public ResultForm showLectureInformation(@PathVariable("lectureCode") Long lectureCode){
+
+        Lecture target = lectureService.getLecture(lectureCode);
+
+        LectureInformation lectureInformation = conversionService.convert(target, LectureInformation.class);
+
+        return ResultFormUtils.getSuccessResultForm(lectureInformation);
+
+    }
 
     /**
      * 강의 목록 조회 (조건)
@@ -78,7 +106,7 @@ public class LectureController {
      * @param condition 강의 검색 조건
      * @return 조건에 따른 강의 목록
      */
-    @GetMapping("/lectureList")
+    @GetMapping
     public ResultForm getLectureList(@RequestBody LectureSearchCondition condition){
         return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList(condition));
     }
@@ -101,17 +129,27 @@ public class LectureController {
 
         Lecture target = lectureService.getLecture(lectureCode);
 
-        if (!loggedInUser.getDepartments().getDepartment().equals(target.getDepartments().getDepartment())) {
+        if (!isEqaulDepartment(loggedInUser, target)) {
             throw new NoPermission();
         }
 
-        if (!loggedInUser.getUserId().equals(target.getProfessor().getUserId())){
+        if (!isMine(loggedInUser, target)){
             throw new NoPermission();
         }
 
         lectureService.editLectureInformation(target, form);
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_UPDATE.getDescription());
+    }
+
+    private static boolean isMine(Users loggedInUser, Lecture target) {
+        return loggedInUser.getUserId().equals(target.getProfessor().getUserId());
+    }
+
+    private static boolean isEqaulDepartment(Users loggedInUser, Lecture target) {
+        String loginUserDepartment = loggedInUser.getDepartments().getDepartment();
+        String lectureRegistDepartment = target.getDepartments().getDepartment();
+        return loginUserDepartment.equals(lectureRegistDepartment);
     }
 
 

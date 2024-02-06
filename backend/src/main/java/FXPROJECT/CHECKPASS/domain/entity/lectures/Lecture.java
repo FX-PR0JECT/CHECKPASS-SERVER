@@ -31,7 +31,7 @@ public class Lecture {
     @Column(nullable = false, length = 20)
     private String lectureName;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(nullable = false)
     private List<LectureTimeCode> lectureTimeCode;
 
