@@ -33,10 +33,6 @@ public class LectureRegisterForm {
 
     private DepartmentsEnum departments;
 
-    private List<Integer> lectureTimes;
-
-    private List<String> lectureDays;
-
-    private List<String> lectureStartTime;
+    private LectureTimeSource lectureTimeSource;
 
 }

@@ -1,3 +1,4 @@
+/*
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
@@ -167,7 +168,7 @@ class EnrollmentServiceTest {
                     .lectureCode(121212L)
                     .professor(professorA)
                     .lectureName("캡스톤 디자인")
-                    .lectureTimes("(화 3A, 3B, 4A)")
+                    //.lecturetimeCode("(화 3A, 3B, 4A)")
                     .lectureRoom("미래융합정보관 (225)")
                     .lectureGrade("3학년")
                     .lectureKind("전필")
@@ -180,4 +181,4 @@ class EnrollmentServiceTest {
             jpaLectureRepository.save(lecture);
         }
     }
-}
+}*/

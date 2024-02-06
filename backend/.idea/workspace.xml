@@ -5,16 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/enums/DaysEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/CheckpassApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/CommonMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/constant/ErrorCode.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/common/exception/advice/ExceptionAdvice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/resolver/LoginUserArgumentResolver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/utils/ResultFormUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/common/utils/ResultFormUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ConfigConst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/constant/ConfigConst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/common/searchCondition/users/OrderCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture$LectureBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture$LectureBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/LectureController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/controller/LectureController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/lectures/LectureService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FXPROJECT/CHECKPASS/web/service/lectures/LectureService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QEnrollment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/generated/FXPROJECT/CHECKPASS/domain/entity/lectures/QLecture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity/lectures/Lecture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LectureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LectureController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/lectures/register/LectureRegisterForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/common/ConnectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/common/ConnectionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaEnrollmentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaEnrollmentRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/domain/repository/JpaLectureRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/EnrollmentServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FXPROJECT/CHECKPASS/web/service/lectures/LectureServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,11 +86,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
-        <option value="Enum" />
         <option value="Interface" />
         <option value="AnnotationType" />
         <option value="Class" />
+        <option value="Enum" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -98,38 +113,41 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.backend [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LectureServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.CheckpassApplication.executor&quot;: &quot;Run&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/yeongwoonshin/Desktop/CHECKPASS-SERVER/backend/build.gradle&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;c7ac23d1d130433821ce3a3ae6260f57&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.backend [build].executor": "Run",
+    "Gradle.backend [clean].executor": "Run",
+    "JUnit.LectureCodeUtilsTest.executor": "Run",
+    "JUnit.LectureCodeUtilsTest.transferCode.executor": "Run",
+    "JUnit.LectureServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CheckpassApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/yeongwoonshin/Desktop/CHECKPASS-SERVER/backend/build.gradle",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "모듈",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "spring.configuration.checksum": "c7ac23d1d130433821ce3a3ae6260f57",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/entity" />
@@ -140,6 +158,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="FXPROJECT.CHECKPASS.web.common.utils" />
       <recent name="FXPROJECT.CHECKPASS.web.service.lectures" />
       <recent name="FXPROJECT.CHECKPASS.web.service.users" />
       <recent name="FXPROJECT.CHECKPASS.domain.repository" />
@@ -156,29 +175,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CheckpassApplication">
-    <configuration name="backend [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="JUnit.LectureCodeUtilsTest">
     <configuration name="backend [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -201,17 +198,33 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="LectureServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LectureCodeUtilsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.service.lectures.*" />
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.common.utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.service.lectures" />
-      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.service.lectures.LectureServiceTest" />
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.common.utils" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtilsTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LectureCodeUtilsTest.transferCode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CHECKPASS-SERVER.backend.CHECKPASS.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FXPROJECT.CHECKPASS.web.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FXPROJECT.CHECKPASS.web.common.utils" />
+      <option name="MAIN_CLASS_NAME" value="FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtilsTest" />
+      <option name="METHOD_NAME" value="transferCode" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -259,11 +272,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LectureCodeUtilsTest" />
         <item itemvalue="Spring Boot.CheckpassApplication" />
-        <item itemvalue="Gradle.backend [clean]" />
-        <item itemvalue="JUnit.LectureServiceTest" />
-        <item itemvalue="Gradle.backend [build]" />
         <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="Gradle.backend [clean]" />
+        <item itemvalue="JUnit.LectureCodeUtilsTest.transferCode" />
       </list>
     </recent_temporary>
   </component>
@@ -327,7 +340,8 @@
       <workItem from="1706860146262" duration="40000" />
       <workItem from="1706860413530" duration="93000" />
       <workItem from="1706864661156" duration="229000" />
-      <workItem from="1707191889044" duration="258000" />
+      <workItem from="1707191889044" duration="4569000" />
+      <workItem from="1707196724975" duration="1801000" />
     </task>
     <servers />
   </component>

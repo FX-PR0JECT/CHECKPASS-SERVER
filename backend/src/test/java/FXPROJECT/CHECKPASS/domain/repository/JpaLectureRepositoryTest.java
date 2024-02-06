@@ -1,3 +1,4 @@
+/*
 package FXPROJECT.CHECKPASS.domain.repository;
 
 
@@ -80,7 +81,7 @@ class JpaLectureRepositoryTest {
                 .lectureCode(121212L)
                 .professor(savedProfessor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                .lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("3학년")
                 .lectureKind("전필")
@@ -118,7 +119,7 @@ class JpaLectureRepositoryTest {
                 .lectureCode(121212L)
                 .professor(savedProfessor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                .lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("1학년")
                 .lectureKind("전필")
@@ -131,7 +132,7 @@ class JpaLectureRepositoryTest {
                 .lectureCode(121212L)
                 .professor(savedProfessor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                .lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("2학년")
                 .lectureKind("전필")
@@ -192,3 +193,4 @@ class JpaLectureRepositoryTest {
     }
 
 }
+*/

@@ -19,8 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 
 @Slf4j
@@ -39,7 +37,7 @@ public class LectureController {
      * @return 성공 : 등록이 완료 되었습니다. 실패 : Database에 이미 등록된 강의\n해결 방법 : 확인 후 재 요청
      */
     @PostMapping("/registerLecture")
-    public ResultForm registerLecture(@RequestBody @Validated LectureRegisterForm form, BindingResult bindingResult){
+    public ResultForm registerLecture(@RequestBody @Validated Lecture form, BindingResult bindingResult){
         Lecture lecture = lectureService.transferToLecture(form);
 
         if(!lectureService.registerLecture(lecture)){
@@ -65,7 +63,7 @@ public class LectureController {
         SimpleLectureInformation simpleLecture = new SimpleLectureInformation().builder()
                 .lectureName(target.getLectureName())
                 .professorName(target.getProfessor().getUserName())
-                .lectureTimes(target.getLectureTimes())
+                .lectureTimes(target.getLectureTimeCode())
                 .lectureRoom(target.getLectureRoom())
                 .build();
 

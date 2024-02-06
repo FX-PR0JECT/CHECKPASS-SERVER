@@ -30,7 +30,7 @@ public class Lecture {
     private String lectureName;
 
     @Column(nullable = false)
-    private String lectureTimes;
+    private String lectureTimeCode;
 
     @Column(nullable = false, length = 20)
     private String lectureRoom;

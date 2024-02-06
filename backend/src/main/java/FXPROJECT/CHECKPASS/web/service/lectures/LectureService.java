@@ -94,7 +94,7 @@ public class LectureService {
                     .lectureGrades(lecture.getLectureGrades())
                     .professorName(lecture.getProfessor().getUserName())
                     .lectureRoom(lecture.getLectureRoom())
-                    .lectureTimes(lecture.getLectureTimes())
+                    .lectureTimes(lecture.getLectureTimeCode())
                     .lectureFull(lecture.getLectureFull())
                     .lectureCount(lecture.getLectureCount())
                     .dayOrNight(lecture.getDayOrNight())
@@ -148,8 +148,9 @@ public class LectureService {
         return jpaLectureRepository.existsByLectureCode(lectureCode);
     }
 
-    public Lecture transferToLecture(LectureRegisterForm form) {
-        Optional<Departments> departments = getDepartments(form.getDepartments());
+    public Lecture transferToLecture(Lecture form) {
+
+        Optional<Departments> departments = getDepartments(DepartmentsEnum.valueOf(form.getDepartments().getDepartment()));
 
         if (departments.isEmpty()){
             log.info("departments Error");
@@ -157,13 +158,13 @@ public class LectureService {
 
         Lecture lecture = new Lecture().builder()
                 .lectureCode(form.getLectureCode())
-                .professor((Professor)userService.getUser(form.getProfessorId()))
+                .professor(form.getProfessor())
                 .lectureName(form.getLectureName())
                 .lectureGrade(form.getLectureGrade())
-                .lectureTimes(form.getLectureTimes())
+                .lectureTimeCode(form.getLectureTimeCode())
                 .lectureRoom(form.getLectureRoom())
                 .lectureGrades(form.getLectureGrades())
-                .lectureKind(form.getLectureKind().getKind())
+                .lectureKind(form.getLectureKind())
                 .lectureFull(form.getLectureFull())
                 .dayOrNight(form.getDayOrNight())
                 .departments(departments.get())
@@ -186,7 +187,7 @@ public class LectureService {
 
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
         target.setLectureName(form.getLectureName());
-        target.setLectureTimes(form.getLectureTimes());
+        target.setLectureTimeCode(form.getLectureTimes());
         target.setLectureRoom(form.getLectureRoom());
         target.setLectureGrade(form.getLectureGrade());
         target.setLectureKind(form.getLectureKind().getKind());

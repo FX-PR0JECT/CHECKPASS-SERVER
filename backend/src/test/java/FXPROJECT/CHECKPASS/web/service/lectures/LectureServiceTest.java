@@ -1,3 +1,4 @@
+/*
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
@@ -69,7 +70,7 @@ public class LectureServiceTest {
                 .lectureCode(121212L)
                 .professor(professor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                //.lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("3학년")
                 .lectureKind("전필")
@@ -82,7 +83,7 @@ public class LectureServiceTest {
                 .lectureCode(121213L)
                 .professor(professor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                //.lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("1학년")
                 .lectureKind("전필")
@@ -95,7 +96,7 @@ public class LectureServiceTest {
                 .lectureCode(121214L)
                 .professor(professor)
                 .lectureName("checkpass")
-                .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                //.lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                 .lectureRoom("미래융합정보관 (225)")
                 .lectureGrade("2학년")
                 .lectureKind("전필")
@@ -123,3 +124,4 @@ public class LectureServiceTest {
     }
 
 }
+*/

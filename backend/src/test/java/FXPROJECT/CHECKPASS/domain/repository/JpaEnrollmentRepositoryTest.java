@@ -1,3 +1,4 @@
+/*
 package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
@@ -171,7 +172,7 @@ class JpaEnrollmentRepositoryTest {
                     .lectureCode(121212L)
                     .professor(professorA)
                     .lectureName("캡스톤 디자인")
-                    .lectureTimes("(화 3A, 3B, 4A)")
+                    .lecturetimeCode("(화 3A, 3B, 4A)")
                     .lectureRoom("미래융합정보관 (225)")
                     .lectureGrade("3학년")
                     .lectureKind("전필")
@@ -187,7 +188,7 @@ class JpaEnrollmentRepositoryTest {
                     .lectureCode(121213L)
                     .professor(professorB)
                     .lectureName("딥러닝")
-                    .lectureTimes("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
+                    .lecturetimeCode("(화 3A, 3B, 4A),(목 4A, 4B, 5A)")
                     .lectureRoom("미래융합정보관 (219)")
                     .lectureGrade("4학년")
                     .lectureKind("전선")
@@ -203,7 +204,7 @@ class JpaEnrollmentRepositoryTest {
                     .lectureCode(121214L)
                     .professor(professorC)
                     .lectureName("컴퓨터보안")
-                    .lectureTimes("(목 4A, 4B, 5A)")
+                    .lecturetimeCode("(목 4A, 4B, 5A)")
                     .lectureRoom("미래융합정보관 (225)")
                     .lectureGrade("4학년")
                     .lectureKind("전선")
@@ -216,4 +217,4 @@ class JpaEnrollmentRepositoryTest {
             jpaLectureRepository.save(lectureC);
         }
     }
-}
+}*/

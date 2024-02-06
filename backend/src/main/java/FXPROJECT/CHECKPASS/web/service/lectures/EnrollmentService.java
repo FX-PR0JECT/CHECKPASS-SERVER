@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
-import FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NumberOfStudentsExceeded;
 import FXPROJECT.CHECKPASS.domain.common.exception.RegisteredForLecture;
@@ -108,7 +107,7 @@ public class EnrollmentService {
                     .lectureGrades(lecture.getLectureGrades())
                     .professorName(lecture.getProfessor().getUserName())
                     .lectureRoom(lecture.getLectureRoom())
-                    .lectureTimes(lecture.getLectureTimes())
+                    .lectureTimes(lecture.getLectureTimeCode())
                     .lectureFull(lecture.getLectureFull())
                     .lectureCount(lecture.getLectureCount())
                     .dayOrNight(lecture.getDayOrNight())
