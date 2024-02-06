@@ -1,12 +1,13 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LectureTimeSource {
 
     private List<String> lectureDays;

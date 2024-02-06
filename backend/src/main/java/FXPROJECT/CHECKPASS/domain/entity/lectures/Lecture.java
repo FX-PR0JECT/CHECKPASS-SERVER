@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.List;
+
 /**
  * CHECKPASS-19
  * Enrollment System DB 구축
@@ -29,8 +31,9 @@ public class Lecture {
     @Column(nullable = false, length = 20)
     private String lectureName;
 
+    @OneToMany
     @Column(nullable = false)
-    private String lectureTimeCode;
+    private List<LectureTimeCode> lectureTimeCode;
 
     @Column(nullable = false, length = 20)
     private String lectureRoom;

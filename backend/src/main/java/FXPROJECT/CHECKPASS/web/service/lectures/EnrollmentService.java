@@ -107,7 +107,7 @@ public class EnrollmentService {
                     .lectureGrades(lecture.getLectureGrades())
                     .professorName(lecture.getProfessor().getUserName())
                     .lectureRoom(lecture.getLectureRoom())
-                    .lectureTimes(lecture.getLectureTimeCode())
+                    //.lectureTimes(lecture.getLectureTimeCode())
                     .lectureFull(lecture.getLectureFull())
                     .lectureCount(lecture.getLectureCount())
                     .dayOrNight(lecture.getDayOrNight())

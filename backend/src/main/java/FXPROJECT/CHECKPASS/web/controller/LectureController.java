@@ -63,7 +63,7 @@ public class LectureController {
         SimpleLectureInformation simpleLecture = new SimpleLectureInformation().builder()
                 .lectureName(target.getLectureName())
                 .professorName(target.getProfessor().getUserName())
-                .lectureTimes(target.getLectureTimeCode())
+                //.lectureTimes(target.getLectureTimeCode())
                 .lectureRoom(target.getLectureRoom())
                 .build();
 

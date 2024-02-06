@@ -94,7 +94,7 @@ public class LectureService {
                     .lectureGrades(lecture.getLectureGrades())
                     .professorName(lecture.getProfessor().getUserName())
                     .lectureRoom(lecture.getLectureRoom())
-                    .lectureTimes(lecture.getLectureTimeCode())
+                    //.lectureTimes(lecture.getLectureTimeCode())
                     .lectureFull(lecture.getLectureFull())
                     .lectureCount(lecture.getLectureCount())
                     .dayOrNight(lecture.getDayOrNight())
@@ -187,7 +187,7 @@ public class LectureService {
 
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
         target.setLectureName(form.getLectureName());
-        target.setLectureTimeCode(form.getLectureTimes());
+        //target.setLectureTimeCode(form.getLectureTimes());
         target.setLectureRoom(form.getLectureRoom());
         target.setLectureGrade(form.getLectureGrade());
         target.setLectureKind(form.getLectureKind().getKind());

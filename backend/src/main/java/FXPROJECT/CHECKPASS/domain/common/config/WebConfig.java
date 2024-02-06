@@ -1,8 +1,13 @@
 package FXPROJECT.CHECKPASS.domain.common.config;
 
+import FXPROJECT.CHECKPASS.domain.common.converter.LectureRegisterFormToLectureConverter;
 import FXPROJECT.CHECKPASS.domain.common.intercepter.LoginCheckInterceptor;
+import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.resolver.LoginUserArgumentResolver;
+import FXPROJECT.CHECKPASS.web.service.users.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,7 +18,11 @@ import java.util.List;
 import static FXPROJECT.CHECKPASS.domain.common.constant.ConfigConst.*;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+
+    private final UserService userService;
+    private final JpaDepartmentRepository jpaDepartmentRepository;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -35,5 +44,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginUserArgumentResolver());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new LectureRegisterFormToLectureConverter(userService,jpaDepartmentRepository));
     }
 }

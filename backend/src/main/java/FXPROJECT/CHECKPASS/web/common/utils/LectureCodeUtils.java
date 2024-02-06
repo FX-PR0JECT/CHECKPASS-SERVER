@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.common.utils;
 
+import FXPROJECT.CHECKPASS.domain.entity.lectures.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.enums.DaysEnum;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import java.util.List;
 @Slf4j
 public class LectureCodeUtils {
 
-    public List<String> getLectureCode(LectureTimeSource lectureTimeSource){
+    public List<LectureTimeCode> getLectureCode(LectureTimeSource lectureTimeSource){
 
         List<String> lectureDayCodeList = getLectureDaysCode(lectureTimeSource.getLectureDays());
 
@@ -18,10 +19,17 @@ public class LectureCodeUtils {
 
         List<String> lectureTimesCodeList = getLectureTimesCodeList(lectureTimeSource.getLectureTimes());
 
-        List<String> timeCodeList = new ArrayList<>();
+        List<LectureTimeCode> timeCodeList = new ArrayList<>();
+
+        LectureTimeCode lectureTimeCode = new LectureTimeCode();
 
         for (int i = 0 ; i < lectureDayCodeList.size(); i++){
-            timeCodeList.add(lectureDayCodeList.get(i) + lectureStartTimeCodeList.get(i) + lectureTimesCodeList.get(i));
+
+            String timeCode = lectureDayCodeList.get(i) + lectureStartTimeCodeList.get(i) + lectureTimesCodeList.get(i);
+
+            lectureTimeCode.setLectureTimeCode(timeCode);
+
+            timeCodeList.add(lectureTimeCode);
         }
 
         return timeCodeList;
