@@ -39,4 +39,8 @@ public class LectureRegisterForm {
 
     private List<Float> lectureTimes;
 
+    private String division;
+
+    private String yearSemester;
+
 }
