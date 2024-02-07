@@ -60,4 +60,10 @@ public class Lecture {
     @Enumerated(EnumType.STRING)
     private Departments departments;
 
+    @Column(nullable = false)
+    private String division;
+
+    @Column(nullable = false)
+    private String yearSemester;
+
 }
