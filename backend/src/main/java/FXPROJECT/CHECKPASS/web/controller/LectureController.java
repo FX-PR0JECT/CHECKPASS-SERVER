@@ -43,7 +43,7 @@ public class LectureController {
     @PostMapping
     public ResultForm registerLecture(@LoginUser Users LoginUser, @RequestBody @Validated LectureRegisterForm form, BindingResult bindingResult){
 
-        if (LoginUser.getUserJob() != Job.PROFESSOR){
+        if (LoginUser.getUserJob() == Job.STUDENTS){
             throw new NoPermission();
         }
 

@@ -44,13 +44,15 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
                 .lectureName(form.getLectureName())
                 .lectureRoom(form.getLectureRoom())
                 .lectureGrade(form.getLectureGrade())
-                .lectureKind(String.valueOf(form.getLectureKind()))
+                .lectureKind(form.getLectureKind().getKind())
                 .lectureGrades(form.getLectureGrades())
                 .lectureFull(form.getLectureFull())
                 .lectureCount(form.getLectureCount())
                 .dayOrNight(form.getDayOrNight())
                 .departments(departments.get())
                 .lectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource))
+                .division(form.getDivision())
+                .yearSemester(form.getYearSemester())
                 .build();
         return lecture;
     }
