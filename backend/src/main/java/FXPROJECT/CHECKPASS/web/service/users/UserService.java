@@ -49,12 +49,21 @@ public class UserService {
     @Transactional
     public Users join(Users user){
 
+        /*
+            TO 유저가 기존에 존재하는지 확인한다. 높은 추상화 단계
+            존재하지 않는다면 현재 날짜를 기입한다. 낮은 추상화 단계
+            가입한다. 높은 추상화 단계
+         */
+
+        //존재확인
         if (existsUser(user.getUserId())){
             throw new ExistingUSER();
         }
 
+        //회원가입 날짜 기입하기
         user.setJoinDate(LocalDateTime.now().withNano(0));
 
+        //가입하기
         return jpaUsersRepository.save(user);
     }
 
@@ -170,12 +179,12 @@ public class UserService {
         if (target instanceof Professor){
             Professor downcastProfessor = (Professor) target;
             ProfessorUpdateForm updateParam = (ProfessorUpdateForm) param;
-            downcastProfessor.setHIREDATE(updateParam.getUpdateHireDate());
+            downcastProfessor.setHireDate(updateParam.getUpdateHireDate());
             return downcastProfessor;
         } else if (target instanceof Staff) {
             Staff downcastStaff = (Staff) target;
             ProfessorUpdateForm updateParam = (ProfessorUpdateForm) param;
-            downcastStaff.setHIREDATE(updateParam.getUpdateHireDate());
+            downcastStaff.setHireDate(updateParam.getUpdateHireDate());
             return downcastStaff;
         }else{
             return target;
@@ -228,7 +237,7 @@ public class UserService {
                         .userJob(professorSignUpForm.getSignUpJob())
                         .departments(departments.get())
                         .userName(professorSignUpForm.getSignUpName())
-                        .HIREDATE(professorSignUpForm.getSignUpHireDate())
+                        .hireDate(professorSignUpForm.getSignUpHireDate())
                         .account(account)
                         .build();
                 return professor;
@@ -245,7 +254,7 @@ public class UserService {
                         .userJob(professorSignUpForm.getSignUpJob())
                         .departments(departments.get())
                         .userName(professorSignUpForm.getSignUpName())
-                        .HIREDATE(professorSignUpForm.getSignUpHireDate())
+                        .hireDate(professorSignUpForm.getSignUpHireDate())
                         .account(account)
                         .build();
                 return staff;

@@ -63,7 +63,11 @@ public class LectureController {
     }
 
     private static boolean isEqualDepartment(Users LoginUser, LectureRegisterForm form) {
-        return LoginUser.getDepartments().getDepartment().equals(form.getDepartments().getDepartment());
+
+        String userDepartment = LoginUser.getDepartments().getDepartment();
+        String LectureDepartment = form.getDepartments().getDepartment();
+
+        return userDepartment.equals(LectureDepartment);
     }
 
     /**

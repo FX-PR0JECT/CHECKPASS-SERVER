@@ -3,6 +3,7 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
@@ -15,9 +16,7 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LoginUserForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleUserInformation;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.*;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +72,31 @@ public class UserController {
             throw new NoSearchResultsFound();
         }
 
-        return ResultFormUtils.getSuccessResultForm(user);
+        if (user.getUserJob() == Job.STUDENTS){
+            Students studuent = (Students) user;
+            StudentInformation studentInformation = new StudentInformation().builder()
+                    .userId(studuent.getUserId())
+                    .userName(studuent.getUserName())
+                    .userJob(studuent.getUserJob())
+                    .userCollege(studuent.getDepartments().getColleges().getCollege())
+                    .userDepartment(studuent.getDepartments().getDepartment())
+                    .studentGrade(studuent.getStudentGrade())
+                    .studentSemester(studuent.getStudentSemester())
+                    .dayOrNight(studuent.getDayOrNight())
+                    .build();
+            return ResultFormUtils.getSuccessResultForm(studentInformation);
+        }else{
+            Professor professor = (Professor) user;
+            ProfessorInformation professorInformation = new ProfessorInformation().builder()
+                    .userId(professor.getUserId())
+                    .userName(professor.getUserName())
+                    .userJob(professor.getUserJob())
+                    .userCollege(professor.getDepartments().getColleges().getCollege())
+                    .userDepartment(professor.getDepartments().getDepartment())
+                    .hireDate(professor.getHireDate())
+                    .build();
+            return ResultFormUtils.getSuccessResultForm(professorInformation);
+        }
     }
 
     /**

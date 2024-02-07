@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -12,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @DiscriminatorValue("STUDENTS")
+@NoArgsConstructor
 public class Students extends Users{
 
     private String studentGrade;
@@ -22,7 +24,4 @@ public class Students extends Users{
     @Column(length = 3)
     private String studentSemester;
 
-    public Students() {
-
-    }
 }

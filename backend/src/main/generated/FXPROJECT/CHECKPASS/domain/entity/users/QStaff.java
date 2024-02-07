@@ -30,7 +30,7 @@ public class QStaff extends EntityPathBase<Staff> {
     // inherited
     public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
 
-    public final StringPath HIREDATE = createString("HIREDATE");
+    public final StringPath hireDate = createString("hireDate");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> joinDate;
