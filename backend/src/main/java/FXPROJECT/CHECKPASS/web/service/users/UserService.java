@@ -196,7 +196,7 @@ public class UserService {
 
     private Users updateAllStudent(Users target, StudentUpdateForm param) {
 
-        Optional<Departments> departments = getDepartments(param.getUpdateDepartment());
+        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
 
         if (departments.isEmpty()){
             log.info("departments Error");
