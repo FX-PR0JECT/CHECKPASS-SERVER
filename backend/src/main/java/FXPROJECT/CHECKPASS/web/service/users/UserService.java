@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
@@ -162,13 +163,13 @@ public class UserService {
 
         log.info("param data : {} " , param.getUpdateDepartment());
 
-        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(param.getUpdateDepartment());
-
-        log.info("update Professor : {}" , departments.get().getDepartment());
+        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
 
         if (departments.isEmpty()){
             log.info("departments Error");
         }
+
+        log.info("update Professor : {}" , departments.get().getDepartment());
 
         target.setDepartments(departments.get());
         target.setUserName(param.getUpdateName());
