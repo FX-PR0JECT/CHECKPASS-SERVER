@@ -1,12 +1,16 @@
 package FXPROJECT.CHECKPASS.web.form.requestForm.users.update;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProfessorUpdateForm extends UpdateForm {
 
-    private String hireDate;
+    private String updateHireDate;
 
 }

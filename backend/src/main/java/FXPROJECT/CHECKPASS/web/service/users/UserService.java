@@ -1,8 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
-import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
-import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
@@ -16,7 +14,7 @@ import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaUsersRepository;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.ProfessorUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
@@ -174,7 +172,6 @@ public class UserService {
 
         target.setDepartments(departments.get());
         target.setUserName(param.getUpdateName());
-        target.getAccount().setPassword(param.getUpdatePassword());
 
         if (target instanceof Professor){
             Professor downcastProfessor = (Professor) target;
@@ -206,8 +203,6 @@ public class UserService {
 
         target.setDepartments(departments.get());
         target.setUserName(param.getUpdateName());
-        target.getAccount().setPassword(param.getUpdatePassword());
-
 
         Students downcastStudent = (Students) target;
         StudentUpdateForm updateParam = (StudentUpdateForm) param;

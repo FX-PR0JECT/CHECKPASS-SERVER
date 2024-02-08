@@ -9,7 +9,7 @@ import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.users.JpaAccountRepository;
-import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.ProfessorUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

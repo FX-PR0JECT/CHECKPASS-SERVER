@@ -12,7 +12,7 @@ import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorSignUpForm;
-import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.ProfessorUpdateForm;
+import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.ProfessorUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.SignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.signup.StudentSignUpForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.users.update.StudentUpdateForm;
