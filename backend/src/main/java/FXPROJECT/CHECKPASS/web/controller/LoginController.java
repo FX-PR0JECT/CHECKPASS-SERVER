@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
-import FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode;
 import FXPROJECT.CHECKPASS.domain.common.constant.SessionConst;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
-import static FXPROJECT.CHECKPASS.domain.common.constant.State.*;
 
 @Slf4j
 @RestController

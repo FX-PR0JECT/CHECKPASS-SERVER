@@ -9,13 +9,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentUpdateForm extends UpdateForm {
+    public class StudentUpdateForm extends UpdateForm {
 
     private String updateStudentGrade;
 
     private String updateDayOrNight;
 
+    // 학기 자동 ++ , state [휴학] -> 고려 해볼것
     private String updateStudentSemester;
-
 
 }
