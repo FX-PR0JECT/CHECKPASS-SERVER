@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd192827-d335-48a2-83a7-b3307843636a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/domain/common/intercepter/LoginCheckInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/StudentUpdateForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/StudentUpdateForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FXPROJECT/CHECKPASS/web/form/requestForm/users/update/UpdateForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,7 +322,7 @@
       <workItem from="1707289385744" duration="98000" />
       <workItem from="1707289727811" duration="590000" />
       <workItem from="1707292244480" duration="2314000" />
-      <workItem from="1707303618600" duration="2582000" />
+      <workItem from="1707303618600" duration="2791000" />
     </task>
     <servers />
   </component>
