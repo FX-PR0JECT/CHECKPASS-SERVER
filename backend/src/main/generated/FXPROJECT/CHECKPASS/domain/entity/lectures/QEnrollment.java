@@ -28,6 +28,8 @@ public class QEnrollment extends EntityPathBase<Enrollment> {
 
     public final FXPROJECT.CHECKPASS.domain.entity.users.QStudents student;
 
+    public final StringPath yearSemester = createString("yearSemester");
+
     public QEnrollment(String variable) {
         this(Enrollment.class, forVariable(variable), INITS);
     }
@@ -47,7 +49,7 @@ public class QEnrollment extends EntityPathBase<Enrollment> {
     public QEnrollment(Class<? extends Enrollment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.lecture = inits.isInitialized("lecture") ? new QLecture(forProperty("lecture"), inits.get("lecture")) : null;
-        this.student = inits.isInitialized("student") ? new FXPROJECT.CHECKPASS.domain.entity.users.QStudents(forProperty("student"), inits.get("student")) : null;
+        this.student = inits.isInitialized("student") ? new FXPROJECT.CHECKPASS.domain.entity.users.QStudents(forProperty("student")) : null;
     }
 
 }

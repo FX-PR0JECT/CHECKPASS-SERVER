@@ -62,4 +62,15 @@ public class EnrollmentController {
     public ResultForm getEnrollmentList(@LoginUser Users loggedInUser){
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getEnrollmentList(loggedInUser));
     }
+
+
+    /**
+     * 수강이력 조회 (연도, 학기 정보 포함)
+     * @param loggedInUser 로그인 유저
+     * @return 로그인 유저의 수강이력 목록
+     */
+    @GetMapping
+    public ResultForm getCourseList(@LoginUser Users loggedInUser) {
+        return ResultFormUtils.getSuccessResultForm(enrollmentService.getCourseList(loggedInUser));
+    }
 }

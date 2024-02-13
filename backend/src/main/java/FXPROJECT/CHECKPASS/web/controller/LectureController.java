@@ -35,7 +35,7 @@ public class LectureController {
 
     /**
      * 강의 등록
-     * URL : /lectures/registerLecture
+     * URL : /lectures
      * @param form 강의 등록 폼
      * @param bindingResult bindingResult 검증
      * @return 성공 : 등록이 완료 되었습니다. 실패 : Database에 이미 등록된 강의\n해결 방법 : 확인 후 재 요청
@@ -106,7 +106,7 @@ public class LectureController {
 
     /**
      * 강의 목록 조회 (조건)
-     * URL : /lectures/lectureList
+     * URL : /lectures
      * @param condition 강의 검색 조건
      * @return 조건에 따른 강의 목록
      */

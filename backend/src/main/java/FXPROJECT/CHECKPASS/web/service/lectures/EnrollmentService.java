@@ -15,11 +15,11 @@ import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
@@ -33,6 +33,7 @@ public class EnrollmentService {
     private final JpaLectureRepository jpaLectureRepository;
     private final LectureService lectureService;
     private final QueryRepository queryRepository;
+    private final ConversionService conversionService;
 
     /**
      * 수강신청
@@ -94,7 +95,7 @@ public class EnrollmentService {
      */
     public List<LectureInformation> getEnrollmentList(Users loggedInUser){
 
-        List<Lecture> enrollmentList =  queryRepository.getEnrollmentList(loggedInUser.getUserId());
+        List<Lecture> enrollmentList =  queryRepository.getEnrollmentList((Students) loggedInUser);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -119,6 +120,37 @@ public class EnrollmentService {
         return lectureInformationList;
     }
 
+    /**
+     * 수강이력 조회
+     * @param loggedInUser 로그인 유저
+     * @return 학생의 연도학기별 수강이력
+     */
+    public Map<String, List<LectureInformation>> getCourseList(Users loggedInUser){
+
+        Comparator<String> comparator = Collections.reverseOrder();
+        Map<String, List<LectureInformation>> enrollmentList = new TreeMap<>(comparator);
+
+        List<String> yearSemesterListOfStudent = queryRepository.getYearSemesterList((Students) loggedInUser);
+        List<Enrollment> enrollmentListOfStudent = queryRepository.getCourseList((Students)loggedInUser);
+
+        for (String yearSemester : yearSemesterListOfStudent) {
+
+            List<LectureInformation> lectureList = new ArrayList<>();
+
+            for (Enrollment enrollment : enrollmentListOfStudent) {
+                if (yearSemester.equals(enrollment.getYearSemester())){
+
+                    Lecture lecture = enrollment.getLecture();
+                    LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
+
+                    lectureList.add(lectureInformation);
+                }
+            }
+            enrollmentList.put(yearSemester, lectureList);
+        }
+
+        return enrollmentList;
+    }
 
     private Long idGenerator(Long lectureCode, Users loggedInUser){
         return Long.valueOf(loggedInUser.getUserId().toString() + lectureCode.toString());

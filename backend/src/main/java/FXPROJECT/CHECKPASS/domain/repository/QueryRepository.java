@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
+import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,14 +123,15 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Lecture> getEnrollmentList(Long loggedInUserId) {
+    public List<Lecture> getEnrollmentList(Students student) {
 
-        log.info("loggedInUserId : {}", loggedInUserId);
+        Long studentId = student.getUserId();
+        String semester = student.getStudentSemester();
 
         List<Lecture> result = query
                 .select(enrollment.lecture)
                 .from(enrollment)
-                .where(checkEnrollment(loggedInUserId))
+                .where(checkEnrollment(studentId), checkYearSemester(semester))
                 .fetch();
 
         if (result.isEmpty()){
@@ -160,11 +163,47 @@ public class QueryRepository {
         return result;
     }
 
+    public List<String> getYearSemesterList(Students student){
+
+        List<String> result = query
+                .select(enrollment.yearSemester).distinct()
+                .from(enrollment)
+                .where(likeStudentId(student.getUserId()))
+                .fetch();
+
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+
+        return result;
+    }
+
+    public List<Enrollment> getCourseList(Students student){
+
+        List<Enrollment> result = query
+                .select(enrollment)
+                .from(enrollment)
+                .where(likeStudentId(student.getUserId()))
+                .fetch();
+
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+
+        return result;
+    }
+
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
         }
         return null;
+    }
+
+    private BooleanExpression checkYearSemester(String semester){
+        String yearSemester = LocalDate.now().getYear() + "년도 " + semester;
+
+        return enrollment.yearSemester.eq(yearSemester);
     }
 
     private BooleanExpression eqLectureGrade(String lectureGrade) {
@@ -254,6 +293,13 @@ public class QueryRepository {
     private BooleanExpression likeUserId(String userId){
         if (StringUtils.hasText(userId)){
             return students.userId.like(userId + "%");
+        }
+        return null;
+    }
+
+    private BooleanExpression likeStudentId(Long studentId){
+        if (studentId != null && studentId > 0) {
+            return enrollment.enrollmentId.like(studentId + "%");
         }
         return null;
     }

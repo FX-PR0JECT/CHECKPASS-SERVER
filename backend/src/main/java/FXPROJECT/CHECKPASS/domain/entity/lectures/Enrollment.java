@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -15,16 +17,18 @@ public class Enrollment {
 
         @ManyToOne
         @JoinColumn(name = "student_id")
-        Students student;
+        private Students student;
 
         @JoinColumn(name = "lecture_code")
         @ManyToOne
-        Lecture lecture;
+        private Lecture lecture;
+
+        private String yearSemester;
 
         public Enrollment(Students student, Lecture lecture) {
                 this.student = student;
                 this.lecture = lecture;
                 this.enrollmentId = Long.valueOf(student.getUserId().toString() + lecture.getLectureCode().toString());
+                this.yearSemester = LocalDate.now().getYear() + "년도 " + student.getStudentSemester();
         }
-
 }
