@@ -1,9 +1,9 @@
 package FXPROJECT.CHECKPASS.domain.common.converter;
 
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
-import FXPROJECT.CHECKPASS.domain.entity.lectures.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.web.common.utils.ToLectureWordUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleLectureInformation;
-import org.hibernate.context.TenantIdentifierMismatchException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +26,7 @@ public class LectureToLectureSimpleInfoConverter implements Converter<Lecture, S
                 .professorName(lecture.getProfessor().getUserName())
                 .lectureRoom(lecture.getLectureRoom())
                 .lectureTimes(time)
+                .alphaTimeCodes(ToLectureWordUtils.TransferLectureWord(lecture.getLectureTimeCode()))
                 .build();
 
         return simpleInfo;

@@ -29,6 +29,8 @@ public class LectureInformation {
 
     private List<String> lectureTimes;
 
+    private List<String> alphaTimeCodes;
+
     private Integer lectureFull;
 
     private Integer lectureCount;
@@ -36,5 +38,9 @@ public class LectureInformation {
     private String dayOrNight;
 
     private String departments;
+
+    private String division;
+
+    private String yearSemester;
 
 }

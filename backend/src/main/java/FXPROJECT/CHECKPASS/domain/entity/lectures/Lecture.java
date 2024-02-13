@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.entity.lectures;
 
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import jakarta.persistence.*;

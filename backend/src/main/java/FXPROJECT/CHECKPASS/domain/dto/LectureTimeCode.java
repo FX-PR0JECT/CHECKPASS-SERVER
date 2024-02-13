@@ -1,4 +1,4 @@
-package FXPROJECT.CHECKPASS.domain.entity.lectures;
+package FXPROJECT.CHECKPASS.domain.dto;
 
 import jakarta.persistence.*;
 import lombok.Getter;

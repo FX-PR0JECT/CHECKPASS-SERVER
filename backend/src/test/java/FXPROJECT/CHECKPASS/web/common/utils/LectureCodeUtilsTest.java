@@ -1,6 +1,6 @@
 package FXPROJECT.CHECKPASS.web.common.utils;
 
-import FXPROJECT.CHECKPASS.domain.entity.lectures.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

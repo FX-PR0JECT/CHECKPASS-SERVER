@@ -19,6 +19,8 @@ public class SimpleLectureInformation {
 
     private List<String> lectureTimes;
 
+    private List<String> alphaTimeCodes;
+
     private String lectureRoom;
 
 }

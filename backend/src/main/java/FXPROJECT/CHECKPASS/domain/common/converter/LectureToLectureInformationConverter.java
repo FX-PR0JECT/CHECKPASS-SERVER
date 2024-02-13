@@ -1,7 +1,8 @@
 package FXPROJECT.CHECKPASS.domain.common.converter;
 
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
-import FXPROJECT.CHECKPASS.domain.entity.lectures.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.web.common.utils.ToLectureWordUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,9 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
                 .dayOrNight(lecture.getDayOrNight())
                 .departments(lecture.getDepartments().getDepartment())
                 .lectureTimes(time)
+                .alphaTimeCodes(ToLectureWordUtils.TransferLectureWord(lecture.getLectureTimeCode()))
+                .division(lecture.getDivision())
+                .yearSemester(lecture.getYearSemester())
                 .build();
 
         return lectureInformation;

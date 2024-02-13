@@ -1,4 +1,4 @@
-package FXPROJECT.CHECKPASS.domain.entity.lectures;
+package FXPROJECT.CHECKPASS.domain.dto;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QLectureTimeCode extends EntityPathBase<LectureTimeCode> {
 
-    private static final long serialVersionUID = 470091484L;
+    private static final long serialVersionUID = -941156005L;
 
     public static final QLectureTimeCode lectureTimeCode1 = new QLectureTimeCode("lectureTimeCode1");
 
