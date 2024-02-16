@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.users;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchDepartmentName;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
@@ -196,14 +197,18 @@ public class UserService {
 
     private Users updateAllStudent(Users target, StudentUpdateForm param) {
 
-        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
+        try{
+            Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
 
-        if (departments.isEmpty()){
-            log.info("departments Error");
+            if (departments.isEmpty()){
+                throw new NoSuchDepartmentName();
+            }
+
+            target.setDepartments(departments.get());
+            target.setUserName(param.getUpdateName());
+        }catch (Exception e){
+            throw new NoSuchDepartmentName();
         }
-
-        target.setDepartments(departments.get());
-        target.setUserName(param.getUpdateName());
 
         Students downcastStudent = (Students) target;
         StudentUpdateForm updateParam = (StudentUpdateForm) param;

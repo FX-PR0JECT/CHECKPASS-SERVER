@@ -85,6 +85,7 @@ public class ToLectureWordUtils {
             for(String timeword: timeWords){
 
                 LectureTimeWords lectureTimeWords = new LectureTimeWords();
+
                 List<String> wordList = new ArrayList<>();
 
                 int substring = Integer.parseInt(timeword.substring(0, 1));

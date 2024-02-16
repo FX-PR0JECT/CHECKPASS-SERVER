@@ -26,6 +26,8 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
 
+    public final StringPath division = createString("division");
+
     public final NumberPath<Long> lectureCode = createNumber("lectureCode", Long.class);
 
     public final NumberPath<Integer> lectureCount = createNumber("lectureCount", Integer.class);
@@ -42,9 +44,11 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public final StringPath lectureRoom = createString("lectureRoom");
 
-    public final ListPath<LectureTimeCode, QLectureTimeCode> lectureTimeCode = this.<LectureTimeCode, QLectureTimeCode>createList("lectureTimeCode", LectureTimeCode.class, QLectureTimeCode.class, PathInits.DIRECT2);
+    public final ListPath<FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode> lectureTimeCode = this.<FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode>createList("lectureTimeCode", FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode.class, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode.class, PathInits.DIRECT2);
 
     public final FXPROJECT.CHECKPASS.domain.entity.users.QProfessor professor;
+
+    public final StringPath yearSemester = createString("yearSemester");
 
     public QLecture(String variable) {
         this(Lecture.class, forVariable(variable), INITS);

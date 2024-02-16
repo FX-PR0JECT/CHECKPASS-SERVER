@@ -188,4 +188,10 @@ public class ExceptionAdvice {
         return ResultFormUtils.getFailResultForm(ErrorCode.OVERLAPPING_HOURS);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchDepartmentName.class)
+    public ResultForm badArgument(Exception e){
+        return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_DEPARTMENT_NAME);
+    }
+
 }
