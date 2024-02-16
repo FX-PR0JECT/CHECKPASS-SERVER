@@ -162,18 +162,19 @@ public class UserService {
      */
     private Users updateAllProfessorAndStaff(Users target, ProfessorUpdateForm param) {
 
-        log.info("param data : {} " , param.getUpdateDepartment());
+        try {
+            Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
 
-        Optional<Departments> departments = jpaDepartmentRepository.findByDepartment(DepartmentsEnum.valueOf(param.getUpdateDepartment()).getDepartment());
+            if (departments.isEmpty()){
+                throw new NoSuchDepartmentName();
+            }
 
-        if (departments.isEmpty()){
-            log.info("departments Error");
+            target.setDepartments(departments.get());
+            target.setUserName(param.getUpdateName());
+        }catch (Exception e){
+            throw new NoSuchDepartmentName();
         }
 
-        log.info("update Professor : {}" , departments.get().getDepartment());
-
-        target.setDepartments(departments.get());
-        target.setUserName(param.getUpdateName());
 
         if (target instanceof Professor){
             Professor downcastProfessor = (Professor) target;
