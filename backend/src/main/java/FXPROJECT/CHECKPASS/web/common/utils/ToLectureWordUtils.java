@@ -1,16 +1,77 @@
 package FXPROJECT.CHECKPASS.web.common.utils;
 
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.dto.ScheduleArray;
 import FXPROJECT.CHECKPASS.domain.enums.DaysEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class ToLectureWordUtils {
+
+    public static LectureCodesToken getLectureCodesToken(List<LectureTimeCode> lectureTimeCodes){
+        return transferLectureTimeCodeTolectureCodesToken(lectureTimeCodes);
+    }
+
+    public static ScheduleArray getScheduleArray(List<LectureTimeCode> lectureTimeCodes){
+
+        LectureCodesToken lectureCodesToken = getLectureCodesToken(lectureTimeCodes);
+
+        Map<String,Boolean> scheduleArrayMap = new HashMap<>();
+
+        List<String> dayWords = translationKoreanDays(lectureCodesToken);
+
+        List<String> startTimes = lectureCodesToken.getStartTimes();
+
+        List<Integer> startIndexs = new ArrayList<>();
+
+        for(String startTime : startTimes){
+
+            int subHour = Integer.parseInt(startTime.substring(0, 2));
+
+            int startIndex = (subHour - 9) * 2;
+
+            String subMin = startTime.substring(2);
+
+            if (!subMin.equals("00")){
+                startIndex += 1;
+            }
+
+            startIndexs.add(startIndex);
+
+        }
+
+        ScheduleArray scheduleArray = new ScheduleArray();
+
+        for(int i = 0; i < lectureCodesToken.times.size(); i++){
+
+            boolean schedule[] = new boolean[18];
+            Arrays.fill(schedule, false);
+
+            int iterCount = Integer.parseInt(lectureCodesToken.times.get(i)) / 30;
+
+            log.info("iterCount : {}" ,iterCount);
+
+            for(int j = 0; j < iterCount; j++){
+                schedule[(startIndexs.get(i) + j)] = true;
+            }
+
+            scheduleArray.getScheduleArray().put(dayWords.get(i),schedule);
+
+        }
+
+        for (boolean[] arry : scheduleArray.getScheduleArray().values()){
+            log.info("test : {} ",arry);
+        }
+
+
+
+        return scheduleArray;
+
+    }
 
     public static List<String> TransferLectureWord(List<LectureTimeCode> lectureTimeCodes) {
 
@@ -19,7 +80,7 @@ public class ToLectureWordUtils {
         TO 각 정보를 활용해 alpha 수업 표시법으로 변환한다
          */
 
-        LectureCodesToken lectureCodesToken = transferLectureTimeCodeTolectureCodesToken(lectureTimeCodes);
+        LectureCodesToken lectureCodesToken = getLectureCodesToken(lectureTimeCodes);
 
         List<String> timeWords = changeStartTimeToStartTimeWord(lectureCodesToken);
 
@@ -177,7 +238,7 @@ public class ToLectureWordUtils {
         lectureTimeCodes.add(lectureTimeCodeA);
 
         LectureTimeCode lectureTimeCodeB = new LectureTimeCode();
-        lectureTimeCodeB.setLectureTimeCode("D1T1000H150");
+        lectureTimeCodeB.setLectureTimeCode("D1T1030H150");
 
         lectureTimeCodes.add(lectureTimeCodeB);
 
@@ -186,6 +247,8 @@ public class ToLectureWordUtils {
         for (String code:strings){
             log.info("code : {} " , code);
         }
+
+        getScheduleArray(lectureTimeCodes);
 
     }
 

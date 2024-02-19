@@ -35,6 +35,7 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
                 .departments(lecture.getDepartments().getDepartment())
                 .lectureTimes(time)
                 .alphaTimeCodes(ToLectureWordUtils.TransferLectureWord(lecture.getLectureTimeCode()))
+                .scheduleArray(ToLectureWordUtils.getScheduleArray(lecture.getLectureTimeCode()))
                 .division(lecture.getDivision())
                 .yearSemester(lecture.getYearSemester())
                 .build();

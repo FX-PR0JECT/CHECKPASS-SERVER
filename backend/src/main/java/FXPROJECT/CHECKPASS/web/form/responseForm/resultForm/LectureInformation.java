@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.form.responseForm.resultForm;
 
+import FXPROJECT.CHECKPASS.domain.dto.ScheduleArray;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class LectureInformation {
     private List<String> lectureTimes;
 
     private List<String> alphaTimeCodes;
+
+    private ScheduleArray scheduleArray;
 
     private Integer lectureFull;
 
