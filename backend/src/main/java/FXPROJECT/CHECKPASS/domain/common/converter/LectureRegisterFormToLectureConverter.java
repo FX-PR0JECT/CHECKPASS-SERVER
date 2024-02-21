@@ -1,8 +1,10 @@
 package FXPROJECT.CHECKPASS.domain.common.converter;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchProfessor;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
+import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
@@ -38,9 +40,16 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
     }
 
     private Lecture transferFormToLecture(LectureRegisterForm form, Optional<Departments> departments, LectureTimeSource lectureTimeSource) {
+
+        Users user = userService.getUser(form.getProfessorId());
+
+        if (user == null){
+            throw new NoSuchProfessor();
+        }
+
         Lecture lecture = new Lecture().builder()
                 .lectureCode(form.getLectureCode())
-                .professor((Professor) userService.getUser(form.getProfessorId()))
+                .professor((Professor) user)
                 .lectureName(form.getLectureName())
                 .lectureRoom(form.getLectureRoom())
                 .lectureGrade(form.getLectureGrade())

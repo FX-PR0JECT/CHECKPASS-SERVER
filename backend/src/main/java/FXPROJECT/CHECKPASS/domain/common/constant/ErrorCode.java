@@ -27,6 +27,7 @@ public enum ErrorCode {
     NO_PERMISSION(403,-24,"No permission","해당 API에 대한 요청 권한이 없는 경우\n" +
             "해결 방법: 해당 API의 이해하기 문서를 참고하여 검수 진행, 권한 획득 후 재호출"),
     NO_SUCH_DEPARTMENT_NAME(400, -25, "No Such department name", "잘못된 학과명입니다. \n" + "해결 방법 : 학과명을 다시 확인해 주세요."),
+    NO_SUCH_PROFESSOR(400, -26, "No Such professor", "존재하지 않는 교수 입니다. \n" + "해결 방법 : 등록 되지 않은 교수입니다. 교수 등록 후 사용해주세요."),
     NO_SEARCH_RESULTS_FOUND(400,-60,"No search results found","검색 결과가 존재하지 않음.\n" +
             "해결 방법 :  검색 조건 확인 후 재 요청"),
     BAD_URI_REQUEST(400,-61,"Bad request","잘못된 URI 요청"),

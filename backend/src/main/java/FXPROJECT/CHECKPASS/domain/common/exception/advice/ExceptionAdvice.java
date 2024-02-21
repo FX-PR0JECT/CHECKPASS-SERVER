@@ -194,4 +194,10 @@ public class ExceptionAdvice {
         return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_DEPARTMENT_NAME);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchProfessor.class)
+    public ResultForm noSuchProfessor(){
+        return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_PROFESSOR);
+    }
+
 }

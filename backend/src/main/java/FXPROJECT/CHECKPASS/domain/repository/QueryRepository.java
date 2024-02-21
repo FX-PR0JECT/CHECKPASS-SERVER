@@ -215,6 +215,7 @@ public class QueryRepository {
 
     private BooleanExpression equalKind(String lectureKind) {
         if (StringUtils.hasText(lectureKind)){
+            log.info("lecture Kind : {}" , lectureKind);
             return lecture.lectureKind.eq(lectureKind);
         }
         return null;
