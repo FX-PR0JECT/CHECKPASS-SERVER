@@ -2,6 +2,8 @@ package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
+import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
+import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
@@ -44,9 +46,9 @@ public class QueryRepository {
 
     public List<Professor> getProfessorList(ProfessorSearchCondition condition, Pageable pageable) {
 
-        String college = condition.getCollege();
-        String department = condition.getDepartment();
-        log.info("method :{}" ,department);
+        String college = CollegesEnum.valueOf(condition.getCollege()).getCollege();
+        String department = DepartmentsEnum.valueOf(condition.getDepartment()).getDepartment();
+        log.info("method :{}" , department);
 
         List<Professor> result = query
                 .select(professor)
@@ -69,8 +71,8 @@ public class QueryRepository {
 
     public List<Staff> getStaffList(ProfessorSearchCondition condition, Pageable pageable) {
 
-        String college = condition.getCollege();
-        String department = condition.getDepartment();
+        String college = CollegesEnum.valueOf(condition.getCollege()).getCollege();
+        String department = DepartmentsEnum.valueOf(condition.getDepartment()).getDepartment();
         log.info("method :{}" ,department);
 
         List<Staff> result = query
@@ -99,8 +101,8 @@ public class QueryRepository {
         String grade = condition.getGrade();
         String dayOrNight = condition.getDayOrNight();
         String semester = condition.getSemester();
-        String college = condition.getCollege();
-        String department = condition.getDepartment();
+        String college = CollegesEnum.valueOf(condition.getCollege()).getCollege();
+        String department = DepartmentsEnum.valueOf(condition.getDepartment()).getDepartment();
 
         log.info("semester : {}" , semester);
 

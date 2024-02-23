@@ -260,7 +260,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/professor")
-    public ResultForm getProfessorList(@RequestBody ProfessorSearchCondition condition, Pageable pageable){
+    public ResultForm getProfessorList(@ModelAttribute ProfessorSearchCondition condition, Pageable pageable){
+
+        log.info("college : {} , department : {}" , condition.getCollege(),condition.getDepartment());
 
         List<Professor> professors = userService.getProfessorList(condition,pageable);
 
@@ -268,7 +270,7 @@ public class UserController {
     }
 
     @GetMapping("/staff")
-    public ResultForm getStaffList(@RequestBody ProfessorSearchCondition condition,Pageable pageable){
+    public ResultForm getStaffList(@ModelAttribute ProfessorSearchCondition condition,Pageable pageable){
 
         List<Staff> staff = userService.getStaffList(condition,pageable);
 
@@ -276,7 +278,7 @@ public class UserController {
     }
 
     @GetMapping("/student")
-    public ResultForm getStudentList(@RequestBody StudentSearchCondition condition,Pageable pageable){
+    public ResultForm getStudentList(@ModelAttribute StudentSearchCondition condition,Pageable pageable){
 
         List<Students> students = userService.getStudentList(condition,pageable);
 
