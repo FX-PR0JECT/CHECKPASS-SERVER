@@ -145,9 +145,9 @@ public class QueryRepository {
 
     public List<Lecture> getLectureList(LectureSearchCondition condition){
 
-        String lectureGrade = condition.getLectureGrade();
-        String lectureKind = condition.getLectureKind();
-        String lectureGrades = condition.getLectureGrades();
+        List<String> gradeList = condition.getGrade();
+        List<String> kindList = condition.getKind();
+        List<String> gradesList = condition.getGrades();
         Long lectureCode = condition.getLectureCode();
         String lectureName = condition.getLectureName();
         String professorName = condition.getProfessorName();
@@ -155,7 +155,7 @@ public class QueryRepository {
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
-                .where(eqLectureGrade(lectureGrade), equalKind(lectureKind), equalGrades(lectureGrades),
+                .where(orLectureGrade(gradeList), orLectureKind(kindList), orLectureGrades(gradesList),
                         eqLectureCode(lectureCode), eqLectureName(lectureName), eqProfessorName(professorName))
                 .fetch();
 
@@ -208,24 +208,23 @@ public class QueryRepository {
         return enrollment.yearSemester.eq(yearSemester);
     }
 
-    private BooleanExpression eqLectureGrade(String lectureGrade) {
-        if (StringUtils.hasText(lectureGrade)){
-            return lecture.lectureGrade.eq(lectureGrade);
+    private BooleanExpression orLectureGrade(List<String> gradeList) {
+        if (gradeList != null){
+            return lecture.lectureGrade.in(gradeList);
         }
         return null;
     }
 
-    private BooleanExpression equalKind(String lectureKind) {
-        if (StringUtils.hasText(lectureKind)){
-            log.info("lecture Kind : {}" , lectureKind);
-            return lecture.lectureKind.eq(lectureKind);
+    private BooleanExpression orLectureKind(List<String> kindList) {
+        if (kindList != null){
+            return lecture.lectureKind.in(kindList);
         }
         return null;
     }
 
-    private BooleanExpression equalGrades(String lectureGrades){
-        if (StringUtils.hasText(lectureGrades)) {
-            return lecture.lectureGrades.eq(lectureGrades);
+    private BooleanExpression orLectureGrades(List<String> gradesList){
+        if (gradesList != null) {
+            return lecture.lectureGrades.in(gradesList);
         }
         return null;
     }

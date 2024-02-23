@@ -110,8 +110,8 @@ public class LectureController {
      * @param condition 강의 검색 조건
      * @return 조건에 따른 강의 목록
      */
-    @GetMapping
-    public ResultForm getLectureList(@RequestBody LectureSearchCondition condition){
+    @RequestMapping("/search")
+    public ResultForm getLectureList(LectureSearchCondition condition){
         return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList(condition));
     }
 
