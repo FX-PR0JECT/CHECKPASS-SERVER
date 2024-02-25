@@ -2,7 +2,6 @@ package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
-import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
@@ -126,10 +125,6 @@ public class LectureController {
      */
     @PatchMapping("/{lectureCode}")
     public ResultForm editLectureInformation(@PathVariable("lectureCode") Long lectureCode, @RequestBody LectureUpdateForm form, @LoginUser Users loggedInUser) {
-
-        if (!lectureService.existsLecture(lectureCode)){
-            throw new NonExistingLecture();
-        }
 
         Lecture target = lectureService.getLecture(lectureCode);
 

@@ -20,13 +20,11 @@ public class ToLectureWordUtils {
 
         LectureCodesToken lectureCodesToken = getLectureCodesToken(lectureTimeCodes);
 
-        Map<String,Boolean> scheduleArrayMap = new HashMap<>();
-
         List<String> dayWords = translationKoreanDays(lectureCodesToken);
 
         List<String> startTimes = lectureCodesToken.getStartTimes();
 
-        List<Integer> startIndexs = new ArrayList<>();
+        List<Integer> startIndexes = new ArrayList<>();
 
         for(String startTime : startTimes){
 
@@ -39,16 +37,14 @@ public class ToLectureWordUtils {
             if (!subMin.equals("00")){
                 startIndex += 1;
             }
-
-            startIndexs.add(startIndex);
-
+            startIndexes.add(startIndex);
         }
 
         ScheduleArray scheduleArray = new ScheduleArray();
 
         for(int i = 0; i < lectureCodesToken.times.size(); i++){
 
-            boolean schedule[] = new boolean[18];
+            boolean[] schedule = new boolean[18];
             Arrays.fill(schedule, false);
 
             int iterCount = Integer.parseInt(lectureCodesToken.times.get(i)) / 30;
@@ -56,21 +52,17 @@ public class ToLectureWordUtils {
             log.info("iterCount : {}" ,iterCount);
 
             for(int j = 0; j < iterCount; j++){
-                schedule[(startIndexs.get(i) + j)] = true;
+                schedule[(startIndexes.get(i) + j)] = true;
             }
 
             scheduleArray.getScheduleArray().put(dayWords.get(i),schedule);
-
         }
 
         for (boolean[] arry : scheduleArray.getScheduleArray().values()){
             log.info("test : {} ",arry);
         }
 
-
-
         return scheduleArray;
-
     }
 
     public static List<String> TransferLectureWord(List<LectureTimeCode> lectureTimeCodes) {
@@ -82,9 +74,9 @@ public class ToLectureWordUtils {
 
         LectureCodesToken lectureCodesToken = getLectureCodesToken(lectureTimeCodes);
 
-        List<String> timeWords = changeStartTimeToStartTimeWord(lectureCodesToken);
+        List<String> startTimeWords = changeStartTimeToStartTimeWord(lectureCodesToken);
 
-        List<LectureTimeWords> lectureTimeWords = generateTimeWords(lectureCodesToken,timeWords);
+        List<LectureTimeWords> lectureTimeWords = generateTimeWords(lectureCodesToken,startTimeWords);
 
         List<String> dayWords = translationKoreanDays(lectureCodesToken);
 
@@ -96,12 +88,8 @@ public class ToLectureWordUtils {
 
     private static List<String> makeFinalCodes(List<LectureTimeWords> lectureTimeWords, List<String> dayWords) {
         List<String> finalTimeCode = new ArrayList<>();
-        for (int i = 0; i < lectureTimeWords.size() ; i = i+2){ // 0 , 1
-            finalTimeCode.add(dayWords.get(i / 2) + " " + lectureTimeWords.get(i).getFinalWorld());
-            finalTimeCode.add(dayWords.get(i / 2) + " " + lectureTimeWords.get(i+1).getFinalWorld());
-            if (i > 3){
-                break;
-            }
+        for (int i = 0; i < lectureTimeWords.size(); i++){
+            finalTimeCode.add(dayWords.get(i) + " " + lectureTimeWords.get(i).getFinalWord());
         }
         return finalTimeCode;
     }
@@ -133,39 +121,40 @@ public class ToLectureWordUtils {
         return dayWord;
     }
 
-    private static List<LectureTimeWords> generateTimeWords(LectureCodesToken lectureCodesToken,List<String> timeWords) {
+    private static List<LectureTimeWords> generateTimeWords(LectureCodesToken lectureCodesToken, List<String> startTimeWords) {
 
         List<String> times = lectureCodesToken.getTimes();
 
         List<LectureTimeWords> lectureTimeWordsList = new ArrayList<>();
 
-        for (String time : times){
+        for (int i = 0; i < times.size(); i++){
 
+            String time = times.get(i);
             int iterCount = Integer.parseInt(time) / 30;
 
-            for(String timeword: timeWords){
+            String startTimeWord = startTimeWords.get(i);
 
-                LectureTimeWords lectureTimeWords = new LectureTimeWords();
+            List<String> wordList = new ArrayList<>();
+            wordList.add(startTimeWord);
 
-                List<String> wordList = new ArrayList<>();
+            LectureTimeWords lectureTimeWords = new LectureTimeWords();
 
-                int substring = Integer.parseInt(timeword.substring(0, 1));
-                String substring1 = timeword.substring(1);
+            int hourCode = Integer.parseInt(startTimeWord.substring(0, 1));
+            String minuteCode = startTimeWord.substring(1);
 
-                for (int j = 0; j < iterCount; j++){
+            for (int j = 0; j < iterCount - 1; j++){
 
-                    if (substring1.equals("A")){
-                        substring1 = "B";
-                    } else if (substring1.equals("B")) {
-                        substring1 = "A";
-                        substring += 1;
-                    }
-
-                    wordList.add(substring + substring1);
+                if (minuteCode.equals("A")){
+                    minuteCode = "B";
+                } else if (minuteCode.equals("B")) {
+                    minuteCode = "A";
+                    hourCode += 1;
                 }
-                lectureTimeWords.setFinalWorld(wordList);
-                lectureTimeWordsList.add(lectureTimeWords);
+
+                wordList.add(hourCode + minuteCode);
             }
+            lectureTimeWords.setFinalWord(wordList);
+            lectureTimeWordsList.add(lectureTimeWords);
         }
         return lectureTimeWordsList;
     }
@@ -178,21 +167,20 @@ public class ToLectureWordUtils {
 
         for(String startTime : startTimes){
 
-            String subString = startTime.substring(0,2);
-            String subString2 = startTime.substring(2);
+            String hour = startTime.substring(0,2);
+            String minute = startTime.substring(2);
 
-            int hour = Integer.parseInt(subString) - 8;
+            int hourCode = Integer.parseInt(hour) - 8;
 
             String alpha = "";
 
-            if (subString2.equals("00")){
+            if (minute.equals("00")){
                 alpha = "A";
-            }else if (subString2.equals("30")){
+            }else if (minute.equals("30")){
                 alpha = "B";
             }
 
-            String timeWord = hour + alpha;
-
+            String timeWord = hourCode + alpha;
             timeWords.add(timeWord);
         }
 
@@ -269,7 +257,7 @@ public class ToLectureWordUtils {
     @Setter
     static class LectureTimeWords {
 
-        List<String> finalWorld;
+        List<String> finalWord;
 
     }
 

@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NumberOfStudentsExceeded;
 import FXPROJECT.CHECKPASS.domain.common.exception.RegisteredForLecture;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
@@ -9,7 +8,6 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaEnrollmentRepository;
-import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
@@ -30,7 +28,6 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 public class EnrollmentService {
 
     private final JpaEnrollmentRepository jpaEnrollmentRepository;
-    private final JpaLectureRepository jpaLectureRepository;
     private final LectureService lectureService;
     private final QueryRepository queryRepository;
     private final ConversionService conversionService;
@@ -44,11 +41,7 @@ public class EnrollmentService {
     @Transactional
     public ResultForm enrollment(Long lectureCode, Users loggedInUser){
 
-        if (!lectureService.existsLecture(lectureCode)){
-            throw new NonExistingLecture();
-        }
-
-        Lecture target = jpaLectureRepository.findLectureByLectureCode(lectureCode);
+        Lecture target = lectureService.getLecture(lectureCode);
 
         if (target.getLectureFull() == target.getLectureCount()){
             throw new NumberOfStudentsExceeded();
@@ -100,21 +93,7 @@ public class EnrollmentService {
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
         for (Lecture lecture : enrollmentList) {
-            LectureInformation lectureInformation = new LectureInformation().builder()
-                    .lectureCode(lecture.getLectureCode())
-                    .lectureName(lecture.getLectureName())
-                    .lectureGrade(lecture.getLectureGrade())
-                    .lectureKind(lecture.getLectureKind())
-                    .lectureGrades(lecture.getLectureGrades())
-                    .professorName(lecture.getProfessor().getUserName())
-                    .lectureRoom(lecture.getLectureRoom())
-                    //.lectureTimes(lecture.getLectureTimeCode())
-                    .lectureFull(lecture.getLectureFull())
-                    .lectureCount(lecture.getLectureCount())
-                    .dayOrNight(lecture.getDayOrNight())
-                    .departments(lecture.getDepartments().getDepartment())
-                    .build();
-
+            LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
             lectureInformationList.add(lectureInformation);
         }
         return lectureInformationList;
@@ -131,13 +110,13 @@ public class EnrollmentService {
         Map<String, List<LectureInformation>> enrollmentList = new TreeMap<>(comparator);
 
         List<String> yearSemesterListOfStudent = queryRepository.getYearSemesterList((Students) loggedInUser);
-        List<Enrollment> enrollmentListOfStudent = queryRepository.getCourseList((Students)loggedInUser);
+        List<Enrollment> courseListOfStudent= queryRepository.getCourseList((Students)loggedInUser);
 
         for (String yearSemester : yearSemesterListOfStudent) {
 
             List<LectureInformation> lectureList = new ArrayList<>();
 
-            for (Enrollment enrollment : enrollmentListOfStudent) {
+            for (Enrollment enrollment : courseListOfStudent) {
                 if (yearSemester.equals(enrollment.getYearSemester())){
 
                     Lecture lecture = enrollment.getLecture();
