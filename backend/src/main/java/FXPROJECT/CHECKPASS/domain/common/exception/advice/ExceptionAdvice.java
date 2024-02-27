@@ -185,7 +185,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RegisteredForLecture.class)
     public ResultForm registeredForLecture(Exception e) {
-        return ResultFormUtils.getFailResultForm(ErrorCode.OVERLAPPING_HOURS);
+        return ResultFormUtils.getFailResultForm(ErrorCode.REGISTERED_FOR_LECTURE);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

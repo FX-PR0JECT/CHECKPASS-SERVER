@@ -136,10 +136,6 @@ public class QueryRepository {
                 .where(checkEnrollment(studentId), checkYearSemester(semester))
                 .fetch();
 
-        if (result.isEmpty()){
-            throw new NoSearchResultsFound();
-        }
-
         return result;
     }
 
