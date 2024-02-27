@@ -17,19 +17,11 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     private static final long serialVersionUID = -2076200431L;
 
-    public static final QAttendance attendance1 = new QAttendance("attendance1");
+    public static final QAttendance attendance = new QAttendance("attendance");
 
-    public final BooleanPath attend = createBoolean("attend");
+    public final NumberPath<Short> AttendanceCode = createNumber("AttendanceCode", Short.class);
 
-    public final NumberPath<Long> attendance = createNumber("attendance", Long.class);
-
-    public final DateTimePath<java.time.LocalDateTime> attendTime = createDateTime("attendTime", java.time.LocalDateTime.class);
-
-    public final BooleanPath canceled = createBoolean("canceled");
-
-    public final StringPath makeupClass = createString("makeupClass");
-
-    public final BooleanPath tardy = createBoolean("tardy");
+    public final StringPath AttendanceId = createString("AttendanceId");
 
     public QAttendance(String variable) {
         super(Attendance.class, forVariable(variable));
