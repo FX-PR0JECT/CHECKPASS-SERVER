@@ -61,7 +61,7 @@ public class QueryRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        if (result.size() == 0){
+        if (result.isEmpty()){
             throw new NoSearchResultsFound();
         }
 
@@ -86,7 +86,7 @@ public class QueryRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        if (result.size() == 0){
+        if (result.isEmpty()){
             throw new NoSearchResultsFound();
         }
 
@@ -118,7 +118,7 @@ public class QueryRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        if (result.size() == 0){
+        if (result.isEmpty()){
             throw new NoSearchResultsFound();
         }
 

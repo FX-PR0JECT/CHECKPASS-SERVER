@@ -16,19 +16,8 @@ import java.time.LocalDateTime;
 public class Attendance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long attendance;
+    private String AttendanceId;
 
-    @ColumnDefault("false")
-    private Boolean attend;
-
-    @ColumnDefault("false")
-    private Boolean canceled;
-
-    private String makeupClass;
-
-    private LocalDateTime attendTime;
-
-    private Boolean tardy;
+    private short AttendanceCode;
 
 }
