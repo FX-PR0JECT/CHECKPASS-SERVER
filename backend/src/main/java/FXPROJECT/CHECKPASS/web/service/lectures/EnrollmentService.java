@@ -1,14 +1,17 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.NumberOfStudentsExceeded;
-import FXPROJECT.CHECKPASS.domain.common.exception.RegisteredForLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.*;
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.dto.ScheduleArray;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaEnrollmentRepository;
+import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.ToLectureWordUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class EnrollmentService {
 
     private final JpaEnrollmentRepository jpaEnrollmentRepository;
     private final LectureService lectureService;
+    private final JpaLectureRepository jpaLectureRepository;
     private final QueryRepository queryRepository;
     private final ConversionService conversionService;
 
@@ -41,16 +45,23 @@ public class EnrollmentService {
     @Transactional
     public ResultForm enrollment(Long lectureCode, Users loggedInUser){
 
-        Lecture target = lectureService.getLecture(lectureCode);
+        if (!lectureService.existsLecture(lectureCode)){
+            throw new NonExistingLecture();
+        }
+
+        Lecture target = jpaLectureRepository.findLectureByLectureCode(lectureCode);
+
+        Enrollment enrollment = new Enrollment((Students) loggedInUser, target);
+        if (jpaEnrollmentRepository.existsById(enrollment.getEnrollmentId())) {
+            throw new RegisteredForLecture();
+        }
+
+        if (!checkLectureTime(target, loggedInUser)) {
+            throw new OverlappingHours();
+        }
 
         if (target.getLectureFull() == target.getLectureCount()){
             throw new NumberOfStudentsExceeded();
-        }
-
-        Enrollment enrollment = new Enrollment((Students) loggedInUser, target);
-
-        if (jpaEnrollmentRepository.existsById(enrollment.getEnrollmentId())){
-            throw new RegisteredForLecture();
         }
 
         jpaEnrollmentRepository.save(enrollment);
@@ -89,6 +100,9 @@ public class EnrollmentService {
     public List<LectureInformation> getEnrollmentList(Users loggedInUser){
 
         List<Lecture> enrollmentList =  queryRepository.getEnrollmentList((Students) loggedInUser);
+        if(enrollmentList.isEmpty()) {
+            throw new NoSearchResultsFound();
+        }
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -133,5 +147,55 @@ public class EnrollmentService {
 
     private Long idGenerator(Long lectureCode, Users loggedInUser){
         return Long.valueOf(loggedInUser.getUserId().toString() + lectureCode.toString());
+    }
+
+    private boolean checkLectureTime(Lecture target, Users loggedInUser){
+
+        List<Lecture> enrollmentList = queryRepository.getEnrollmentList((Students)loggedInUser);
+        if (enrollmentList.isEmpty()) {
+            return true;
+        }
+        Map<String, boolean[]> fullScheduleArray = generateFullScheduleArray(enrollmentList);
+
+        List<LectureTimeCode> timeCodeList = target.getLectureTimeCode();
+        ScheduleArray targetSchedule = ToLectureWordUtils.getScheduleArray(timeCodeList);
+        Map<String, boolean[]> targetScheduleArray = targetSchedule.getScheduleArray();
+
+        for (String day : targetScheduleArray.keySet()){
+            if (fullScheduleArray.containsKey(day)) {
+                boolean[] studentSchedule = fullScheduleArray.get(day);
+                boolean[] lectureSchedule = targetScheduleArray.get(day);
+
+                for (int i = 0; i < studentSchedule.length; i++) {
+                    if (studentSchedule[i] && lectureSchedule[i]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private Map<String, boolean[]> generateFullScheduleArray(List<Lecture> lectureList){
+
+        Map<String, boolean[]> fullScheduleArray = new HashMap<>();
+
+        for (Lecture lecture : lectureList) {
+            List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
+            ScheduleArray studentSchedule = ToLectureWordUtils.getScheduleArray(lectureTimeCodeList);
+            Map<String, boolean[]> studentScheduleArray = studentSchedule.getScheduleArray();
+
+            for (String day : studentScheduleArray.keySet()){
+                fullScheduleArray.merge(day, studentScheduleArray.get(day), EnrollmentService::sumBooleanArray);
+            }
+        }
+        return fullScheduleArray;
+    }
+
+    private static boolean[] sumBooleanArray(boolean[] original, boolean[] operand) {
+        for (int i = 0; i < original.length; i++) {
+            original[i] = original[i] || operand[i];
+        }
+        return original;
     }
 }
