@@ -36,8 +36,8 @@ public class Lecture {
     @Column(nullable = false)
     private List<LectureTimeCode> lectureTimeCode;
 
-    @ManyToOne
-    private LectureRoom lectureRoom;
+    @Column(nullable = false, length = 20)
+    private String lectureRoom;
 
     @Column(nullable = false)
     private String lectureGrade;
