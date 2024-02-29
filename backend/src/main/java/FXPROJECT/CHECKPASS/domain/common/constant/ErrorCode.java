@@ -40,6 +40,9 @@ public enum ErrorCode {
     REGISTERED_FOR_LECTURE(400, -91, "Registered for lecture", "이미 수강신청된 강의입니다."),
     OVERLAPPING_HOURS(400, -92, "Overlapping hours", "강의 시간이 중복됩니다.\n" +
             "강의 시간을 확인해 주세요."),
+    NO_PERMISSION_TO_ENROLLMENT(403, -93, "No permission to enrollment", "수강신청 권한이 없습니다.\n" +
+            "관리자에게 문의하세요."),
+    NO_COURSE_HISTORY(400, -94, "No course history", "수강 내역이 없습니다."),
     NON_EXISTING_LECTURE(400, -100, "Non-Existing Lecture", "Database에 등록되지 않은 강의\n" + "해결 방법 : 확인 후 재 요청"),
     EXISTING_LECTURE(400, -101, "Existing Lecture", "Database에 이미 등록된 강의\n" + "해결 방법 : 확인 후 재 요청"),
     OK(200,-1000,"OK","OK");

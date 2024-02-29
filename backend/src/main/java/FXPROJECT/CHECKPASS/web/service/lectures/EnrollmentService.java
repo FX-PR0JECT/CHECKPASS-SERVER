@@ -88,7 +88,7 @@ public class EnrollmentService {
 
         jpaEnrollmentRepository.deleteById(enrollmentId);
 
-        return ResultFormUtils.getSuccessResultForm(COMPLETE_DELETE.getDescription());
+        return ResultFormUtils.getSuccessResultForm(COURSE_CANCELLATION_COMPLETED.getDescription());
     }
 
 
@@ -101,7 +101,7 @@ public class EnrollmentService {
 
         List<Lecture> enrollmentList =  queryRepository.getEnrollmentList((Students) loggedInUser);
         if(enrollmentList.isEmpty()) {
-            throw new NoSearchResultsFound();
+            throw new NoCourseHistory();
         }
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();

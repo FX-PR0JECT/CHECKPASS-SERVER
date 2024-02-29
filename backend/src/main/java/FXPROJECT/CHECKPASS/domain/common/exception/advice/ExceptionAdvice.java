@@ -200,4 +200,16 @@ public class ExceptionAdvice {
         return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_PROFESSOR);
     }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(NoPermissionToEnrollment.class)
+    public ResultForm noPermissionToEnrollment() {
+        return ResultFormUtils.getFailResultForm(ErrorCode.NO_PERMISSION_TO_ENROLLMENT);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoCourseHistory.class)
+    public ResultForm noCourseHistory() {
+        return ResultFormUtils.getFailResultForm(ErrorCode.NO_COURSE_HISTORY);
+    }
+
 }

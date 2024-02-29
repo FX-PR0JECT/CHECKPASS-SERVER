@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
@@ -170,7 +171,7 @@ public class QueryRepository {
                 .fetch();
 
         if (result.isEmpty()){
-            throw new NoSearchResultsFound();
+            throw new NoCourseHistory();
         }
 
         return result;
@@ -185,7 +186,7 @@ public class QueryRepository {
                 .fetch();
 
         if (result.isEmpty()){
-            throw new NoSearchResultsFound();
+            throw new NoCourseHistory();
         }
 
         return result;

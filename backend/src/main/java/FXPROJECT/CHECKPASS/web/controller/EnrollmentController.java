@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoPermissionToEnrollment;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
@@ -30,7 +31,7 @@ public class EnrollmentController {
     public ResultForm enrollment(@PathVariable("lectureCode") Long lectureCode, @LoginUser Users loggedInUser){
 
         if (loggedInUser.getUserJob() != Job.STUDENTS) {
-            throw new NoPermission();
+            throw new NoPermissionToEnrollment();
         }
 
         return enrollmentService.enrollment(lectureCode, loggedInUser);
@@ -47,7 +48,7 @@ public class EnrollmentController {
     public ResultForm cancelEnrollment(@PathVariable("lectureCode") Long lectureCode, @LoginUser Users loggedInUser){
 
         if (loggedInUser.getUserJob() != Job.STUDENTS) {
-            throw new NoPermission();
+            throw new NoPermissionToEnrollment();
         }
         return enrollmentService.cancelEnrollment(lectureCode, loggedInUser);
     }
