@@ -104,18 +104,8 @@ public class LectureController {
     }
 
     /**
-     * 해당 학기에 개설된 모든 강의 조회
-     * URL : /lectures
-     * @return 해당 학기에 개설된 모든 강의 목록
-     */
-    @GetMapping
-    public ResultForm showAllLectureInformation() {
-        return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList());
-    }
-
-    /**
      * 강의 목록 조회 (조건)
-     * URL : /lectures/search
+     * URL : /lectures
      * @param condition 강의 검색 조건
      * @return 조건에 따른 강의 목록
      */

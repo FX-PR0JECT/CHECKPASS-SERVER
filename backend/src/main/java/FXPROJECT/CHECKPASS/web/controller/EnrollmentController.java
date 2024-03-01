@@ -40,7 +40,6 @@ public class EnrollmentController {
 
     /**
      * 수강신청 취소
-     * URL : /enrollment/{lectureCode}
      * @param lectureCode 강의코드
      * @param loggedInUser 로그인 유저
      * @return 성공 : 취소 완료 ResultForm  실패 : 잘못된 요청 ResultForm
@@ -57,11 +56,10 @@ public class EnrollmentController {
 
     /**
      * 수강신청 목록 조회
-     * URL : /enrollment
      * @param loggedInUser 로그인 유저
      * @return 로그인 유저가 수강신청한 강의 정보 목록
      */
-    @GetMapping
+    @GetMapping("/enrollmentList")
     public ResultForm getEnrollmentList(@LoginUser Users loggedInUser){
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getEnrollmentList(loggedInUser));
     }
@@ -69,11 +67,10 @@ public class EnrollmentController {
 
     /**
      * 수강이력 조회 (연도, 학기 정보 포함)
-     * URL : /enrollment/history
      * @param loggedInUser 로그인 유저
      * @return 로그인 유저의 수강이력 목록
      */
-    @GetMapping("/history")
+    @GetMapping
     public ResultForm getCourseList(@LoginUser Users loggedInUser) {
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getCourseList(loggedInUser));
     }
