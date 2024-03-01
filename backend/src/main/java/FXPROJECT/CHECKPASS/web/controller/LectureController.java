@@ -70,6 +70,16 @@ public class LectureController {
     }
 
     /**
+     * 해당 학기에 개설된 모든 강의 조회
+     * URL : /lectures
+     * @return 해당 학기에 개설된 모든 강의 목록
+     */
+    @GetMapping
+    public ResultForm showAllLectureInformation() {
+        return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList());
+    }
+
+    /**
      * 강의 간략 정보 조회
      * URL : /lectures/simple/{lectureCode}
      * @param lectureCode 강의 코드

@@ -4,28 +4,24 @@ import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
-import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
-import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
-import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
-import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -76,6 +72,25 @@ public class LectureService {
         return jpaLectureRepository.findByLectureCode(lectureCode);
     }
 
+    /**
+     * 해당 학기에 개설된 모든 강의 조회
+     * @return 해당 학기에 개설된 모든 강의 목록
+     */
+    public List<LectureInformation> getLectureList(){
+
+        String yearSemester = getYearSemester();
+        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(yearSemester);
+
+        List<LectureInformation> lectureInformationList = new ArrayList<>();
+
+        for (Lecture lecture : lectureList) {
+            LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
+            lectureInformationList.add(lectureInformation);
+        }
+
+        return lectureInformationList;
+    }
+
 
     /**
      * 강의 목록 조회 (조건 검색)
@@ -84,14 +99,13 @@ public class LectureService {
      */
     public List<LectureInformation> getLectureList(LectureSearchCondition condition){
 
-        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition);
+        String yearSemester = getYearSemester();
+        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition, yearSemester);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
         for (Lecture lecture : lectureList) {
-
             LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
-
             lectureInformationList.add(lectureInformation);
         }
 
@@ -170,6 +184,20 @@ public class LectureService {
         target.setDayOrNight(form.getDayOrNight());
 
         return target;
+    }
+
+    private String getYearSemester() {
+        String year = LocalDate.now().getYear() + "년도 ";
+        int month = LocalDate.now().getMonthValue();
+        String semester;
+
+        if (month <= 6) {
+            semester = "1학기";
+        } else {
+            semester = "2학기";
+        }
+
+        return year + semester;
     }
 
     private static LectureTimeSource extractionLectureTimeSource(LectureUpdateForm form) {

@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.web.controller;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermissionToEnrollment;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
@@ -59,7 +58,7 @@ public class EnrollmentController {
      * @param loggedInUser 로그인 유저
      * @return 로그인 유저가 수강신청한 강의 정보 목록
      */
-    @GetMapping("/enrollmentList")
+    @GetMapping
     public ResultForm getEnrollmentList(@LoginUser Users loggedInUser){
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getEnrollmentList(loggedInUser));
     }
@@ -70,7 +69,7 @@ public class EnrollmentController {
      * @param loggedInUser 로그인 유저
      * @return 로그인 유저의 수강이력 목록
      */
-    @GetMapping
+    @GetMapping("/history")
     public ResultForm getCourseList(@LoginUser Users loggedInUser) {
         return ResultFormUtils.getSuccessResultForm(enrollmentService.getCourseList(loggedInUser));
     }
