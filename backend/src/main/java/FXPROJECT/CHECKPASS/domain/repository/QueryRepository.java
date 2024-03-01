@@ -134,13 +134,13 @@ public class QueryRepository {
         List<Lecture> result = query
                 .select(enrollment.lecture)
                 .from(enrollment)
-                .where(checkEnrollment(studentId), checkYearSemester(semester))
+                .where(checkEnrollment(studentId), checkEnrollmentYearSemester(semester))
                 .fetch();
 
         return result;
     }
 
-    public List<Lecture> getLectureList(LectureSearchCondition condition){
+    public List<Lecture> getLectureList(LectureSearchCondition condition, String yearSemester){
 
         List<String> gradeList = condition.getGrade();
         List<String> kindList = condition.getKind();
@@ -152,8 +152,21 @@ public class QueryRepository {
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
-                .where(orLectureGrade(gradeList), orLectureKind(kindList), orLectureGrades(gradesList),
+                .where(orLectureGrade(gradeList), orLectureKind(kindList), orLectureGrades(gradesList), checkLectureYearSemester(yearSemester),
                         eqLectureCode(lectureCode), eqLectureName(lectureName), eqProfessorName(professorName))
+                .fetch();
+
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+        return result;
+    }
+
+    public List<Lecture> getLectureList(String yearSemester) {
+        List<Lecture> result = query
+                .select(lecture)
+                .from(lecture)
+                .where(checkLectureYearSemester(yearSemester))
                 .fetch();
 
         if (result.isEmpty()){
@@ -199,10 +212,13 @@ public class QueryRepository {
         return null;
     }
 
-    private BooleanExpression checkYearSemester(String semester){
+    private BooleanExpression checkEnrollmentYearSemester(String semester){
         String yearSemester = LocalDate.now().getYear() + "년도 " + semester;
-
         return enrollment.yearSemester.eq(yearSemester);
+    }
+
+    private BooleanExpression checkLectureYearSemester(String yearSemester){
+        return lecture.yearSemester.eq(yearSemester);
     }
 
     private BooleanExpression orLectureGrade(List<String> gradeList) {
