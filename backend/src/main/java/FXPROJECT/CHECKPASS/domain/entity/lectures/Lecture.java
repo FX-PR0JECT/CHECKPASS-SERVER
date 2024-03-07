@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.entity.lectures;
 
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import jakarta.persistence.*;
@@ -36,17 +37,17 @@ public class Lecture {
     @Column(nullable = false)
     private List<LectureTimeCode> lectureTimeCode;
 
-    @Column(nullable = false, length = 20)
-    private String lectureRoom;
+    @ManyToOne
+    private Beacon beacon;
 
     @Column(nullable = false)
-    private String lectureGrade;
+    private int lectureGrade;
 
     @Column(nullable = false)
     private String lectureKind;
 
-    @Column(nullable = false, length = 3)
-    private String lectureGrades;
+    @Column(nullable = false)
+    private int lectureGrades;
 
     @Column(nullable = false)
     private int lectureFull;
