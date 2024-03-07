@@ -18,11 +18,11 @@ public class LectureInformation {
 
     private String lectureName;
 
-    private String lectureGrade;
+    private int lectureGrade;
 
     private String lectureKind;
 
-    private String lectureGrades;
+    private int lectureGrades;
 
     private String professorName;
 

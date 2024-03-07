@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 public class LectureSearchCondition {
 
-    private List<String> grade;
+    private List<Integer> grade;
     private List<String> kind;
-    private List<String> grades;
+    private List<Integer> grades;
     private Long lectureCode;
     private String lectureName;
     private String professorName;

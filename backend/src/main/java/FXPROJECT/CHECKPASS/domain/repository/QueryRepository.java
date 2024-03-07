@@ -1,6 +1,8 @@
 package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
+
+import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
@@ -25,12 +27,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.*;
-import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.*;
+import static FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon.beacon;
+import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.enrollment;
+import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.lecture;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStaff.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStudents.*;
-
 
 @Slf4j
 @Repository
@@ -142,9 +144,9 @@ public class QueryRepository {
 
     public List<Lecture> getLectureList(LectureSearchCondition condition, String yearSemester){
 
-        List<String> gradeList = condition.getGrade();
+        List<Integer> gradeList = condition.getGrade();
         List<String> kindList = condition.getKind();
-        List<String> gradesList = condition.getGrades();
+        List<Integer> gradesList = condition.getGrades();
         Long lectureCode = condition.getLectureCode();
         String lectureName = condition.getLectureName();
         String professorName = condition.getProfessorName();
@@ -205,6 +207,18 @@ public class QueryRepository {
         return result;
     }
 
+    public List<Beacon> getBeaconList() {
+        List<Beacon> result = query
+                .select(beacon)
+                .from(beacon)
+                .fetch();
+        if (result.isEmpty()){
+            throw new NoSearchResultsFound();
+        }
+
+        return result;
+    }
+
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
@@ -221,7 +235,7 @@ public class QueryRepository {
         return lecture.yearSemester.eq(yearSemester);
     }
 
-    private BooleanExpression orLectureGrade(List<String> gradeList) {
+    private BooleanExpression orLectureGrade(List<Integer> gradeList) {
         if (gradeList != null){
             return lecture.lectureGrade.in(gradeList);
         }
@@ -235,7 +249,7 @@ public class QueryRepository {
         return null;
     }
 
-    private BooleanExpression orLectureGrades(List<String> gradesList){
+    private BooleanExpression orLectureGrades(List<Integer> gradesList){
         if (gradesList != null) {
             return lecture.lectureGrades.in(gradesList);
         }

@@ -46,7 +46,7 @@ public class EnrollmentService {
     public ResultForm enrollment(Long lectureCode, Users loggedInUser){
 
         if (!lectureService.existsLecture(lectureCode)){
-            throw new NonExistingLecture();
+            throw new NonExistentLecture();
         }
 
         Lecture target = jpaLectureRepository.findLectureByLectureCode(lectureCode);

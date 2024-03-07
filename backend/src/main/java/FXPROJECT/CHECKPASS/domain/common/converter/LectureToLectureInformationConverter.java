@@ -1,9 +1,12 @@
 package FXPROJECT.CHECKPASS.domain.common.converter;
 
+import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.web.common.utils.ToLectureWordUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
+import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class LectureToLectureInformationConverter implements Converter<Lecture, LectureInformation> {
 
+    private final BeaconService beaconService;
     @Override
     public LectureInformation convert(Lecture lecture) {
 
@@ -21,6 +26,9 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
             time.add(code.getLectureTimeCode());
         }
 
+        BeaconPK beaconPK = lecture.getBeacon().getBeaconPK();
+        String lectureRoom = beaconService.getLectureRoom(beaconPK);
+
         LectureInformation lectureInformation = new LectureInformation().builder()
                 .lectureCode(lecture.getLectureCode())
                 .lectureName(lecture.getLectureName())
@@ -28,7 +36,7 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
                 .lectureKind(lecture.getLectureKind())
                 .lectureGrades(lecture.getLectureGrades())
                 .professorName(lecture.getProfessor().getUserName())
-                .lectureRoom(lecture.getLectureRoom())
+                .lectureRoom(lectureRoom)
                 .lectureFull(lecture.getLectureFull())
                 .lectureCount(lecture.getLectureCount())
                 .dayOrNight(lecture.getDayOrNight())

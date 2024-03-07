@@ -1,15 +1,20 @@
 package FXPROJECT.CHECKPASS.domain.common.converter;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchProfessor;
+import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
+import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
+import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
+import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +29,9 @@ import java.util.Optional;
 public class LectureRegisterFormToLectureConverter implements Converter<LectureRegisterForm, Lecture> {
 
     private final UserService userService;
+    private final BeaconService beaconService;
     private final JpaDepartmentRepository jpaDepartmentRepository;
+    private final JpaBuildingRepository jpaBuildingRepository;
     private final LectureCodeUtils lectureCodeUtils;
 
     @Override
@@ -47,16 +54,19 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
             throw new NoSuchProfessor();
         }
 
+        int major = form.getMajor();
+        int minor = form.getMinor();
+        Beacon beacon = beaconService.getBeacon(major, minor);
+
         Lecture lecture = new Lecture().builder()
                 .lectureCode(form.getLectureCode())
                 .professor((Professor) user)
                 .lectureName(form.getLectureName())
-                .lectureRoom(form.getLectureRoom())
+                .beacon(beacon)
                 .lectureGrade(form.getLectureGrade())
                 .lectureKind(form.getLectureKind().getKind())
                 .lectureGrades(form.getLectureGrades())
                 .lectureFull(form.getLectureFull())
-                .lectureCount(form.getLectureCount())
                 .dayOrNight(form.getDayOrNight())
                 .departments(departments.get())
                 .lectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource))

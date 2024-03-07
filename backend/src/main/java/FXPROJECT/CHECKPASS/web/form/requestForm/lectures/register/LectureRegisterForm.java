@@ -17,17 +17,17 @@ public class LectureRegisterForm {
 
     private String lectureName;
 
-    private String lectureRoom;
+    private int major;
 
-    private String lectureGrade;
+    private int minor;
+
+    private int lectureGrade;
 
     private LectureKind lectureKind;
 
-    private String lectureGrades;
+    private int lectureGrades;
 
     private Integer lectureFull;
-
-    private Integer lectureCount;
 
     private String dayOrNight;
 

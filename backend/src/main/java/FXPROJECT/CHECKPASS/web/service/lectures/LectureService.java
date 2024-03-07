@@ -2,8 +2,10 @@ package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
-import FXPROJECT.CHECKPASS.domain.common.exception.NonExistingLecture;
+import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
+import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
+import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
@@ -17,6 +19,7 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSou
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 
 import java.time.LocalDate;
@@ -38,6 +41,7 @@ public class LectureService {
 
     private final JpaLectureRepository jpaLectureRepository;
     private final UserService userService;
+    private final BeaconService beaconService;
     private final QueryRepository jpaQueryUsersRepository;
     private final ConversionService conversionService;
     private final LectureCodeUtils lectureCodeUtils;
@@ -66,7 +70,7 @@ public class LectureService {
     public Lecture getLecture(Long lectureCode){
 
         if(!existsLecture(lectureCode)){
-            throw new NonExistingLecture();
+            throw new NonExistentLecture();
         }
 
         return jpaLectureRepository.findByLectureCode(lectureCode);
@@ -136,7 +140,7 @@ public class LectureService {
     public ResultForm deleteLecture(Long lectureCode){
 
         if(!existsLecture(lectureCode)){
-            return ResultFormUtils.getFailResultForm(NON_EXISTING_LECTURE);
+            return ResultFormUtils.getFailResultForm(NON_EXISTENT_LECTURE);
         }
         jpaLectureRepository.deleteLectureByLectureCode(lectureCode);
 
@@ -173,10 +177,15 @@ public class LectureService {
 
         LectureTimeSource lectureTimeSource = extractionLectureTimeSource(form);
 
+        BeaconPK beaconPK = target.getBeacon().getBeaconPK();
+        int major = form.getMajor();
+        int minor = form.getMinor();
+        Beacon beacon = beaconService.updateBeacon(beaconPK, major, minor);
+
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
         target.setLectureName(form.getLectureName());
         target.setLectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource));
-        target.setLectureRoom(form.getLectureRoom());
+        target.setBeacon(beacon);
         target.setLectureGrade(form.getLectureGrade());
         target.setLectureKind(form.getLectureKind().getKind());
         target.setLectureGrades(form.getLectureGrades());
