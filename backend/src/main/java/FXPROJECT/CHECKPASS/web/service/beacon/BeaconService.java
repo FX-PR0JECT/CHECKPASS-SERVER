@@ -13,7 +13,6 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterFo
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,6 @@ public class BeaconService {
     private final JpaBeaconRepository jpaBeaconRepository;
     private final JpaBuildingRepository jpaBuildingRepository;
     private final QueryRepository queryRepository;
-    private final ConversionService conversionService;
 
     /**
      * 비콘 등록
