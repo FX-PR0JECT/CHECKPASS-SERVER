@@ -114,6 +114,25 @@ public class BeaconService {
     }
 
     /**
+     * 비콘 삭제
+     * @param major 비콘 major
+     * @param minor 비콘 minor
+     * @return 성공 : Beacon 삭제 성공 ResultForm, 실패 : 해당 Beacon이 DB에 없음
+     */
+    @Transactional
+    public ResultForm deleteBeacon(int major, int minor){
+        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
+        BeaconPK beaconPK = new BeaconPK(buildings, minor);
+
+        if (!existsBeacon(beaconPK)){
+            throw new NonExistentBeacon();
+        }
+
+        jpaBeaconRepository.deleteById(beaconPK);
+        return ResultFormUtils.getSuccessResultForm(COMPLETE_DELETE.getDescription());
+    }
+
+    /**
      * 비콘 DB에 저장되어 있는지 확인
      * @param beaconPK 비콘의 복합 PK(major + minor)
      * @return true: 존재함, false: 존재하지 않음
