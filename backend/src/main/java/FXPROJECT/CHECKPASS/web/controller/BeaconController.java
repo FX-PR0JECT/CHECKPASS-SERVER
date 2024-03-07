@@ -33,7 +33,7 @@ public class BeaconController {
      * @return 성공 : 등록이 완료 되었습니다. 실패 : Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청
      */
     @PostMapping
-    public ResultForm registerBeacon(BeaconRegisterForm form, @LoginUser Users loggedInUser) {
+    public ResultForm registerBeacon(@RequestBody BeaconRegisterForm form, @LoginUser Users loggedInUser) {
         if (loggedInUser.getUserJob() != Job.STAFF) {
             throw new NoPermission();
         }
