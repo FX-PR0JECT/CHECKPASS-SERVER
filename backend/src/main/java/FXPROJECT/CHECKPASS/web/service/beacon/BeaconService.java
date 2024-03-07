@@ -145,4 +145,13 @@ public class BeaconService {
         return true;
     }
 
+    public String getLectureRoom(BeaconPK beaconPK) {
+        Buildings buildings = beaconPK.getBuildings();
+        int major = buildings.getBuildingCode();
+        int minor = beaconPK.getMinor();
+        String buildingName = jpaBuildingRepository.findBuildingNameByBuildingCode(major);
+        String lectureRoom = buildingName + " (" + minor + ")";
+
+        return lectureRoom;
+    }
 }
