@@ -89,6 +89,31 @@ public class BeaconService {
     }
 
     /**
+     * 비콘 정보 업데이트
+     * @param beaconPK 비콘의 복합 PK(major + minor)
+     * @param major 비콘 major
+     * @param minor 비콘 minor
+     * @return 복합 PK가 업데이트 된 비콘
+     */
+    @Transactional
+    public Beacon updateBeacon(BeaconPK beaconPK, int major, int minor) {
+        int registeredMajor = beaconPK.getBuildings().getBuildingCode();
+        int registeredMinor = beaconPK.getMinor();
+        Beacon target = getBeacon(registeredMajor, registeredMinor);
+
+        BeaconPK pk = target.getBeaconPK();
+        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
+        pk.setBuildings(buildings);
+        pk.setMinor(minor);
+
+        if (!existsBeacon(beaconPK)) {
+            throw new NonExistentBeacon();
+        }
+
+        return target;
+    }
+
+    /**
      * 비콘 DB에 저장되어 있는지 확인
      * @param beaconPK 비콘의 복합 PK(major + minor)
      * @return true: 존재함, false: 존재하지 않음
