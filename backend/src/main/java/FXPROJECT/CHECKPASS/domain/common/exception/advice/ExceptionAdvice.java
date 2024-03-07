@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 @Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -159,9 +158,9 @@ public class ExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NonExistingLecture.class)
+    @ExceptionHandler(NonExistentLecture.class)
     public ResultForm nonExistingLecture(Exception e){
-        return ResultFormUtils.getFailResultForm(ErrorCode.NON_EXISTING_LECTURE);
+        return ResultFormUtils.getFailResultForm(ErrorCode.NON_EXISTENT_LECTURE);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -210,6 +209,18 @@ public class ExceptionAdvice {
     @ExceptionHandler(NoCourseHistory.class)
     public ResultForm noCourseHistory() {
         return ResultFormUtils.getFailResultForm(ErrorCode.NO_COURSE_HISTORY);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NonExistentBeacon.class)
+    public ResultForm nonExistingBeacon() {
+        return ResultFormUtils.getFailResultForm(ErrorCode.NON_EXISTENT_BEACON);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ExistingBeacon.class)
+    public ResultForm existingBeacon() {
+        return ResultFormUtils.getFailResultForm(ErrorCode.EXISTING_BEACON);
     }
 
 }

@@ -4,8 +4,8 @@ public enum CommonMessage {
 
     COMPLETE_JOIN("가입이 완료되었습니다."),
     AVAILABLE_ID("사용 가능한 아이디입니다."),
-    COMPLETE_DELETE("삭제가 완료 되었습니다."),
-    COMPLETE_UPDATE("수정이 완료 되었습니다."),
+    COMPLETE_DELETE("삭제가 완료되었습니다."),
+    COMPLETE_UPDATE("수정이 완료되었습니다."),
     COMPLETE_REGISTER("등록이 완료되었습니다."),
     COMPLETE_ENROLLMENT("신청이 완료되었습니다."),
     COURSE_CANCELLATION_COMPLETED("수강 취소가 완료되었습니다."),
