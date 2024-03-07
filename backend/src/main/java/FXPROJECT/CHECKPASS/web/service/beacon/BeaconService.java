@@ -10,7 +10,6 @@ import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.BeaconInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
@@ -75,17 +73,9 @@ public class BeaconService {
      * 비콘 목록 조회
      * @return DB에 저장되어 있는 비콘 List
      */
-    public List<BeaconInformation> getBeaconList(){
+    public List<Beacon> getBeaconList(){
         List<Beacon> beaconList = queryRepository.getBeaconList();
-
-        List<BeaconInformation> beaconInformationList = new ArrayList<>();
-
-        for (Beacon beacon : beaconList) {
-            BeaconInformation beaconInformation = conversionService.convert(beacon, BeaconInformation.class);
-            beaconInformationList.add(beaconInformation);
-        }
-
-        return beaconInformationList;
+        return beaconList;
     }
 
     /**

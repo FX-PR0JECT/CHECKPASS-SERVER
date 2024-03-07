@@ -2,14 +2,11 @@ package FXPROJECT.CHECKPASS.domain.common.converter;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSuchProfessor;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
-import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
-import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
-import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
@@ -31,7 +28,6 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
     private final UserService userService;
     private final BeaconService beaconService;
     private final JpaDepartmentRepository jpaDepartmentRepository;
-    private final JpaBuildingRepository jpaBuildingRepository;
     private final LectureCodeUtils lectureCodeUtils;
 
     @Override

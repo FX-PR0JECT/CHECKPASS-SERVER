@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.common.config;
 
+import FXPROJECT.CHECKPASS.domain.common.converter.BeaconToBeaconInformationConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureRegisterFormToLectureConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureInformationConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureSimpleInfoConverter;
@@ -21,9 +22,10 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.ConfigConst.*;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final LectureRegisterFormToLectureConverter lectureRegisterFormToLectureConverter;
     private final LoginCheckInterceptor loginCheckInterceptor;
     private final LoginUserArgumentResolver loginUserArgumentResolver;
+    private final BeaconToBeaconInformationConverter beaconToBeaconInformationConverter;
+    private final LectureRegisterFormToLectureConverter lectureRegisterFormToLectureConverter;
     private final LectureToLectureInformationConverter lectureInformationConverter;
     private final LectureToLectureSimpleInfoConverter lectureToLectureSimpleInfoConverter;
 
@@ -54,6 +56,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(lectureRegisterFormToLectureConverter);
         registry.addConverter(lectureInformationConverter);
         registry.addConverter(lectureToLectureSimpleInfoConverter);
+        registry.addConverter(beaconToBeaconInformationConverter);
     }
 
 

@@ -8,7 +8,6 @@ import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.BeaconInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.COMPLETE_REGISTER;
+import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 
 @Slf4j
 @RestController
@@ -75,7 +74,7 @@ public class BeaconController {
             throw new NoPermission();
         }
 
-        List<BeaconInformation> beaconList = beaconService.getBeaconList();
+        List<Beacon> beaconList = beaconService.getBeaconList();
 
         return ResultFormUtils.getSuccessResultForm(beaconList);
     }
