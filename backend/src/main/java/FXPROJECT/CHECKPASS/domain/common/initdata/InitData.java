@@ -1,10 +1,13 @@
 package FXPROJECT.CHECKPASS.domain.common.initdata;
 
 
+import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
+import FXPROJECT.CHECKPASS.domain.enums.BuildingsEnum;
 import FXPROJECT.CHECKPASS.domain.enums.CollegesEnum;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
+import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import jakarta.annotation.PostConstruct;
@@ -21,6 +24,7 @@ public class InitData {
 
     private final JpaCollegesRepository jpaCollegesRepository;
     private final JpaDepartmentRepository jpaDepartmentRepository;
+    private final JpaBuildingRepository jpaBuildingRepository;
 
     @PostConstruct
     private void initData(){
@@ -45,6 +49,16 @@ public class InitData {
             departments.setDepartment(department.getDepartment());
             departments.setColleges(findCollege.get());
             jpaDepartmentRepository.save(departments);
+        }
+
+        BuildingsEnum[] buildingsEnums = BuildingsEnum.values();
+
+        for (BuildingsEnum building : buildingsEnums) {
+            log.info("Building : {}", building.getBuilding());
+            Buildings buildings = new Buildings();
+            buildings.setBuildingCode(building.getBuildingCode());
+            buildings.setBuildingName(building.getBuilding());
+            jpaBuildingRepository.save(buildings);
         }
 
     }
