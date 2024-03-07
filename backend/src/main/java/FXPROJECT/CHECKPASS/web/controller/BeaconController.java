@@ -87,12 +87,12 @@ public class BeaconController {
      * @return 성공 : 삭제가 완료되었습니다. 실패 : Database에 등록되지 않은 비콘입니다.
      */
     @DeleteMapping("/{major}/{minor}")
-    public ResultForm deleteBeacon(@PathVariable("major") int major, @PathVariable("minor") int minor,@LoginUser Users loggedInUser) {
+    public ResultForm deleteBeacon(@PathVariable("major") int major, @PathVariable("minor") int minor, @LoginUser Users loggedInUser) {
         if (loggedInUser.getUserJob() != Job.STAFF) {
             throw new NoPermission();
         }
 
-        return beaconService.deleteBeacon(major, major);
+        return beaconService.deleteBeacon(major, minor);
     }
 
 }
