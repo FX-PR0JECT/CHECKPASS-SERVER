@@ -30,6 +30,8 @@ public class BeaconService {
 
     private final JpaBeaconRepository jpaBeaconRepository;
     private final JpaBuildingRepository jpaBuildingRepository;
+    private final QueryRepository queryRepository;
+    private final ConversionService conversionService;
 
     /**
      * 비콘 등록
@@ -50,6 +52,40 @@ public class BeaconService {
         Beacon beacon = new Beacon(beaconPK);
 
         return jpaBeaconRepository.save(beacon);
+    }
+
+    /**
+     * 비콘 조회
+     * @param major 비콘 major
+     * @param minor 비콘 minor
+     * @return 조회된 비콘
+     */
+    public Beacon getBeacon(int major, int minor){
+        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
+        BeaconPK beaconPK = new BeaconPK(buildings, minor);
+
+        if (!existsBeacon(beaconPK)) {
+            throw new NonExistentBeacon();
+        }
+
+        return jpaBeaconRepository.findByBeaconPK(beaconPK);
+    }
+
+    /**
+     * 비콘 목록 조회
+     * @return DB에 저장되어 있는 비콘 List
+     */
+    public List<BeaconInformation> getBeaconList(){
+        List<Beacon> beaconList = queryRepository.getBeaconList();
+
+        List<BeaconInformation> beaconInformationList = new ArrayList<>();
+
+        for (Beacon beacon : beaconList) {
+            BeaconInformation beaconInformation = conversionService.convert(beacon, BeaconInformation.class);
+            beaconInformationList.add(beaconInformation);
+        }
+
+        return beaconInformationList;
     }
 
     /**
