@@ -4,7 +4,6 @@ import FXPROJECT.CHECKPASS.domain.common.exception.ExistingBeacon;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentBeacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
-import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import FXPROJECT.CHECKPASS.domain.repository.beacon.JpaBeaconRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
@@ -38,8 +37,7 @@ public class BeaconService {
     public Beacon registerBeacon(BeaconRegisterForm form){
         int major = form.getMajor();
         int minor = form.getMinor();
-        Buildings building = jpaBuildingRepository.findByBuildingCode(major);
-        BeaconPK beaconPK = new BeaconPK(building, minor);
+        BeaconPK beaconPK = new BeaconPK(major, minor);
 
         if (existsBeacon(beaconPK)) {
             throw new ExistingBeacon();
@@ -57,8 +55,7 @@ public class BeaconService {
      * @return 조회된 비콘
      */
     public Beacon getBeacon(int major, int minor){
-        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
-        BeaconPK beaconPK = new BeaconPK(buildings, minor);
+        BeaconPK beaconPK = new BeaconPK(major, minor);
 
         if (!existsBeacon(beaconPK)) {
             throw new NonExistentBeacon();
@@ -85,18 +82,17 @@ public class BeaconService {
      */
     @Transactional
     public Beacon updateBeacon(BeaconPK beaconPK, int major, int minor) {
-        int registeredMajor = beaconPK.getBuildings().getBuildingCode();
+        if (!existsBeacon(beaconPK)) {
+            throw new NonExistentBeacon();
+        }
+
+        int registeredMajor = beaconPK.getMajor();
         int registeredMinor = beaconPK.getMinor();
         Beacon target = getBeacon(registeredMajor, registeredMinor);
 
         BeaconPK pk = target.getBeaconPK();
-        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
-        pk.setBuildings(buildings);
+        pk.setMajor(major);
         pk.setMinor(minor);
-
-        if (!existsBeacon(beaconPK)) {
-            throw new NonExistentBeacon();
-        }
 
         return target;
     }
@@ -109,8 +105,7 @@ public class BeaconService {
      */
     @Transactional
     public ResultForm deleteBeacon(int major, int minor){
-        Buildings buildings = jpaBuildingRepository.findByBuildingCode(major);
-        BeaconPK beaconPK = new BeaconPK(buildings, minor);
+        BeaconPK beaconPK = new BeaconPK(major, minor);
 
         if (!existsBeacon(beaconPK)){
             throw new NonExistentBeacon();
@@ -134,8 +129,7 @@ public class BeaconService {
     }
 
     public String getLectureRoom(BeaconPK beaconPK) {
-        Buildings buildings = beaconPK.getBuildings();
-        int major = buildings.getBuildingCode();
+        int major = beaconPK.getMajor();
         int minor = beaconPK.getMinor();
         String buildingName = jpaBuildingRepository.findBuildingNameByBuildingCode(major);
         String lectureRoom = buildingName + " (" + minor + ")";

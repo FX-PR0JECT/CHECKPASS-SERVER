@@ -27,9 +27,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon.beacon;
-import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.enrollment;
-import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.lecture;
+import static FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon.*;
+import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.*;
+import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QProfessor.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStaff.*;
 import static FXPROJECT.CHECKPASS.domain.entity.users.QStudents.*;
@@ -177,6 +177,20 @@ public class QueryRepository {
         return result;
     }
 
+    public List<Lecture> getLectureList(int major, int minor) {
+
+        List<Lecture> result = query
+                .select(lecture)
+                .from(lecture)
+                .where(eqLectureMajor(major), eqLectureMinor(minor))
+                .fetch();
+
+        if (result.isEmpty()) {
+            throw new NoSearchResultsFound();
+        }
+        return result;
+    }
+
     public List<String> getYearSemesterList(Students student){
 
         List<String> result = query
@@ -222,6 +236,20 @@ public class QueryRepository {
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqLectureMajor(int major) {
+        if (major > 0){
+            return lecture.beacon.beaconPK.major.eq(major);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqLectureMinor(int minor) {
+        if (minor > 0){
+            return lecture.beacon.beaconPK.minor.eq(minor);
         }
         return null;
     }

@@ -18,7 +18,7 @@ public class BeaconToBeaconInformationConverter implements Converter<Beacon, Bea
 
         BeaconPK beaconPK = beacon.getBeaconPK();
         BeaconInformation beaconInformation = new BeaconInformation().builder()
-                .major(beaconPK.getBuildings().getBuildingCode())
+                .major(beaconPK.getMajor())
                 .minor(beaconPK.getMinor())
                 .build();
 

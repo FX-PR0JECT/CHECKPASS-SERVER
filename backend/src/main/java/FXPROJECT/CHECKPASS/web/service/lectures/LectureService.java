@@ -4,14 +4,20 @@ import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentLecture;
 import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
+import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
+import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
+import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
+import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
+import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
+import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
@@ -45,6 +51,7 @@ public class LectureService {
     private final QueryRepository jpaQueryUsersRepository;
     private final ConversionService conversionService;
     private final LectureCodeUtils lectureCodeUtils;
+    private final JpaBuildingRepository jpaBuildingRepository;
 
     /**
      * 강의 등록
@@ -147,6 +154,38 @@ public class LectureService {
         return ResultFormUtils.getSuccessResultForm(COMPLETE_DELETE.getDescription());
     }
 
+    /**
+     * 사용자가 수강한 강의 중 해당 비콘에 매칭되어있는 강의 정보 목록 조회
+     * @param major 비콘의 major
+     * @param minor 비콘의 minor
+     * @param loggedInUser 로그인된 유저
+     * @return 사용자가 수강한 강의 중 해당 비콘에 매칭되어있는 강의 정보 객체 목록
+     */
+    public List<LectureInformation> getLectureList(int major, int minor, Users loggedInUser) {
+        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(major, minor);
+        List<Lecture> enrollmentList = jpaQueryUsersRepository.getEnrollmentList((Students) loggedInUser);
+        int day = LocalDate.now().getDayOfWeek().getValue(); // 1(월) ~ 5(금)
+
+        List<LectureInformation> lectureInformationList = new ArrayList<>();
+
+        for (Lecture lecture : lectureList) {
+            if (enrollmentList.contains(lecture)) {
+                List<LectureTimeCode> timeCodeList = lecture.getLectureTimeCode();
+
+                for (LectureTimeCode timeCode : timeCodeList) {
+                    String timeCodeDay = String.valueOf(timeCode.getLectureTimeCode()); // 0(월) ~ 4(금)
+                    int lectureDay = Integer.parseInt(timeCodeDay.substring(1, 2)) + 1;
+
+                    if (day == lectureDay) {
+                        LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
+                        lectureInformationList.add(lectureInformation);
+                        break;
+                    }
+                }
+            }
+        }
+        return lectureInformationList;
+    }
 
     /**
      * 강의 코드를 이용하여 등록된 강의인지 확인

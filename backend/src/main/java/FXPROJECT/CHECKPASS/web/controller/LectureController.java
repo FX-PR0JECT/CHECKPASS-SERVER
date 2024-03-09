@@ -21,6 +21,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 
 @Slf4j
@@ -151,17 +153,6 @@ public class LectureController {
         return ResultFormUtils.getSuccessResultForm(COMPLETE_UPDATE.getDescription());
     }
 
-    private static boolean isMine(Users loggedInUser, Lecture target) {
-        return loggedInUser.getUserId().equals(target.getProfessor().getUserId());
-    }
-
-    private static boolean isEqaulDepartment(Users loggedInUser, Lecture target) {
-        String loginUserDepartment = loggedInUser.getDepartments().getDepartment();
-        String lectureRegistDepartment = target.getDepartments().getDepartment();
-        return loginUserDepartment.equals(lectureRegistDepartment);
-    }
-
-
     /**
      * 강의 삭제
      * URL : /lectures/{lectureCode}
@@ -173,4 +164,27 @@ public class LectureController {
         return lectureService.deleteLecture(lectureCode);
     }
 
+    /**
+     * 사용자가 수강한 강의 중 해당 비콘에 매칭되어있는 강의 정보 목록 조회
+     * @param major 비콘의 major
+     * @param minor 비콘의 minor
+     * @param loggedInUser 로그인된 유저
+     * @return 사용자가 수강한 강의 중 해당 비콘에 매칭되어있는 강의 정보 객체 목록
+     */
+    @RequestMapping("/beacon")
+    public ResultForm getBeaconLectureList(@RequestParam("major") int major, @RequestParam("minor") int minor, @LoginUser Users loggedInUser){
+        List<LectureInformation> lectureInformationList = lectureService.getLectureList(major, minor, loggedInUser);
+        return ResultFormUtils.getSuccessResultForm(lectureInformationList);
+    }
+
+
+    private static boolean isMine(Users loggedInUser, Lecture target) {
+        return loggedInUser.getUserId().equals(target.getProfessor().getUserId());
+    }
+
+    private static boolean isEqaulDepartment(Users loggedInUser, Lecture target) {
+        String loginUserDepartment = loggedInUser.getDepartments().getDepartment();
+        String lectureRegistDepartment = target.getDepartments().getDepartment();
+        return loginUserDepartment.equals(lectureRegistDepartment);
+    }
 }

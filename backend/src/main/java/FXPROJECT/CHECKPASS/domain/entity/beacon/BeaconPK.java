@@ -1,6 +1,5 @@
 package FXPROJECT.CHECKPASS.domain.entity.beacon;
 
-import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +15,8 @@ import java.io.Serializable;
 @Embeddable
 public class BeaconPK implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Buildings buildings;
+    @Column(nullable = false)
+    private int major;
 
     @Column(nullable = false)
     private int minor;
