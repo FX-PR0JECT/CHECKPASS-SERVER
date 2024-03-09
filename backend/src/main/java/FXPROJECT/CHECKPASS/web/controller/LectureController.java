@@ -144,7 +144,7 @@ public class LectureController {
             throw new NoPermission();
         }
 
-        if (!isMine(loggedInUser, target)){
+        if (isProfessor(loggedInUser) && !isMine(loggedInUser, target)){
             throw new NoPermission();
         }
 
@@ -177,6 +177,9 @@ public class LectureController {
         return ResultFormUtils.getSuccessResultForm(lectureInformationList);
     }
 
+    private static boolean isProfessor(Users loggedInUser) {
+        return loggedInUser.getUserJob().equals(Job.PROFESSOR);
+    }
 
     private static boolean isMine(Users loggedInUser, Lecture target) {
         return loggedInUser.getUserId().equals(target.getProfessor().getUserId());

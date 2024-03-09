@@ -1,12 +1,8 @@
 package FXPROJECT.CHECKPASS.web.service.lectures;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.ExistingLecture;
-import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
-import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentLecture;
-import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
+import FXPROJECT.CHECKPASS.domain.common.exception.*;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
-import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
@@ -168,8 +164,7 @@ public class LectureService {
                 List<LectureTimeCode> timeCodeList = lecture.getLectureTimeCode();
 
                 for (LectureTimeCode timeCode : timeCodeList) {
-                    String timeCodeDay = String.valueOf(timeCode.getLectureTimeCode()); // 0(월) ~ 4(금)
-                    int lectureDay = Integer.parseInt(timeCodeDay.substring(1, 2)) + 1;
+                    int lectureDay = Integer.parseInt(timeCode.getLectureTimeCode().substring(1, 2)) + 1;
 
                     if (day == lectureDay) {
                         LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
@@ -194,13 +189,13 @@ public class LectureService {
     public Lecture updateLecture(Lecture target, LectureUpdateForm form) {
 
         if (!userService.existsUser(form.getProfessorId())){
-            throw new UnauthenticatedUser();
+            throw new NoSuchProfessor();
         }
 
         Users user = userService.getUser(form.getProfessorId());
 
         if (!isProfessor(user.getUserJob())){
-            throw new NoPermission();
+            throw new NoSuchProfessor();
         }
 
         return lectureAllFieldUpdate(target, form);
@@ -210,7 +205,6 @@ public class LectureService {
 
         LectureTimeSource lectureTimeSource = extractionLectureTimeSource(form);
 
-        BeaconPK beaconPK = target.getBeacon().getBeaconPK();
         int major = form.getMajor();
         int minor = form.getMinor();
         Beacon beacon = beaconService.getBeacon(major, minor);
@@ -253,7 +247,7 @@ public class LectureService {
 
     private static Boolean isProfessor(Job job) {
 
-        if(job == Job.STUDENTS){
+        if(job != Job.PROFESSOR){
             return false;
         }
         return true;
