@@ -4,9 +4,11 @@ import FXPROJECT.CHECKPASS.domain.common.exception.ExistingBeacon;
 import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentBeacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
+import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.repository.beacon.JpaBeaconRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
+import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
@@ -26,6 +28,7 @@ public class BeaconService {
 
     private final JpaBeaconRepository jpaBeaconRepository;
     private final JpaBuildingRepository jpaBuildingRepository;
+    private final JpaLectureRepository jpaLectureRepository;
     private final QueryRepository queryRepository;
 
     /**
@@ -74,30 +77,6 @@ public class BeaconService {
     }
 
     /**
-     * 비콘 정보 업데이트
-     * @param beaconPK 비콘의 복합 PK(major + minor)
-     * @param major 비콘 major
-     * @param minor 비콘 minor
-     * @return 복합 PK가 업데이트 된 비콘
-     */
-    @Transactional
-    public Beacon updateBeacon(BeaconPK beaconPK, int major, int minor) {
-        if (!existsBeacon(beaconPK)) {
-            throw new NonExistentBeacon();
-        }
-
-        int registeredMajor = beaconPK.getMajor();
-        int registeredMinor = beaconPK.getMinor();
-        Beacon target = getBeacon(registeredMajor, registeredMinor);
-
-        BeaconPK pk = target.getBeaconPK();
-        pk.setMajor(major);
-        pk.setMinor(minor);
-
-        return target;
-    }
-
-    /**
      * 비콘 삭제
      * @param major 비콘 major
      * @param minor 비콘 minor
@@ -106,9 +85,15 @@ public class BeaconService {
     @Transactional
     public ResultForm deleteBeacon(int major, int minor){
         BeaconPK beaconPK = new BeaconPK(major, minor);
+        Beacon beacon = getBeacon(major, minor);
 
         if (!existsBeacon(beaconPK)){
             throw new NonExistentBeacon();
+        }
+
+        List<Lecture> lectureList = jpaLectureRepository.findAllByBeacon(beacon);
+        for (Lecture lecture : lectureList) {
+            lecture.setBeacon(null);
         }
 
         jpaBeaconRepository.deleteById(beaconPK);

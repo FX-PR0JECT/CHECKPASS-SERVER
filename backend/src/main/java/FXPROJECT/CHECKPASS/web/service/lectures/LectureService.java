@@ -7,17 +7,13 @@ import FXPROJECT.CHECKPASS.domain.common.exception.UnauthenticatedUser;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
-import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
-import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
-import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
-import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
@@ -51,7 +47,6 @@ public class LectureService {
     private final QueryRepository jpaQueryUsersRepository;
     private final ConversionService conversionService;
     private final LectureCodeUtils lectureCodeUtils;
-    private final JpaBuildingRepository jpaBuildingRepository;
 
     /**
      * 강의 등록
@@ -196,7 +191,6 @@ public class LectureService {
         return jpaLectureRepository.existsByLectureCode(lectureCode);
     }
 
-
     public Lecture updateLecture(Lecture target, LectureUpdateForm form) {
 
         if (!userService.existsUser(form.getProfessorId())){
@@ -219,7 +213,7 @@ public class LectureService {
         BeaconPK beaconPK = target.getBeacon().getBeaconPK();
         int major = form.getMajor();
         int minor = form.getMinor();
-        Beacon beacon = beaconService.updateBeacon(beaconPK, major, minor);
+        Beacon beacon = beaconService.getBeacon(major, minor);
 
         target.setProfessor((Professor)userService.getUser(form.getProfessorId()));
         target.setLectureName(form.getLectureName());
