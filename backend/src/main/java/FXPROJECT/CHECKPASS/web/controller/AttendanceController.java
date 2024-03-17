@@ -31,4 +31,9 @@ public class AttendanceController {
         return attendanceService.attend((Students) loggedInUser, lectureCode);
     }
 
+    @GetMapping
+    public ResultForm getAllAttendanceList(@LoginUser Users loggedInUser) {
+        Map<String, Map<Integer, Long>> allAttendanceList = attendanceService.getLectureAttendanceCounts((Students)loggedInUser);
+        return ResultFormUtils.getSuccessResultForm(allAttendanceList);
+    }
 }

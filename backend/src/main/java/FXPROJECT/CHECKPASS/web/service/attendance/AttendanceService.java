@@ -63,6 +63,32 @@ public class AttendanceService {
         throw new NotAttendanceCheckTime();
     }
 
+    /**
+     * 모든 강의 출석현황 보기
+     * @param loggedInUser 로그인된 유저
+     * @return 사용자의 수강하고 있는 강의 출석정보 목록
+     */
+    public Map<String, Map<Integer, Long>> getLectureAttendanceCounts(Students loggedInUser) {
+        Long studentId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
+        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
+
+        Map<String, Map<Integer, Long>> lectureAttendanceCounts = new TreeMap<>();
+
+        List<Lecture> enrollmentList = queryRepository.getEnrollmentList(loggedInUser);
+        for (Lecture lecture : enrollmentList) {
+            String lectureName = lecture.getLectureName();
+            Long lectureCode = lecture.getLectureCode();
+
+            String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+
+            List<Tuple> attendanceCountList = queryRepository.getAttendanceCountList(attendanceId);
+            Map<Integer, Long> attendanceCounts = aggregateAndSortAttendanceCounts(attendanceCountList);
+            lectureAttendanceCounts.put(lectureName, attendanceCounts);
+        }
+        return lectureAttendanceCounts;
+    }
+
     private boolean isCurrentLectureDay(String day, LectureTimeCode lectureTimeCode) {
         // TO-BE : 현재 날짜와 강의 날짜가 서로 같은지 확인
         String timeCode = lectureTimeCode.getLectureTimeCode();
@@ -107,5 +133,26 @@ public class AttendanceService {
         // TO-BE : 출석정보 저장
         Attendance attendance = new Attendance(attendanceId, status);
         jpaAttendanceRepository.save(attendance);
+    }
+
+    private Map<Integer, Long> aggregateAndSortAttendanceCounts(List<Tuple> attendanceCountList){
+        // TO-BE : 각 출석 상태별로 출석 횟수를 집계하고, 그 결과를 오름차순으로 정렬된 Map으로 반환
+        Map<Integer, Long> attendanceCounts = new TreeMap<>();
+
+        for (int i = 1; i < 4; i++) {
+            attendanceCounts.put(i, 0L);
+        }
+
+        for (Tuple attendanceCount : attendanceCountList) {
+            Integer attendanceCode = attendanceCount.get(0, Integer.class);
+
+            if (attendanceCode == 0) {
+                continue;
+            }
+
+            Long count = attendanceCount.get(1, Long.class);
+            attendanceCounts.put(attendanceCode, count);
+        }
+        return attendanceCounts;
     }
 }

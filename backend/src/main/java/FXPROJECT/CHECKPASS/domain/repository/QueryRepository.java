@@ -239,6 +239,20 @@ public class QueryRepository {
         query.delete(attendance).where(likeAttendanceId(attendanceId)).execute();
     }
 
+    public List<Tuple> getAttendanceCountList(String attendanceId) {
+        List<Tuple> result = query
+                .select(attendance.AttendanceCode, attendance.AttendanceCode.count())
+                .from(attendance)
+                .where(likeAttendanceId(attendanceId))
+                .groupBy(attendance.AttendanceCode)
+                .fetch();
+        if (result.isEmpty()) {
+            throw new NoCourseHistory();
+        }
+
+        return result;
+    }
+
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
