@@ -12,6 +12,7 @@ import FXPROJECT.CHECKPASS.web.common.searchCondition.users.ProfessorSearchCondi
 import FXPROJECT.CHECKPASS.web.common.searchCondition.users.StudentSearchCondition;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoSearchResultsFound;
 import FXPROJECT.CHECKPASS.domain.entity.users.*;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -24,9 +25,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import static FXPROJECT.CHECKPASS.domain.entity.attendance.QAttendance.*;
 import static FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon.*;
 import static FXPROJECT.CHECKPASS.domain.entity.lectures.QEnrollment.*;
 import static FXPROJECT.CHECKPASS.domain.entity.lectures.QLecture.*;
@@ -233,6 +234,11 @@ public class QueryRepository {
         return result;
     }
 
+    public void deleteAttendanceWeek(Long userId, Long lectureCode, String studentGrade, String studentSemester){
+        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+        query.delete(attendance).where(likeAttendanceId(attendanceId)).execute();
+    }
+
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
@@ -357,6 +363,13 @@ public class QueryRepository {
     private BooleanExpression likeStudentId(Long studentId){
         if (studentId != null && studentId > 0) {
             return enrollment.enrollmentId.like(studentId + "%");
+        }
+        return null;
+    }
+
+    private BooleanExpression likeAttendanceId(String attendanceId) {
+        if (StringUtils.hasText(attendanceId)) {
+            return attendance.AttendanceId.like(attendanceId + "%");
         }
         return null;
     }

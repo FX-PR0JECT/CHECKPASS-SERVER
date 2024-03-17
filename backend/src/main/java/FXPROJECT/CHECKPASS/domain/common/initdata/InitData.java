@@ -1,6 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.common.initdata;
 
 
+import FXPROJECT.CHECKPASS.domain.entity.attendance.StartSemesterDays;
 import FXPROJECT.CHECKPASS.domain.entity.building.Buildings;
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
 import FXPROJECT.CHECKPASS.domain.entity.college.Departments;
@@ -10,6 +11,7 @@ import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaCollegesRepository;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
+import FXPROJECT.CHECKPASS.domain.repository.lectureweek.JpaLectureWeekRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class InitData {
     private final JpaCollegesRepository jpaCollegesRepository;
     private final JpaDepartmentRepository jpaDepartmentRepository;
     private final JpaBuildingRepository jpaBuildingRepository;
+    private final JpaLectureWeekRepository jpaLectureWeekRepository;
 
     @PostConstruct
     private void initData(){
@@ -60,6 +63,11 @@ public class InitData {
             buildings.setBuildingName(building.getBuilding());
             jpaBuildingRepository.save(buildings);
         }
+
+        StartSemesterDays oneSemesterDay = new StartSemesterDays(1, "2024-03-04");
+        StartSemesterDays twoSemesterDay = new StartSemesterDays(2, "2024-09-02");
+        jpaLectureWeekRepository.save(oneSemesterDay);
+        jpaLectureWeekRepository.save(twoSemesterDay);
 
     }
 

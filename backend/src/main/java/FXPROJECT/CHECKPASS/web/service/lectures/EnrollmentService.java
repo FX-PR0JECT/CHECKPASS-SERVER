@@ -14,6 +14,7 @@ import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ToLectureWordUtils;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.service.attendance.AttendanceWeekService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -35,6 +36,7 @@ public class EnrollmentService {
     private final JpaLectureRepository jpaLectureRepository;
     private final QueryRepository queryRepository;
     private final ConversionService conversionService;
+    private final AttendanceWeekService attendanceWeekService;
 
     /**
      * 수강신청
@@ -65,6 +67,7 @@ public class EnrollmentService {
         }
 
         jpaEnrollmentRepository.save(enrollment);
+        attendanceWeekService.generateAttendanceWeek(loggedInUser, lectureCode);
         target.setLectureCount(target.getLectureCount() + 1);
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_ENROLLMENT.getDescription());
@@ -86,6 +89,7 @@ public class EnrollmentService {
             return ResultFormUtils.getFailResultForm(BAD_URI_REQUEST);
         }
 
+        attendanceWeekService.deleteAttendanceWeek(loggedInUser, lectureCode);
         jpaEnrollmentRepository.deleteById(enrollmentId);
 
         return ResultFormUtils.getSuccessResultForm(COURSE_CANCELLATION_COMPLETED.getDescription());
