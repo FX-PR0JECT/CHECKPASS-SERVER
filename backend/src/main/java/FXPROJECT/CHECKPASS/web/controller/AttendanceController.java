@@ -6,6 +6,7 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
@@ -96,6 +97,11 @@ public class AttendanceController {
         }
 
         return attendanceService.generateAttendanceToken(lectureCode);
+    }
+
+    @PostMapping("/setAbsent")
+    public void setAbsent(@RequestBody AttendanceInputForm form) {
+        attendanceService.setAbsent(form);
     }
 
     private boolean isProfessorOrStaff(Users loggedInUser) {

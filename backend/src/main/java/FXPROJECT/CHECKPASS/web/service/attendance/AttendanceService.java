@@ -13,9 +13,11 @@ import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceTokenReposi
 import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.RandomNumberUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceTokenInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
+import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,7 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
 @RequiredArgsConstructor
 public class AttendanceService {
 
+    private final UserService userService;
     private final LectureService lectureService;
     private final LectureWeekUtils lectureWeekUtils;
     private final JpaAttendanceTokenRepository jpaAttendanceTokenRepository;
@@ -182,6 +185,16 @@ public class AttendanceService {
 
         AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
         return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
+    }
+
+    @Transactional
+    public void setAbsent(AttendanceInputForm form) {
+        Long userId = form.getUserId();
+        Long lectureCode = form.getLectureCode();
+
+        Students student = (Students) userService.getUser(userId);
+        String attendanceId = generateAttendanceId(student, lectureCode);
+        queryRepository.setAbsent(attendanceId);
     }
 
     private boolean isCurrentLectureDay(LectureTimeCode lectureTimeCode) {

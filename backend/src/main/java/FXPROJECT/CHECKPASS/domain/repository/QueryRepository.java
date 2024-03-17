@@ -271,6 +271,10 @@ public class QueryRepository {
         query.update(attendance).set(attendance.AttendanceCode, 3).where(likeAttendanceIdByLectureCode(lectureCode, day, week)).execute();
     }
 
+    public void setAbsent(String attendanceId) {
+        query.update(attendance).set(attendance.AttendanceCode, 3).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+    }
+
     private BooleanExpression checkEnrollment(Long userId) {
         if (userId != null && userId > 0){
             return enrollment.student.userId.eq(userId);
