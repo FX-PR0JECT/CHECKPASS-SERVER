@@ -12,7 +12,7 @@ public class RandomNumberUtils {
     public int generateAttendanceCode() {
         Random random = new Random();
 
-        int digit1 = random.nextInt(10);
+        int digit1 = random.nextInt(9) + 1;
         int digit2 = random.nextInt(10);
         int digit3 = random.nextInt(10);
         int digit4 = random.nextInt(10);
