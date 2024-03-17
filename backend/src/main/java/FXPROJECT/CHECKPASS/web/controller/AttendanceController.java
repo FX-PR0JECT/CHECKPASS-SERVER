@@ -99,9 +99,22 @@ public class AttendanceController {
         return attendanceService.generateAttendanceToken(lectureCode);
     }
 
+    /**
+     * 결석 처리(수동)
+     * @param form 유저Id, 강의 코드가 담긴 form
+     */
     @PostMapping("/setAbsent")
     public void setAbsent(@RequestBody AttendanceInputForm form) {
         attendanceService.setAbsent(form);
+    }
+
+    /**
+     * 지각 처리(수동)
+     * @param form 유저Id, 강의 코드가 담긴 form
+     */
+    @PostMapping("/setLateness")
+    public void setLateness(@RequestBody AttendanceInputForm form) {
+        attendanceService.setLateness(form);
     }
 
     private boolean isProfessorOrStaff(Users loggedInUser) {

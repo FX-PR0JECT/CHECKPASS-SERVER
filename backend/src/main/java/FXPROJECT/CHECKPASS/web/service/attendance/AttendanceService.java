@@ -187,6 +187,10 @@ public class AttendanceService {
         return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
     }
 
+    /**
+     * 결석 처리하기(수동)
+     * @param form 유저Id, 강의 코드가 담긴 form
+     */
     @Transactional
     public void setAbsent(AttendanceInputForm form) {
         Long userId = form.getUserId();
@@ -195,6 +199,20 @@ public class AttendanceService {
         Students student = (Students) userService.getUser(userId);
         String attendanceId = generateAttendanceId(student, lectureCode);
         queryRepository.setAbsent(attendanceId);
+    }
+
+    /**
+     * 지각 처리하기(수동)
+     * @param form 유저Id, 강의 코드가 담긴 form
+     */
+    @Transactional
+    public void setLateness(AttendanceInputForm form) {
+        Long userId = form.getUserId();
+        Long lectureCode = form.getLectureCode();
+
+        Students student = (Students) userService.getUser(userId);
+        String attendanceId = generateAttendanceId(student, lectureCode);
+        queryRepository.setLateness(attendanceId);
     }
 
     private boolean isCurrentLectureDay(LectureTimeCode lectureTimeCode) {
