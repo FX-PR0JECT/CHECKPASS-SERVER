@@ -7,6 +7,7 @@ import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceTokens;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
+import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceTokenRepository;
@@ -134,7 +135,7 @@ public class AttendanceService {
 
         for (Attendance attendance : attendanceList) {
             int attendanceWeek = Integer.parseInt(attendance.getAttendanceId().substring(20));
-            String status = String.valueOf(attendance.getAttendanceCode());
+            String status = String.valueOf(attendance.getAttendanceStatus());
 
             if (lectureAttendanceCounts.containsKey(attendanceWeek)) {
                 String existingStatus = lectureAttendanceCounts.get(attendanceWeek);
@@ -145,6 +146,32 @@ public class AttendanceService {
         }
 
         return lectureAttendanceCounts;
+    }
+
+    /**
+     * 현재 출석인원 목록 구하기
+     * @param lectureCode 강의코드
+     * @return 현재 출석한 인원 목록 Map
+     */
+    public Map<Long, String> getPresentAttendanceUsers(Long lectureCode) {
+        Map<Long, String> presentAttendanceUsers = new TreeMap<>();
+
+        String week = String.valueOf(lectureWeekUtils.getWeek()); // 현재 주차
+        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
+
+        List<Attendance> attendanceList = queryRepository.getPresentAttendanceList(lectureCode.toString(), day, week);
+
+        for(Attendance attendance : attendanceList) {
+            String attendanceId = attendance.getAttendanceId();
+            Long userId = Long.valueOf(attendanceId.substring(0, 7));
+
+            Users user = userService.getUser(userId);
+            String userName = user.getUserName();
+
+            presentAttendanceUsers.put(userId, userName);
+        }
+
+        return presentAttendanceUsers;
     }
 
     /**

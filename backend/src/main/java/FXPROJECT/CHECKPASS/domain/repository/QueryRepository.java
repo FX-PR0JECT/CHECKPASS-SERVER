@@ -242,10 +242,10 @@ public class QueryRepository {
 
     public List<Tuple> getAttendanceCountList(String attendanceId) {
         List<Tuple> result = query
-                .select(attendance.AttendanceCode, attendance.AttendanceCode.count())
+                .select(attendance.attendanceStatus, attendance.attendanceStatus.count())
                 .from(attendance)
                 .where(likeAttendanceIdByAttendanceId(attendanceId))
-                .groupBy(attendance.AttendanceCode)
+                .groupBy(attendance.attendanceStatus)
                 .fetch();
         if (result.isEmpty()) {
             throw new NoCourseHistory();
@@ -267,20 +267,33 @@ public class QueryRepository {
         return result;
     }
 
+    public List<Attendance> getPresentAttendanceList(String lectureCode, String day, String week) {
+        List<Attendance> result = query
+                .select(attendance)
+                .from(attendance)
+                .where(likeAttendanceIdByLectureCode(lectureCode, day, week), eqAttendanceStatus(1))
+                .fetch();
+        return result;
+    }
+
     public void setAbsent(String lectureCode, String day, String week) {
-        query.update(attendance).set(attendance.AttendanceCode, 3).where(likeAttendanceIdByLectureCode(lectureCode, day, week)).execute();
+        query.update(attendance).set(attendance.attendanceStatus, 3).where(likeAttendanceIdByLectureCode(lectureCode, day, week)).execute();
     }
 
     public void setAbsent(String attendanceId) {
-        query.update(attendance).set(attendance.AttendanceCode, 3).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+        query.update(attendance).set(attendance.attendanceStatus, 3).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
     }
 
     public void setLateness(String attendanceId) {
-        query.update(attendance).set(attendance.AttendanceCode, 2).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+        query.update(attendance).set(attendance.attendanceStatus, 2).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
     }
 
     public void setAttend(String attendanceId) {
-        query.update(attendance).set(attendance.AttendanceCode, 1).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+        query.update(attendance).set(attendance.attendanceStatus, 1).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+    }
+
+    private BooleanExpression eqAttendanceStatus(int attendanceStatus) {
+        return attendance.attendanceStatus.eq(attendanceStatus);
     }
 
     private BooleanExpression checkEnrollment(Long userId) {
@@ -413,14 +426,14 @@ public class QueryRepository {
 
     private BooleanExpression likeAttendanceIdByAttendanceId(String attendanceId) {
         if (StringUtils.hasText(attendanceId)) {
-            return attendance.AttendanceId.like(attendanceId + "%");
+            return attendance.attendanceId.like(attendanceId + "%");
         }
         return null;
     }
 
     private  BooleanExpression likeAttendanceIdByLectureCode(String lectureCode, String day, String week) {
         if (StringUtils.hasText(lectureCode)) {
-            return attendance.AttendanceId.like("%" + lectureCode + "%" + day + week);
+            return attendance.attendanceId.like("%" + lectureCode + "%" + day + week);
         }
         return null;
     }

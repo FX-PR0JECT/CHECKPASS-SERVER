@@ -75,13 +75,29 @@ public class AttendanceController {
      * @return 각 주차마다 출석상테가 담겨있는 Map
      */
     @GetMapping("/{lectureCode}")
-    public ResultForm getAttendanceList(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
+    public ResultForm getAttendances(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
         if (!isStudent(loggedInUser)) {
             throw new NoPermission();
         }
 
         Map<Integer, String> attendanceStatusMap = attendanceService.getLectureAttendanceCounts((Students)loggedInUser, lectureCode);
         return ResultFormUtils.getSuccessResultForm(attendanceStatusMap);
+    }
+
+    /**
+     * 현재 출석인원 보기
+     * @param loggedInUser 로그인된 유저
+     * @param lectureCode 강의코드
+     * @return 현재 출석한 인원 목록 Map
+     */
+    @GetMapping("/now/{lectureCode}")
+    public ResultForm getPresentAttendanceUsers(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
+        if (!isProfessorOrStaff(loggedInUser)) {
+            throw new NoPermission();
+        }
+
+        Map<Long, String> presentAttendanceUsers = attendanceService.getPresentAttendanceUsers(lectureCode);
+        return ResultFormUtils.getSuccessResultForm(presentAttendanceUsers);
     }
 
     /**
@@ -104,7 +120,11 @@ public class AttendanceController {
      * @param form 유저Id, 강의 코드가 담긴 form
      */
     @PostMapping("/setAbsent")
-    public void setAbsent(@RequestBody AttendanceInputForm form) {
+    public void setAbsent(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
+        if (!isStudent(loggedInUser)) {
+            throw new NoPermission();
+        }
+
         attendanceService.setAbsent(form);
     }
 
@@ -113,7 +133,11 @@ public class AttendanceController {
      * @param form 유저Id, 강의 코드가 담긴 form
      */
     @PostMapping("/setLateness")
-    public void setLateness(@RequestBody AttendanceInputForm form) {
+    public void setLateness(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
+        if (!isStudent(loggedInUser)) {
+            throw new NoPermission();
+        }
+
         attendanceService.setLateness(form);
     }
 
@@ -122,7 +146,11 @@ public class AttendanceController {
      * @param form
      */
     @PostMapping("/setAttend")
-    public void setAttend(@RequestBody AttendanceInputForm form) {
+    public void setAttend(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
+        if (!isStudent(loggedInUser)) {
+            throw new NoPermission();
+        }
+
         attendanceService.setAttend(form);
     }
 

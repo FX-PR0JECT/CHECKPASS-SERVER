@@ -15,8 +15,8 @@ import lombok.Setter;
 public class Attendance {
 
     @Id
-    private String AttendanceId;
+    private String attendanceId;
 
-    private int AttendanceCode;
+    private int attendanceStatus;
 
 }
