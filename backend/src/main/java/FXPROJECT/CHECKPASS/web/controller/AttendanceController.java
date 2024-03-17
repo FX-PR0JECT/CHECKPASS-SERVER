@@ -117,6 +117,15 @@ public class AttendanceController {
         attendanceService.setLateness(form);
     }
 
+    /**
+     * 출석 처리(수동)
+     * @param form
+     */
+    @PostMapping("/setAttend")
+    public void setAttend(@RequestBody AttendanceInputForm form) {
+        attendanceService.setAttend(form);
+    }
+
     private boolean isProfessorOrStaff(Users loggedInUser) {
         Job job = loggedInUser.getUserJob();
 

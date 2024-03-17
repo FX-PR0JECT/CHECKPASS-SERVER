@@ -215,6 +215,20 @@ public class AttendanceService {
         queryRepository.setLateness(attendanceId);
     }
 
+    /**
+     * 출석 처리하기(수동)
+     * @param form 유저Id, 강의 코드가 담긴 form
+     */
+    @Transactional
+    public void setAttend(AttendanceInputForm form) {
+        Long userId = form.getUserId();
+        Long lectureCode = form.getLectureCode();
+
+        Students student = (Students) userService.getUser(userId);
+        String attendanceId = generateAttendanceId(student, lectureCode);
+        queryRepository.setAttend(attendanceId);
+    }
+
     private boolean isCurrentLectureDay(LectureTimeCode lectureTimeCode) {
         // TO-BE : 현재 날짜와 강의 날짜가 서로 같은지 확인
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
