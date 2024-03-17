@@ -223,4 +223,7 @@ public class ExceptionAdvice {
         return ResultFormUtils.getFailResultForm(ErrorCode.EXISTING_BEACON);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotAttendanceCheckTime.class)
+    public ResultForm notAttendanceCheckTime() { return ResultFormUtils.getFailResultForm(ErrorCode.NOT_ATTENDANCE_CHECK_TIME); }
 }

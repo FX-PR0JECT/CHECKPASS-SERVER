@@ -8,6 +8,8 @@ public enum CommonMessage {
     COMPLETE_UPDATE("수정이 완료되었습니다."),
     COMPLETE_REGISTER("등록이 완료되었습니다."),
     COMPLETE_ENROLLMENT("신청이 완료되었습니다."),
+    COMPLETE_ATTENDANCE("출석체크가 완료되었습니다."),
+    TREAT_LATENESS("지각 처리되었습니다."),
     COURSE_CANCELLATION_COMPLETED("수강 취소가 완료되었습니다."),
     NOT_FOUNT("찾을 수 없습니다."),
     SUCCESS_LOGIN("로그인 성공!"),

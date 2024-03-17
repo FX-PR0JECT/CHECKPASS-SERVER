@@ -48,6 +48,7 @@ public enum ErrorCode {
     NON_EXISTENT_BEACON(400, -120, "Non-Existent Beacon", "Database에 등록되지 않은 비콘입니다.\n" +
             "해결 방법 : 관리자에게 문의하거나 신규 비콘일 경우 비콘 등록 후 재시도."),
     EXISTING_BEACON(400, -121, "Existing Beacon", "Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청"),
+    NOT_ATTENDANCE_CHECK_TIME(400, -140, "Not attendance check time", "출석체크 시간이 아닙니다."),
     OK(200,-1000,"OK","OK");
 
 
