@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.domain.common.config;
 
+import FXPROJECT.CHECKPASS.domain.common.converter.AttendanceTokenToAttendanceTokenInformationConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureRegisterFormToLectureConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureInformationConverter;
 import FXPROJECT.CHECKPASS.domain.common.converter.LectureToLectureSimpleInfoConverter;
@@ -26,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final LectureRegisterFormToLectureConverter lectureRegisterFormToLectureConverter;
     private final LectureToLectureInformationConverter lectureInformationConverter;
     private final LectureToLectureSimpleInfoConverter lectureToLectureSimpleInfoConverter;
+    private final AttendanceTokenToAttendanceTokenInformationConverter attendanceTokenToAttendanceTokenInformationConverter;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -54,6 +56,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(lectureRegisterFormToLectureConverter);
         registry.addConverter(lectureInformationConverter);
         registry.addConverter(lectureToLectureSimpleInfoConverter);
+        registry.addConverter(attendanceTokenToAttendanceTokenInformationConverter);
     }
 
 

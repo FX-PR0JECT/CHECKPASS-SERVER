@@ -237,14 +237,14 @@ public class QueryRepository {
 
     public void deleteAttendanceWeek(Long userId, Long lectureCode, String studentGrade, String studentSemester){
         String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
-        query.delete(attendance).where(likeAttendanceId(attendanceId)).execute();
+        query.delete(attendance).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
     }
 
     public List<Tuple> getAttendanceCountList(String attendanceId) {
         List<Tuple> result = query
                 .select(attendance.AttendanceCode, attendance.AttendanceCode.count())
                 .from(attendance)
-                .where(likeAttendanceId(attendanceId))
+                .where(likeAttendanceIdByAttendanceId(attendanceId))
                 .groupBy(attendance.AttendanceCode)
                 .fetch();
         if (result.isEmpty()) {
@@ -258,13 +258,17 @@ public class QueryRepository {
         List <Attendance> result = query
                 .select(attendance)
                 .from(attendance)
-                .where(likeAttendanceId(attendanceId))
+                .where(likeAttendanceIdByAttendanceId(attendanceId))
                 .fetch();
         if (result.isEmpty()){
             throw new NoCourseHistory();
         }
 
         return result;
+    }
+
+    public void setAbsent(String lectureCode, String day, String week) {
+        query.update(attendance).set(attendance.AttendanceCode, 3).where(likeAttendanceIdByLectureCode(lectureCode, day, week)).execute();
     }
 
     private BooleanExpression checkEnrollment(Long userId) {
@@ -395,9 +399,16 @@ public class QueryRepository {
         return null;
     }
 
-    private BooleanExpression likeAttendanceId(String attendanceId) {
+    private BooleanExpression likeAttendanceIdByAttendanceId(String attendanceId) {
         if (StringUtils.hasText(attendanceId)) {
             return attendance.AttendanceId.like(attendanceId + "%");
+        }
+        return null;
+    }
+
+    private  BooleanExpression likeAttendanceIdByLectureCode(String lectureCode, String day, String week) {
+        if (StringUtils.hasText(lectureCode)) {
+            return attendance.AttendanceId.like("%" + lectureCode + "%" + day + week);
         }
         return null;
     }

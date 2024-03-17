@@ -1,20 +1,27 @@
 package FXPROJECT.CHECKPASS.web.service.attendance;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceCodeMismatch;
 import FXPROJECT.CHECKPASS.domain.common.exception.NotAttendanceCheckTime;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
+import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceTokens;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceRepository;
+import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceTokenRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.RandomNumberUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceTokenInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,8 +37,11 @@ public class AttendanceService {
 
     private final LectureService lectureService;
     private final LectureWeekUtils lectureWeekUtils;
+    private final JpaAttendanceTokenRepository jpaAttendanceTokenRepository;
     private final JpaAttendanceRepository jpaAttendanceRepository;
     private final QueryRepository queryRepository;
+    private final RandomNumberUtils randomNumberUtils;
+    private final ConversionService conversionService;
 
     /**
      * 출석체크
@@ -39,28 +49,50 @@ public class AttendanceService {
      * @param lectureCode 강의코드
      * @return 성공 : (출석 : 출석체크가 완료되었습니다. 지각 : 지각 처리되었습니다.), 실패 : 출석체크 시간이 아닙니다.
      */
+    @Transactional
     public ResultForm attend(Students loggedInUser, Long lectureCode) {
-        Long userId = loggedInUser.getUserId();
-        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
-        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
-
-        int week = lectureWeekUtils.getWeek(); // 현재 주차
-        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
-
         LocalDateTime now = LocalDateTime.now();
         LocalTime currentTime = now.toLocalTime().truncatedTo(ChronoUnit.MINUTES);
 
         Lecture lecture = lectureService.getLecture(lectureCode);
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + week;
+        String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
 
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
-            if (isCurrentLectureDay(day, lectureTimeCode)) {
+            if (isCurrentLectureDay(lectureTimeCode)) {
                 return checkAndSaveAttendance(attendanceId, currentTime, lectureTimeCode);
             }
         }
         throw new NotAttendanceCheckTime();
+    }
+
+    /**
+     * 전자출석
+     * @param loggedInUser 로그인된 유저
+     * @param attendanceCode 출석코드
+     * @return 성공 : 출석체크가 완료되었습니다  실패 : 출석체크 시간이 아닙니다. 또는 출석코드가 일치하지 않습니다.
+     */
+    @Transactional
+    public ResultForm attend(Students loggedInUser, int attendanceCode) {
+        AttendanceTokens attendanceToken = getAttendanceToken(attendanceCode);
+        LocalDateTime expirationDate = attendanceToken.getExpirationDate();
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime currentDate = now.truncatedTo(ChronoUnit.MINUTES);
+
+        if (currentDate.isAfter(expirationDate)) {
+            throw new NotAttendanceCheckTime();
+        }
+
+        Lecture lecture = attendanceToken.getLecture();
+        Long lectureCode = lecture.getLectureCode();
+
+        String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+
+        saveAttendance(attendanceId, 1); // 출석
+
+        return ResultFormUtils.getSuccessResultForm(COMPLETE_ATTENDANCE.getDescription());
     }
 
     /**
@@ -69,10 +101,6 @@ public class AttendanceService {
      * @return 사용자의 수강하고 있는 강의 출석현황 통계 Map
      */
     public Map<String, Map<Integer, Long>> getAllLectureAttendanceCounts(Students loggedInUser) {
-        Long studentId = loggedInUser.getUserId();
-        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
-        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
-
         Map<String, Map<Integer, Long>> lectureAttendanceCounts = new TreeMap<>();
 
         List<Lecture> enrollmentList = queryRepository.getEnrollmentList(loggedInUser);
@@ -80,7 +108,7 @@ public class AttendanceService {
             String lectureName = lecture.getLectureName();
             Long lectureCode = lecture.getLectureCode();
 
-            String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+            String attendanceId = generateMatchingAttendanceId(loggedInUser, lectureCode);
 
             List<Tuple> attendanceCountList = queryRepository.getAttendanceCountList(attendanceId);
             Map<Integer, Long> attendanceCounts = aggregateAndSortAttendanceCounts(attendanceCountList);
@@ -96,13 +124,9 @@ public class AttendanceService {
      * @return 각 주차마다 출석현황이 담겨져 있는 Map
      */
     public Map<Integer, String> getLectureAttendanceCounts(Students loggedInUser, Long lectureCode) {
-        Long studentId = loggedInUser.getUserId();
-        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
-        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
-
         Map<Integer, String> lectureAttendanceCounts = new TreeMap<>();
 
-        String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+        String attendanceId = generateMatchingAttendanceId(loggedInUser, lectureCode);
         List<Attendance> attendanceList = queryRepository.getAttendanceList(attendanceId);
 
         for (Attendance attendance : attendanceList) {
@@ -120,8 +144,35 @@ public class AttendanceService {
         return lectureAttendanceCounts;
     }
 
-    private boolean isCurrentLectureDay(String day, LectureTimeCode lectureTimeCode) {
+    /**
+     * 출석코드 생성하기
+     * @param lectureCode 강의코드
+     * @return 생성한 출석코드 객체
+     */
+    @Transactional
+    public ResultForm generateAttendanceToken(Long lectureCode) {
+        int attendanceCode = randomNumberUtils.generateAttendanceCode();
+        Lecture lecture = lectureService.getLecture(lectureCode);
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startDate = now.truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime expirationDate = startDate.plusMinutes(3);
+
+        AttendanceTokens attendanceToken = new AttendanceTokens(lecture, attendanceCode, startDate, expirationDate);
+        jpaAttendanceTokenRepository.save(attendanceToken);
+
+        String week = String.valueOf(lectureWeekUtils.getWeek()); // 현재 주차
+        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
+
+        queryRepository.setAbsent(lectureCode.toString(), day, week);
+
+        AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
+        return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
+    }
+
+    private boolean isCurrentLectureDay(LectureTimeCode lectureTimeCode) {
         // TO-BE : 현재 날짜와 강의 날짜가 서로 같은지 확인
+        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
         String timeCode = lectureTimeCode.getLectureTimeCode();
         String lectureDay = timeCode.substring(1, 2);
         return day.equals(lectureDay);
@@ -144,9 +195,8 @@ public class AttendanceService {
         } else if (currentTime.isAfter(latenessStartTime) && currentTime.isBefore(latenessEndTime)){
             saveAttendance(attendanceId, 2); // 지각 처리
             return ResultFormUtils.getSuccessResultForm(TREAT_LATENESS.getDescription());
-        } else {
-            throw new NotAttendanceCheckTime();
         }
+        throw new NotAttendanceCheckTime();
     }
 
     private LocalTime calculateStartTime(int lectureHour, int lectureMinute) {
@@ -185,5 +235,36 @@ public class AttendanceService {
             attendanceCounts.put(attendanceCode, count);
         }
         return attendanceCounts;
+    }
+
+    private AttendanceTokens getAttendanceToken(int attendanceCode) {
+        if (!jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
+            throw new AttendanceCodeMismatch();
+        }
+
+        return jpaAttendanceTokenRepository.findByAttendanceCode(attendanceCode);
+    }
+
+    private String generateAttendanceId(Students loggedInUser, Long lectureCode) {
+        Long userId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
+        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
+
+        int week = lectureWeekUtils.getWeek(); // 현재 주차
+        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
+
+        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + week;
+
+        return attendanceId;
+    }
+
+    private String generateMatchingAttendanceId(Students loggedInUser, Long lectureCode) {
+        Long userId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
+        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
+
+        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+
+        return attendanceId;
     }
 }

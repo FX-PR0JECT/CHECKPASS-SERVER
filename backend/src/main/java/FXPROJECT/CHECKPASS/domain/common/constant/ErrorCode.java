@@ -1,5 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.common.constant;
 
+import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
+
 public enum ErrorCode {
 
     MISSING_REQUIRED_ELEMENT(403,-3,"Missing required element","해당 API를 사용하기 위해 필요한 기능(간편가입, 동의항목, 서비스 설정 등)이 활성화 되지 않은 경우\n" +
@@ -49,6 +51,7 @@ public enum ErrorCode {
             "해결 방법 : 관리자에게 문의하거나 신규 비콘일 경우 비콘 등록 후 재시도."),
     EXISTING_BEACON(400, -121, "Existing Beacon", "Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청"),
     NOT_ATTENDANCE_CHECK_TIME(400, -140, "Not attendance check time", "출석체크 시간이 아닙니다."),
+    ATTENDANCE_CODE_MISMATCH(400, -141, "Attendance code mismatch", "출석코드가 일치하지 않습니다."),
     OK(200,-1000,"OK","OK");
 
 

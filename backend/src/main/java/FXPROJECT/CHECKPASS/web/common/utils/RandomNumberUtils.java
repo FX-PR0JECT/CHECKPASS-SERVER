@@ -9,7 +9,7 @@ import java.util.Random;
 @Component
 public class RandomNumberUtils {
 
-    public int generateAttendanceToken() {
+    public int generateAttendanceCode() {
         Random random = new Random();
 
         int digit1 = random.nextInt(10);
@@ -17,8 +17,8 @@ public class RandomNumberUtils {
         int digit3 = random.nextInt(10);
         int digit4 = random.nextInt(10);
 
-        int attendanceToken = digit1 * 1000 + digit2 * 100 + digit3 * 10 + digit4;
+        int attendanceCode = digit1 * 1000 + digit2 * 100 + digit3 * 10 + digit4;
 
-        return attendanceToken;
+        return attendanceCode;
     }
 }

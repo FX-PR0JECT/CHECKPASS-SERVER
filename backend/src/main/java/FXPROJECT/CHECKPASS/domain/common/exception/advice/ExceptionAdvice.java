@@ -226,4 +226,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotAttendanceCheckTime.class)
     public ResultForm notAttendanceCheckTime() { return ResultFormUtils.getFailResultForm(ErrorCode.NOT_ATTENDANCE_CHECK_TIME); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AttendanceCodeMismatch.class)
+    public ResultForm attendanceCodeMismatch() { return ResultFormUtils.getFailResultForm(ErrorCode.ATTENDANCE_CODE_MISMATCH); }
 }
