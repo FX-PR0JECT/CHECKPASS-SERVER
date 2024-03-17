@@ -26,14 +26,31 @@ public class AttendanceController {
      * @param lectureCode 강의코드
      * @return 성공 : (출석 : 출석체크가 완료되었습니다. 지각 : 지각 처리되었습니다.), 실패 : 출석체크 시간이 아닙니다.
      */
-    @PostMapping
-    public ResultForm attendance(@LoginUser Users loggedInUser, @RequestParam("lectureCode") Long lectureCode) {
+    @PostMapping("/{lectureCode}")
+    public ResultForm attendance(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
         return attendanceService.attend((Students) loggedInUser, lectureCode);
     }
 
+    /**
+     * 모든 강의 출석현황 통계보기
+     * @param loggedInUser 로그인된 유저
+     * @return 사용자의 수강하고 있는 강의 출석현황 통계 Map
+     */
     @GetMapping
-    public ResultForm getAllAttendanceList(@LoginUser Users loggedInUser) {
-        Map<String, Map<Integer, Long>> allAttendanceList = attendanceService.getLectureAttendanceCounts((Students)loggedInUser);
+    public ResultForm getAllLectureAttendanceStats(@LoginUser Users loggedInUser) {
+        Map<String, Map<Integer, Long>> allAttendanceList = attendanceService.getAllLectureAttendanceCounts((Students)loggedInUser);
         return ResultFormUtils.getSuccessResultForm(allAttendanceList);
+    }
+
+    /**
+     * 특정 강의의 출석현황 보기
+     * @param loggedInUser 로그인된 유저
+     * @param lectureCode 강의코드
+     * @return 각 주차마다 출석상테가 담겨있는 Map
+     */
+    @GetMapping("/{lectureCode}")
+    public ResultForm getAttendanceList(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
+        Map<Integer, String> attendanceStatusMap = attendanceService.getLectureAttendanceCounts((Students)loggedInUser, lectureCode);
+        return ResultFormUtils.getSuccessResultForm(attendanceStatusMap);
     }
 }

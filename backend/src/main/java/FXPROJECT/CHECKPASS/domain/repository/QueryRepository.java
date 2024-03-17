@@ -2,6 +2,7 @@ package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
 
+import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
@@ -247,6 +248,19 @@ public class QueryRepository {
                 .groupBy(attendance.AttendanceCode)
                 .fetch();
         if (result.isEmpty()) {
+            throw new NoCourseHistory();
+        }
+
+        return result;
+    }
+
+    public List<Attendance> getAttendanceList(String attendanceId) {
+        List <Attendance> result = query
+                .select(attendance)
+                .from(attendance)
+                .where(likeAttendanceId(attendanceId))
+                .fetch();
+        if (result.isEmpty()){
             throw new NoCourseHistory();
         }
 

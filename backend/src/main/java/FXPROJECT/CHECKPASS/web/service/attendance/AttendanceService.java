@@ -53,7 +53,7 @@ public class AttendanceService {
         Lecture lecture = lectureService.getLecture(lectureCode);
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + week + day;
+        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + week;
 
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
             if (isCurrentLectureDay(day, lectureTimeCode)) {
@@ -64,11 +64,11 @@ public class AttendanceService {
     }
 
     /**
-     * 모든 강의 출석현황 보기
+     * 모든 강의 출석현황 통계 구하기
      * @param loggedInUser 로그인된 유저
-     * @return 사용자의 수강하고 있는 강의 출석정보 목록
+     * @return 사용자의 수강하고 있는 강의 출석현황 통계 Map
      */
-    public Map<String, Map<Integer, Long>> getLectureAttendanceCounts(Students loggedInUser) {
+    public Map<String, Map<Integer, Long>> getAllLectureAttendanceCounts(Students loggedInUser) {
         Long studentId = loggedInUser.getUserId();
         String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
         String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
@@ -86,6 +86,37 @@ public class AttendanceService {
             Map<Integer, Long> attendanceCounts = aggregateAndSortAttendanceCounts(attendanceCountList);
             lectureAttendanceCounts.put(lectureName, attendanceCounts);
         }
+        return lectureAttendanceCounts;
+    }
+
+    /**
+     * 특정 강의의 출석현황 구하기
+     * @param loggedInUser 로그인된 유저
+     * @param lectureCode 강의코드
+     * @return 각 주차마다 출석현황이 담겨져 있는 Map
+     */
+    public Map<Integer, String> getLectureAttendanceCounts(Students loggedInUser, Long lectureCode) {
+        Long studentId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
+        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
+
+        Map<Integer, String> lectureAttendanceCounts = new TreeMap<>();
+
+        String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester;
+        List<Attendance> attendanceList = queryRepository.getAttendanceList(attendanceId);
+
+        for (Attendance attendance : attendanceList) {
+            int attendanceWeek = Integer.parseInt(attendance.getAttendanceId().substring(20));
+            String status = String.valueOf(attendance.getAttendanceCode());
+
+            if (lectureAttendanceCounts.containsKey(attendanceWeek)) {
+                String existingStatus = lectureAttendanceCounts.get(attendanceWeek);
+                String saveStatus = existingStatus + status;
+                lectureAttendanceCounts.put(attendanceWeek, saveStatus);
+            }
+            lectureAttendanceCounts.put(attendanceWeek, status);
+        }
+
         return lectureAttendanceCounts;
     }
 
