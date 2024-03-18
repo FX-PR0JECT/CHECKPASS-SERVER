@@ -52,6 +52,7 @@ public enum ErrorCode {
     EXISTING_BEACON(400, -121, "Existing Beacon", "Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청"),
     NOT_ATTENDANCE_CHECK_TIME(400, -140, "Not attendance check time", "출석체크 시간이 아닙니다."),
     ATTENDANCE_CODE_MISMATCH(400, -141, "Attendance code mismatch", "출석코드가 일치하지 않습니다."),
+    ATTENDANCE_ALREADY_PROCESSED(400, -142, "Attendance already processed", "이미 처리된 출석입니다."),
     OK(200,-1000,"OK","OK");
 
 

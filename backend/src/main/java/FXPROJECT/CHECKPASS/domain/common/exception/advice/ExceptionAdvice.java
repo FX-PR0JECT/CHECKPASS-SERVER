@@ -230,4 +230,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AttendanceCodeMismatch.class)
     public ResultForm attendanceCodeMismatch() { return ResultFormUtils.getFailResultForm(ErrorCode.ATTENDANCE_CODE_MISMATCH); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AttendanceAlreadyProcessed.class)
+    public ResultForm attendanceAlreadyProcessed() { return ResultFormUtils.getFailResultForm(ErrorCode.ATTENDANCE_ALREADY_PROCESSED); }
 }
