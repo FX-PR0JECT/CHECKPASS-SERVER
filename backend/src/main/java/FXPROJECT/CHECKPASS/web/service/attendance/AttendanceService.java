@@ -1,5 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.attendance;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceAlreadyProcessed;
 import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceCodeMismatch;
 import FXPROJECT.CHECKPASS.domain.common.exception.NotAttendanceCheckTime;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
@@ -63,6 +64,10 @@ public class AttendanceService {
 
         String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
 
+        if (isAttendanceChecked(attendanceId)) {
+            throw new AttendanceAlreadyProcessed();
+        }
+
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
             if (isCurrentLectureDay(lectureTimeCode)) {
                 return checkAndSaveAttendance(attendanceId, currentTime, lectureTimeCode);
@@ -93,6 +98,10 @@ public class AttendanceService {
         Long lectureCode = lecture.getLectureCode();
 
         String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+
+        if (isAttendanceChecked(attendanceId)) {
+            throw new AttendanceAlreadyProcessed();
+        }
 
         saveAttendance(attendanceId, 1); // 출석
 
@@ -329,6 +338,14 @@ public class AttendanceService {
         }
 
         return jpaAttendanceTokenRepository.findByAttendanceCode(attendanceCode);
+    }
+
+    private boolean isAttendanceChecked(String attendanceId) {
+        if (!jpaAttendanceRepository.existsByAttendanceStatus(attendanceId)) {
+            return false;
+        }
+
+        return true;
     }
 
     private String generateAttendanceId(Students loggedInUser, Long lectureCode) {
