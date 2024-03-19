@@ -41,6 +41,4 @@ public class LectureRegisterForm {
 
     private String division;
 
-    private String yearSemester;
-
 }

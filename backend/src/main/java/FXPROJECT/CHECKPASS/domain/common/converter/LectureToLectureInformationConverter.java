@@ -28,9 +28,11 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
 
         BeaconPK beaconPK = lecture.getBeacon().getBeaconPK();
         String lectureRoom = beaconService.getLectureRoom(beaconPK);
+        Long lectureCode = lecture.getLectureCode();
+        String lectureYear = lectureCode.toString().substring(0, 4) + "년도 ";
 
         LectureInformation lectureInformation = new LectureInformation().builder()
-                .lectureCode(lecture.getLectureCode())
+                .lectureCode(lectureCode)
                 .lectureName(lecture.getLectureName())
                 .lectureGrade(lecture.getLectureGrade())
                 .lectureKind(lecture.getLectureKind())
@@ -45,7 +47,7 @@ public class LectureToLectureInformationConverter implements Converter<Lecture, 
                 .alphaTimeCodes(ToLectureWordUtils.TransferLectureWord(lecture.getLectureTimeCode()))
                 .scheduleArray(ToLectureWordUtils.getScheduleArray(lecture.getLectureTimeCode()))
                 .division(lecture.getDivision())
-                .yearSemester(lecture.getYearSemester())
+                .yearSemester(lectureYear + lecture.getSemester())
                 .build();
 
         return lectureInformation;

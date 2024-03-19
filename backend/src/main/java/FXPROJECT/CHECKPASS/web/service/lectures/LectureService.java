@@ -13,6 +13,7 @@ import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.SemesterUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
@@ -43,6 +44,7 @@ public class LectureService {
     private final QueryRepository jpaQueryUsersRepository;
     private final ConversionService conversionService;
     private final LectureCodeUtils lectureCodeUtils;
+    private final SemesterUtils semesterUtils;
 
     /**
      * 강의 등록
@@ -80,8 +82,9 @@ public class LectureService {
      */
     public List<LectureInformation> getLectureList(){
 
-        String yearSemester = getYearSemester();
-        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(yearSemester);
+        String semester = semesterUtils.getSemester();
+        int year = LocalDate.now().getYear();
+        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(year, semester);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -101,8 +104,9 @@ public class LectureService {
      */
     public List<LectureInformation> getLectureList(LectureSearchCondition condition){
 
-        String yearSemester = getYearSemester();
-        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition, yearSemester);
+        String semester = semesterUtils.getSemester();
+        int year = LocalDate.now().getYear();
+        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition, year, semester);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -220,20 +224,6 @@ public class LectureService {
         target.setDayOrNight(form.getDayOrNight());
 
         return target;
-    }
-
-    private String getYearSemester() {
-        String year = LocalDate.now().getYear() + "년도 ";
-        int month = LocalDate.now().getMonthValue();
-        String semester;
-
-        if (month <= 6) {
-            semester = "1학기";
-        } else {
-            semester = "2학기";
-        }
-
-        return year + semester;
     }
 
     private static LectureTimeSource extractionLectureTimeSource(LectureUpdateForm form) {

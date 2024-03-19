@@ -66,6 +66,6 @@ public class Lecture {
     private String division;
 
     @Column(nullable = false)
-    private String yearSemester;
+    private String semester;
 
 }

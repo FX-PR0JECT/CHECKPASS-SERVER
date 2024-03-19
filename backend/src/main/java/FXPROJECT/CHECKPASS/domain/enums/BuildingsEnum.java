@@ -36,7 +36,6 @@ public enum BuildingsEnum {
     Life("생명관", 7403),
     International("국제관", 7408),
 
-    RemoteCourse("원격강좌", 1000),
     FieldLesson("현장수업", 1001),
     Industry("산업체", 1002),
     FlightTraining("비행훈련원", 1003);

@@ -138,13 +138,13 @@ public class QueryRepository {
         List<Lecture> result = query
                 .select(enrollment.lecture)
                 .from(enrollment)
-                .where(checkEnrollment(studentId), checkEnrollmentYearSemester(semester))
+                .where(checkEnrollment(studentId), checkEnrollmentYearSemester(semester)) // 변경
                 .fetch();
 
         return result;
     }
 
-    public List<Lecture> getLectureList(LectureSearchCondition condition, String yearSemester){
+    public List<Lecture> getLectureList(LectureSearchCondition condition, int year, String semester){
 
         List<Integer> gradeList = condition.getGrade();
         List<String> kindList = condition.getKind();
@@ -156,8 +156,8 @@ public class QueryRepository {
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
-                .where(orLectureGrade(gradeList), orLectureKind(kindList), orLectureGrades(gradesList), checkLectureYearSemester(yearSemester),
-                        eqLectureCode(lectureCode), eqLectureName(lectureName), eqProfessorName(professorName))
+                .where(orLectureGrade(gradeList), orLectureKind(kindList), orLectureGrades(gradesList), checkLectureSemester(semester),
+                        eqLectureCode(lectureCode), eqLectureName(lectureName), eqProfessorName(professorName), checkLectureYear(year))
                 .fetch();
 
         if (result.isEmpty()){
@@ -166,11 +166,11 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Lecture> getLectureList(String yearSemester) {
+    public List<Lecture> getLectureList(int year, String semester) {
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
-                .where(checkLectureYearSemester(yearSemester))
+                .where(checkLectureYear(year), checkLectureSemester(semester))
                 .fetch();
 
         if (result.isEmpty()){
@@ -322,8 +322,12 @@ public class QueryRepository {
         return enrollment.yearSemester.eq(yearSemester);
     }
 
-    private BooleanExpression checkLectureYearSemester(String yearSemester){
-        return lecture.yearSemester.eq(yearSemester);
+    private BooleanExpression checkLectureSemester(String semester){
+        return lecture.semester.eq(semester);
+    }
+
+    private BooleanExpression checkLectureYear(int year) {
+        return lecture.lectureCode.like(year + "%");
     }
 
     private BooleanExpression orLectureGrade(List<Integer> gradeList) {

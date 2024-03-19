@@ -9,6 +9,8 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.DepartmentsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.college.JpaDepartmentRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
+import FXPROJECT.CHECKPASS.web.common.utils.SemesterUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureRegisterForm;
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSource;
 import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
@@ -29,6 +31,7 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
     private final BeaconService beaconService;
     private final JpaDepartmentRepository jpaDepartmentRepository;
     private final LectureCodeUtils lectureCodeUtils;
+    private final SemesterUtils semesterUtils;
 
     @Override
     public Lecture convert(LectureRegisterForm form) {
@@ -67,7 +70,7 @@ public class LectureRegisterFormToLectureConverter implements Converter<LectureR
                 .departments(departments.get())
                 .lectureTimeCode(lectureCodeUtils.getLectureCode(lectureTimeSource))
                 .division(form.getDivision())
-                .yearSemester(form.getYearSemester())
+                .semester(semesterUtils.getSemester())
                 .build();
         return lecture;
     }
