@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -80,8 +81,8 @@ public class AttendanceController {
             throw new NoPermission();
         }
 
-        Map<Integer, String> attendanceStatusMap = attendanceService.getLectureAttendanceCounts((Students)loggedInUser, lectureCode);
-        return ResultFormUtils.getSuccessResultForm(attendanceStatusMap);
+        List<String> attendanceStatusList = attendanceService.getLectureAttendanceCountList((Students)loggedInUser, lectureCode);
+        return ResultFormUtils.getSuccessResultForm(attendanceStatusList);
     }
 
     /**

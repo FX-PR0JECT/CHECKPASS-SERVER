@@ -136,25 +136,21 @@ public class AttendanceService {
      * @param lectureCode 강의코드
      * @return 각 주차마다 출석현황이 담겨져 있는 Map
      */
-    public Map<Integer, String> getLectureAttendanceCounts(Students loggedInUser, Long lectureCode) {
-        Map<Integer, String> lectureAttendanceCounts = new TreeMap<>();
+    public List<String> getLectureAttendanceCountList(Students loggedInUser, Long lectureCode) {
+        int maxWeeks = 16; // 16주차
+        List<String> lectureAttendanceStatusList = new ArrayList<>(Collections.nCopies(maxWeeks, ""));
 
         String attendanceId = generateMatchingAttendanceId(loggedInUser, lectureCode);
         List<Attendance> attendanceList = queryRepository.getAttendanceList(attendanceId);
 
         for (Attendance attendance : attendanceList) {
-            int attendanceWeek = Integer.parseInt(attendance.getAttendanceId().substring(20));
-            String status = String.valueOf(attendance.getAttendanceStatus());
-
-            if (lectureAttendanceCounts.containsKey(attendanceWeek)) {
-                String existingStatus = lectureAttendanceCounts.get(attendanceWeek);
-                String saveStatus = existingStatus + status;
-                lectureAttendanceCounts.put(attendanceWeek, saveStatus);
-            }
-            lectureAttendanceCounts.put(attendanceWeek, status);
+            int attendanceWeek = Integer.parseInt(attendance.getAttendanceId().substring(20)) - 1; // 리스트 인덱스 0부터 시작해야하므로 1을 뺌
+            String status = String.valueOf(attendance.getAttendanceStatus()); // 출석 상태를 문자열로 변환
+            String existingStatus = lectureAttendanceStatusList.get(attendanceWeek);
+            lectureAttendanceStatusList.set(attendanceWeek, existingStatus + status);
         }
 
-        return lectureAttendanceCounts;
+        return lectureAttendanceStatusList;
     }
 
     /**
