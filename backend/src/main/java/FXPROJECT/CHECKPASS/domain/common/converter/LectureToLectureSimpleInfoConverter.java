@@ -17,25 +17,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LectureToLectureSimpleInfoConverter implements Converter<Lecture, SimpleLectureInformation> {
 
-    private final BeaconService beaconService;
-
     @Override
     public SimpleLectureInformation convert(Lecture lecture) {
 
-        List<String> time = new ArrayList<>();
-        for (LectureTimeCode code : lecture.getLectureTimeCode()){
-            time.add(code.getLectureTimeCode());
-        }
-
-        BeaconPK beaconPK = lecture.getBeacon().getBeaconPK();
-        String lectureRoom = beaconService.getLectureRoom(beaconPK);
-
         SimpleLectureInformation simpleInfo = new SimpleLectureInformation().builder()
+                .lectureCode(lecture.getLectureCode())
                 .lectureName(lecture.getLectureName())
-                .professorName(lecture.getProfessor().getUserName())
-                .lectureRoom(lectureRoom)
-                .lectureTimes(time)
-                .alphaTimeCodes(ToLectureWordUtils.TransferLectureWord(lecture.getLectureTimeCode()))
                 .build();
 
         return simpleInfo;

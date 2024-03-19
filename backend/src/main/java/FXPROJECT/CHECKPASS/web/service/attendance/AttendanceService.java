@@ -16,6 +16,7 @@ import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.RandomNumberUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceTokenInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
@@ -177,6 +178,43 @@ public class AttendanceService {
         }
 
         return presentAttendanceUsers;
+    }
+
+    /**
+     * 특정 강의를 수강하는 학생들의 출석 정보 목록 구하기
+     * @param lectureCode 강의코드
+     * @return 학생들의 출석 정보 목록
+     */
+    public List<AttendanceInformation> getStudentAttendanceInformationList(Long lectureCode, int week) {
+        List<AttendanceInformation> studentAttendanceInformationList = new ArrayList<>();
+        Map<Long, String> attendanceStatusByStudentId = new TreeMap<>();
+
+        List<Attendance> attendanceList = queryRepository.getAttendanceListByLectureAndWeek(lectureCode.toString(), String.valueOf(week));
+
+        for (Attendance attendance : attendanceList) {
+            Long studentId = Long.valueOf(attendance.getAttendanceId().substring(0, 7));
+            String status = String.valueOf(attendance.getAttendanceStatus());
+
+            if (attendanceStatusByStudentId.containsKey(studentId)) {
+                String existingStatus = attendanceStatusByStudentId.get(studentId);
+                String saveStatus = existingStatus + status;
+                attendanceStatusByStudentId.put(studentId, saveStatus);
+            } else {
+                attendanceStatusByStudentId.put(studentId, status);
+            }
+        }
+
+        for (Map.Entry<Long, String> entry : attendanceStatusByStudentId.entrySet()) {
+            Long studentId = entry.getKey();
+            Users user = userService.getUser(studentId);
+            String studentName = user.getUserName();
+            String attendanceStatus = entry.getValue();
+
+            AttendanceInformation attendanceInformation = new AttendanceInformation(studentId, studentName, attendanceStatus);
+            studentAttendanceInformationList.add(attendanceInformation);
+        }
+
+        return studentAttendanceInformationList;
     }
 
     /**

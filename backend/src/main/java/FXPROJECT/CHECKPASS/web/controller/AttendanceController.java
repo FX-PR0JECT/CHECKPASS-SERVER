@@ -7,6 +7,7 @@ import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
@@ -99,6 +100,22 @@ public class AttendanceController {
 
         Map<Long, String> presentAttendanceUsers = attendanceService.getPresentAttendanceUsers(lectureCode);
         return ResultFormUtils.getSuccessResultForm(presentAttendanceUsers);
+    }
+
+    /**
+     * 특정 강의를 수강하는 학생들의 출석 정보 목록 조회
+     * @param loggedInUser 로그인한 유저
+     * @param lectureCode 강의코드
+     * @return 학생들의 출석 정보 목록
+     */
+    @GetMapping("/info/{week}/{lectureCode}")
+    public ResultForm getStudentAttendanceInformationList(@LoginUser Users loggedInUser, @PathVariable("week") int week, @PathVariable("lectureCode") Long lectureCode) {
+        if (!isProfessorOrStaff(loggedInUser)) {
+            throw new NoPermission();
+        }
+
+        List<AttendanceInformation> attendanceInformationList = attendanceService.getStudentAttendanceInformationList(lectureCode, week);
+        return ResultFormUtils.getSuccessResultForm(attendanceInformationList);
     }
 
     /**

@@ -133,6 +133,7 @@ public class QueryRepository {
 
     public List<Lecture> getEnrollmentList(Students student) {
 
+        // 학생이 수강한 강의 리스트를 찾는다.
         Long studentId = student.getUserId();
         String semester = student.getStudentSemester();
 
@@ -147,6 +148,7 @@ public class QueryRepository {
 
     public List<Lecture> getLectureList(LectureSearchCondition condition, int year, String semester){
 
+        // 사용자가 제시한 조건에 따라 해당 학기에 개설된 강의를 찾는다.
         List<Integer> gradeList = condition.getGrade();
         List<String> kindList = condition.getKind();
         List<Integer> gradesList = condition.getGrades();
@@ -168,6 +170,8 @@ public class QueryRepository {
     }
 
     public List<Lecture> getLectureList(int year, String semester) {
+
+        // 연도와 학기정보를 받아 해당 학기에 개설된 강의를 찾는다.
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
@@ -182,6 +186,7 @@ public class QueryRepository {
 
     public List<Lecture> getLectureList(int major, int minor) {
 
+        // 비콘 정보를 사용하여 해당 비콘에 매칭된 강의를 찾는다.
         List<Lecture> result = query
                 .select(lecture)
                 .from(lecture)
@@ -214,6 +219,7 @@ public class QueryRepository {
 
     public List<String> getYearSemesterList(Students student){
 
+        // 학생이 지금까지 수강했던 연도학기 정보를 찾는다. (중복 값 제거)
         List<String> result = query
                 .select(enrollment.yearSemester).distinct()
                 .from(enrollment)
@@ -229,6 +235,7 @@ public class QueryRepository {
 
     public List<Enrollment> getCourseList(Students student){
 
+        // 학생의 수강 이력을 찾는다.
         List<Enrollment> result = query
                 .select(enrollment)
                 .from(enrollment)
@@ -243,6 +250,8 @@ public class QueryRepository {
     }
 
     public List<Beacon> getBeaconList() {
+
+        // DB에 저장된 비콘 정보 목록을 찾는다.
         List<Beacon> result = query
                 .select(beacon)
                 .from(beacon)
@@ -255,11 +264,15 @@ public class QueryRepository {
     }
 
     public void deleteAttendanceWeek(Long userId, Long lectureCode, String studentGrade, String studentSemester){
+
+        // 학생이 수강신청 시 미리 생성한 강의 주차 정보를 삭제한다.
         String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
         query.delete(attendance).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
     }
 
     public List<Tuple> getAttendanceCountList(String attendanceId) {
+
+        // 학생의 출석 상태를 계산하여 List<Tuple> 형식으로 반환한다.
         List<Tuple> result = query
                 .select(attendance.attendanceStatus, attendance.attendanceStatus.count())
                 .from(attendance)
@@ -274,6 +287,8 @@ public class QueryRepository {
     }
 
     public List<Attendance> getAttendanceList(String attendanceId) {
+
+        // 학생의 출석 현황을 찾는다. (특정 강의의 16주차 출석 현황)
         List <Attendance> result = query
                 .select(attendance)
                 .from(attendance)
@@ -287,10 +302,23 @@ public class QueryRepository {
     }
 
     public List<Attendance> getPresentAttendanceList(String lectureCode, String day, String week) {
+
+        // 해당 강의에 출석한 인원을 찾는다.
         List<Attendance> result = query
                 .select(attendance)
                 .from(attendance)
                 .where(likeAttendanceIdByLectureCode(lectureCode, day, week), eqAttendanceStatus(1))
+                .fetch();
+        return result;
+    }
+
+    public List<Attendance> getAttendanceListByLectureAndWeek(String lectureCode, String week) {
+
+        // 해당 강의의 해당 주차의 학생들의 출석 정보를 찾는다.
+        List<Attendance> result = query
+                .select(attendance)
+                .from(attendance)
+                .where(likeAttendanceIdByLectureCodeAndWeek(lectureCode, week))
                 .fetch();
         return result;
     }
@@ -465,6 +493,13 @@ public class QueryRepository {
     private  BooleanExpression likeAttendanceIdByLectureCode(String lectureCode, String day, String week) {
         if (StringUtils.hasText(lectureCode)) {
             return attendance.attendanceId.like("%" + lectureCode + "%" + day + 0 + week);
+        }
+        return null;
+    }
+
+    private  BooleanExpression likeAttendanceIdByLectureCodeAndWeek(String lectureCode, String week) {
+        if (StringUtils.hasText(lectureCode)) {
+            return attendance.attendanceId.like("%" + lectureCode + "%" + 0 + week);
         }
         return null;
     }
