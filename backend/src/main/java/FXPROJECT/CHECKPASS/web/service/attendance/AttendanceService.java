@@ -201,20 +201,16 @@ public class AttendanceService {
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
         if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
-            AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
-            attendanceToken.setAttendanceCode(attendanceCode);
-            attendanceToken.setStartDate(startDate);
-            attendanceToken.setExpirationDate(expirationDate);
-
-            jpaAttendanceTokenRepository.save(attendanceToken);
-
-            queryRepository.setAbsent(lectureCode.toString(), day, week);
-
-            AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
-            return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
+            AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+            int findAttendanceTokenCode = findAttendanceToken.getAttendanceCode();
+            jpaAttendanceTokenRepository.deleteById(findAttendanceTokenCode);
         }
 
-        AttendanceTokens attendanceToken = new AttendanceTokens(lecture, attendanceCode, startDate, expirationDate);
+        while (jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
+            attendanceCode = randomNumberUtils.generateAttendanceCode();
+        }
+
+        AttendanceTokens attendanceToken = new AttendanceTokens(attendanceCode, lecture, startDate, expirationDate);
         jpaAttendanceTokenRepository.save(attendanceToken);
 
         queryRepository.setAbsent(lectureCode.toString(), day, week);
