@@ -46,7 +46,7 @@ public class AttendanceWeekService {
 
         for (int i = 1; i < 17; i++) {
             for (String lectureDay : lectureDays) {
-                String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester + lectureDay + i;
+                String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester + lectureDay + 0 + i;
                 Attendance attendance = new Attendance(attendanceId, 0);
                 jpaAttendanceRepository.save(attendance);
             }
