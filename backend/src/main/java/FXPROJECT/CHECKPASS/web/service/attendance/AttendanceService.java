@@ -193,30 +193,40 @@ public class AttendanceService {
         int attendanceCode = randomNumberUtils.generateAttendanceCode();
         Lecture lecture = lectureService.getLecture(lectureCode);
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startDate = now.truncatedTo(ChronoUnit.MINUTES);
-        LocalDateTime expirationDate = startDate.plusMinutes(3);
+        List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
         String week = String.valueOf(lectureWeekUtils.getWeek()); // 현재 주차
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
-        if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
-            AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
-            int findAttendanceTokenCode = findAttendanceToken.getAttendanceCode();
-            jpaAttendanceTokenRepository.deleteById(findAttendanceTokenCode);
+        for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
+            if (!isCurrentLectureDay(lectureTimeCode)) {
+                continue;
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime startDate = now.truncatedTo(ChronoUnit.MINUTES);
+            LocalDateTime expirationDate = startDate.plusMinutes(3);
+
+            if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
+                AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+                int findAttendanceTokenCode = findAttendanceToken.getAttendanceCode();
+                jpaAttendanceTokenRepository.deleteById(findAttendanceTokenCode);
+            }
+
+            while (jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
+                attendanceCode = randomNumberUtils.generateAttendanceCode();
+            }
+
+            AttendanceTokens attendanceToken = new AttendanceTokens(attendanceCode, lecture, startDate, expirationDate);
+            jpaAttendanceTokenRepository.save(attendanceToken);
+
+            queryRepository.setAbsent(lectureCode.toString(), day, week);
+
+            AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
+            return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
         }
 
-        while (jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
-            attendanceCode = randomNumberUtils.generateAttendanceCode();
-        }
-
-        AttendanceTokens attendanceToken = new AttendanceTokens(attendanceCode, lecture, startDate, expirationDate);
-        jpaAttendanceTokenRepository.save(attendanceToken);
-
-        queryRepository.setAbsent(lectureCode.toString(), day, week);
-
-        AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
-        return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
+        throw new NotAttendanceCheckTime();
     }
 
     /**
@@ -352,7 +362,7 @@ public class AttendanceService {
         int week = lectureWeekUtils.getWeek(); // 현재 주차
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + week;
+        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + 0 + week;
 
         return attendanceId;
     }
