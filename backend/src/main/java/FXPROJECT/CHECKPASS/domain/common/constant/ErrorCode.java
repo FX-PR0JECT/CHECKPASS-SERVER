@@ -47,6 +47,7 @@ public enum ErrorCode {
     NO_COURSE_HISTORY(400, -94, "No course history", "수강 내역이 없습니다."),
     NON_EXISTENT_LECTURE(400, -100, "Non-Existent Lecture", "Database에 등록되지 않은 강의\n" + "해결 방법 : 확인 후 재 요청"),
     EXISTING_LECTURE(400, -101, "Existing Lecture", "Database에 이미 등록된 강의\n" + "해결 방법 : 확인 후 재 요청"),
+    NO_LECTURES_OFFERED(400, -102, "No lectures offered", "개설한 강의가 없습니다."),
     NON_EXISTENT_BEACON(400, -120, "Non-Existent Beacon", "Database에 등록되지 않은 비콘입니다.\n" +
             "해결 방법 : 관리자에게 문의하거나 신규 비콘일 경우 비콘 등록 후 재시도."),
     EXISTING_BEACON(400, -121, "Existing Beacon", "Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청"),

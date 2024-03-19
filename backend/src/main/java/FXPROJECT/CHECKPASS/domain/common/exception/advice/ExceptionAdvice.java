@@ -164,6 +164,12 @@ public class ExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoLecturesOffered.class)
+    public ResultForm noLecturesOffered(Exception e){
+        return ResultFormUtils.getFailResultForm(ErrorCode.NO_LECTURES_OFFERED);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResultForm notReadable(Exception e){
         return ResultFormUtils.getFailResultForm(ErrorCode.MISSING_REQUIRED_ARGUMENT, e.getMessage());
