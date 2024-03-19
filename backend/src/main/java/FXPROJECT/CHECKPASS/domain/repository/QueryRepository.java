@@ -437,7 +437,7 @@ public class QueryRepository {
 
     private  BooleanExpression likeAttendanceIdByLectureCode(String lectureCode, String day, String week) {
         if (StringUtils.hasText(lectureCode)) {
-            return attendance.attendanceId.like("%" + lectureCode + "%" + day + week);
+            return attendance.attendanceId.like("%" + lectureCode + "%" + day + 0 + week);
         }
         return null;
     }
