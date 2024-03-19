@@ -181,8 +181,9 @@ public class AttendanceService {
     }
 
     /**
-     * 특정 강의를 수강하는 학생들의 출석 정보 목록 구하기
+     * 특정 강의의 해당 주차에 따른 학생들의 출석 정보 목록 구하기
      * @param lectureCode 강의코드
+     * @param week 주차
      * @return 학생들의 출석 정보 목록
      */
     public List<AttendanceInformation> getStudentAttendanceInformationList(Long lectureCode, int week) {

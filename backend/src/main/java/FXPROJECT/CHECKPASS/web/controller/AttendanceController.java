@@ -103,8 +103,9 @@ public class AttendanceController {
     }
 
     /**
-     * 특정 강의를 수강하는 학생들의 출석 정보 목록 조회
+     * 특정 강의의 해당 주차에 따른 학생들의 출석 정보 목록 조회
      * @param loggedInUser 로그인한 유저
+     * @param week 주차
      * @param lectureCode 강의코드
      * @return 학생들의 출석 정보 목록
      */

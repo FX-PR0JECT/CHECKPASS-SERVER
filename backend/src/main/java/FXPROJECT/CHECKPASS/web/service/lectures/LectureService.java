@@ -23,6 +23,9 @@ import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,6 +184,9 @@ public class LectureService {
         List<Lecture> enrollmentList = queryRepository.getEnrollmentList((Students) loggedInUser);
         int day = LocalDate.now().getDayOfWeek().getValue(); // 1(월) ~ 5(금)
 
+        LocalDateTime now = LocalDateTime.now();
+        LocalTime currentTime = now.toLocalTime().truncatedTo(ChronoUnit.MINUTES);
+
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
         for (Lecture lecture : lectureList) {
@@ -188,9 +194,15 @@ public class LectureService {
                 List<LectureTimeCode> timeCodeList = lecture.getLectureTimeCode();
 
                 for (LectureTimeCode timeCode : timeCodeList) {
-                    int lectureDay = Integer.parseInt(timeCode.getLectureTimeCode().substring(1, 2)) + 1;
+                    String lectureTimeCode = timeCode.getLectureTimeCode();
+                    int lectureDay = Integer.parseInt(lectureTimeCode.substring(1, 2)) + 1;
+                    int lectureHour = Integer.parseInt(lectureTimeCode.substring(3, 5));
+                    int lectureMinute = Integer.parseInt(lectureTimeCode.substring(5, 7));
 
-                    if (day == lectureDay) {
+                    LocalTime startTime = calculateStartTime(lectureHour, lectureMinute);
+                    LocalTime endTime = calculateEndTime(lectureHour, lectureMinute);
+
+                    if (day == lectureDay && currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
                         LectureInformation lectureInformation = conversionService.convert(lecture, LectureInformation.class);
                         lectureInformationList.add(lectureInformation);
                         break;
@@ -261,6 +273,14 @@ public class LectureService {
             return false;
         }
         return true;
+    }
+
+    private LocalTime calculateStartTime(int lectureHour, int lectureMinute) {
+        return lectureMinute == 0 ? LocalTime.of(lectureHour - 1, 49) : LocalTime.of(lectureHour, 19);
+    }
+
+    private LocalTime calculateEndTime(int lectureHour, int lectureMinute) {
+        return lectureMinute == 0 ? LocalTime.of(lectureHour, 31) : LocalTime.of(lectureHour + 1, 01);
     }
 
 }
