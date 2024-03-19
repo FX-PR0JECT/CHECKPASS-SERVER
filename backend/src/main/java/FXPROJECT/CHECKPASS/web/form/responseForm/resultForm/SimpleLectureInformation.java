@@ -13,14 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SimpleLectureInformation {
 
+    private Long lectureCode;
+
     private String lectureName;
-
-    private String professorName;
-
-    private List<String> lectureTimes;
-
-    private List<String> alphaTimeCodes;
-
-    private String lectureRoom;
-
 }

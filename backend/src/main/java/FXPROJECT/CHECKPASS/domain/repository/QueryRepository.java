@@ -2,6 +2,7 @@ package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
 
+import FXPROJECT.CHECKPASS.domain.common.exception.NoLecturesOffered;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
@@ -193,6 +194,24 @@ public class QueryRepository {
         return result;
     }
 
+    public List<Lecture> getLectureListByProfessorId(Long professorId) {
+
+        // 해당 교수가 개설한 강의 목록을 찾는다.
+        List<Lecture> result = query
+                .select(lecture)
+                .from(lecture)
+                .where(eqProfessorId(professorId))
+                .orderBy(
+                        lecture.lectureCode.asc()
+                )
+                .fetch();
+
+        if (result.isEmpty()) {
+            throw new NoLecturesOffered();
+        }
+        return result;
+    }
+
     public List<String> getYearSemesterList(Students student){
 
         List<String> result = query
@@ -371,6 +390,14 @@ public class QueryRepository {
         }
         return null;
     }
+
+    private BooleanExpression eqProfessorId(Long professorId) {
+        if (professorId != null && professorId > 0) {
+            return lecture.professor.userId.eq(professorId);
+        }
+        return null;
+    }
+
 
     private BooleanExpression equalProfessorCollege(String userCollege){
         if (StringUtils.hasText(userCollege)){

@@ -18,6 +18,7 @@ import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.register.LectureTimeSou
 import FXPROJECT.CHECKPASS.web.form.requestForm.lectures.update.LectureUpdateForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.LectureInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.SimpleLectureInformation;
 import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 
@@ -41,7 +42,7 @@ public class LectureService {
     private final JpaLectureRepository jpaLectureRepository;
     private final UserService userService;
     private final BeaconService beaconService;
-    private final QueryRepository jpaQueryUsersRepository;
+    private final QueryRepository queryRepository;
     private final ConversionService conversionService;
     private final LectureCodeUtils lectureCodeUtils;
     private final SemesterUtils semesterUtils;
@@ -84,7 +85,7 @@ public class LectureService {
 
         String semester = semesterUtils.getSemester();
         int year = LocalDate.now().getYear();
-        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(year, semester);
+        List<Lecture> lectureList = queryRepository.getLectureList(year, semester);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -106,7 +107,7 @@ public class LectureService {
 
         String semester = semesterUtils.getSemester();
         int year = LocalDate.now().getYear();
-        List<Lecture> lectureList =  jpaQueryUsersRepository.getLectureList(condition, year, semester);
+        List<Lecture> lectureList =  queryRepository.getLectureList(condition, year, semester);
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();
 
@@ -116,6 +117,25 @@ public class LectureService {
         }
 
         return lectureInformationList;
+    }
+
+    /**
+     * 해당 교수가 개설한 강의 목록 찾기
+     * @param professor 로그인한 교수
+     * @return 해당 교수가 개설한 강의 목록
+     */
+    public List<SimpleLectureInformation> getLecturesByProfessor(Professor professor) {
+        Long professorId = professor.getUserId();
+
+        List<SimpleLectureInformation> simpleLectureInformationList = new ArrayList<>();
+
+        List<Lecture> lectureList = queryRepository.getLectureListByProfessorId(professorId);
+
+        for (Lecture lecture : lectureList) {
+            SimpleLectureInformation simpleLectureInformation = conversionService.convert(lecture, SimpleLectureInformation.class);
+            simpleLectureInformationList.add(simpleLectureInformation);
+        }
+        return simpleLectureInformationList;
     }
 
 
@@ -157,8 +177,8 @@ public class LectureService {
      * @return 사용자가 수강한 강의 중 해당 비콘에 매칭되어있는 강의 정보 객체 목록
      */
     public List<LectureInformation> getLectureList(int major, int minor, Users loggedInUser) {
-        List<Lecture> lectureList = jpaQueryUsersRepository.getLectureList(major, minor);
-        List<Lecture> enrollmentList = jpaQueryUsersRepository.getEnrollmentList((Students) loggedInUser);
+        List<Lecture> lectureList = queryRepository.getLectureList(major, minor);
+        List<Lecture> enrollmentList = queryRepository.getEnrollmentList((Students) loggedInUser);
         int day = LocalDate.now().getDayOfWeek().getValue(); // 1(월) ~ 5(금)
 
         List<LectureInformation> lectureInformationList = new ArrayList<>();

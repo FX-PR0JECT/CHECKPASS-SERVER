@@ -3,6 +3,7 @@ package FXPROJECT.CHECKPASS.web.controller;
 import FXPROJECT.CHECKPASS.domain.common.exception.InternalException;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoPermission;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
+import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
@@ -82,23 +83,6 @@ public class LectureController {
     }
 
     /**
-     * 강의 간략 정보 조회
-     * URL : /lectures/simple/{lectureCode}
-     * @param lectureCode 강의 코드
-     * @return SimpleLectureInformation 객체 속성들
-     */
-    @GetMapping("/simple/{lectureCode}")
-    public ResultForm showLectureSimpleInformation(@PathVariable("lectureCode") Long lectureCode){
-
-        Lecture target = lectureService.getLecture(lectureCode);
-
-        SimpleLectureInformation simpleLectureInformation = conversionService.convert(target, SimpleLectureInformation.class);
-
-        return ResultFormUtils.getSuccessResultForm(simpleLectureInformation);
-
-    }
-
-    /**
      * 강의 정보 조회
      * URL : /lectures/{lectureCode}
      * @param lectureCode 강의 코드
@@ -126,6 +110,20 @@ public class LectureController {
         return ResultFormUtils.getSuccessResultForm(lectureService.getLectureList(condition));
     }
 
+    /**
+     * 해당 교수가 개설한 강의 목록 조회
+     * @param loggedInUser 로그인한 유저
+     * @return 해당 교수가 개설한 강의 목록
+     */
+    @GetMapping("/offerings")
+    public ResultForm getLectureListForLoggedInProfessor(@LoginUser Users loggedInUser) {
+        if (!isProfessor(loggedInUser)){
+            throw new NoPermission();
+        }
+
+        List<SimpleLectureInformation> simpleLectureInformationList = lectureService.getLecturesByProfessor((Professor) loggedInUser);
+        return ResultFormUtils.getSuccessResultForm(simpleLectureInformationList);
+    }
 
     /**
      * 강의 수정
