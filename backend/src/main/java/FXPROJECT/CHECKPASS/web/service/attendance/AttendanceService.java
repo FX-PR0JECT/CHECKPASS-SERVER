@@ -2,6 +2,7 @@ package FXPROJECT.CHECKPASS.web.service.attendance;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceAlreadyProcessed;
 import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceCodeMismatch;
+import FXPROJECT.CHECKPASS.domain.common.exception.DoNotTakeTheCourse;
 import FXPROJECT.CHECKPASS.domain.common.exception.NotAttendanceCheckTime;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
@@ -12,6 +13,7 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceTokenRepository;
+import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaEnrollmentRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.RandomNumberUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
@@ -45,6 +47,7 @@ public class AttendanceService {
     private final LectureWeekUtils lectureWeekUtils;
     private final JpaAttendanceTokenRepository jpaAttendanceTokenRepository;
     private final JpaAttendanceRepository jpaAttendanceRepository;
+    private final JpaEnrollmentRepository jpaEnrollmentRepository;
     private final QueryRepository queryRepository;
     private final RandomNumberUtils randomNumberUtils;
     private final ConversionService conversionService;
@@ -64,6 +67,10 @@ public class AttendanceService {
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
         String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+
+        if (!isExistsInEnrollment(attendanceId)){
+            throw new DoNotTakeTheCourse();
+        }
 
         if (isAttendanceChecked(attendanceId)) {
             throw new AttendanceAlreadyProcessed();
@@ -91,14 +98,18 @@ public class AttendanceService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime currentDate = now.truncatedTo(ChronoUnit.MINUTES);
 
-        if (currentDate.isAfter(expirationDate)) {
-            throw new NotAttendanceCheckTime();
-        }
-
         Lecture lecture = attendanceToken.getLecture();
         Long lectureCode = lecture.getLectureCode();
 
         String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+
+        if (!isExistsInEnrollment(attendanceId)) {
+            throw new DoNotTakeTheCourse();
+        }
+
+        if (currentDate.isAfter(expirationDate)) {
+            throw new NotAttendanceCheckTime();
+        }
 
         if (isAttendanceChecked(attendanceId)) {
             throw new AttendanceAlreadyProcessed();
@@ -383,6 +394,16 @@ public class AttendanceService {
 
     private boolean isAttendanceChecked(String attendanceId) {
         if (!jpaAttendanceRepository.existsByAttendanceStatus(attendanceId)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isExistsInEnrollment(String attendanceId){
+        Long lectureCode = Long.valueOf(attendanceId.substring(7, 17));
+        log.info("lectureCode : {}" , lectureCode);
+        if (!jpaEnrollmentRepository.existsByLectureCode(lectureCode)) {
             return false;
         }
 
