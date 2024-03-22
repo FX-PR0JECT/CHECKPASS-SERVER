@@ -23,6 +23,7 @@ public class LectureToLectureSimpleInfoConverter implements Converter<Lecture, S
         SimpleLectureInformation simpleInfo = new SimpleLectureInformation().builder()
                 .lectureCode(lecture.getLectureCode())
                 .lectureName(lecture.getLectureName())
+                .division(lecture.getDivision())
                 .build();
 
         return simpleInfo;

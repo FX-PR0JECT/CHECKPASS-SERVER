@@ -16,4 +16,6 @@ public class SimpleLectureInformation {
     private Long lectureCode;
 
     private String lectureName;
+
+    private String division;
 }
