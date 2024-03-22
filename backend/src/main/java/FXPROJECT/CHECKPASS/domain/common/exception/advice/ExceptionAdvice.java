@@ -240,4 +240,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AttendanceAlreadyProcessed.class)
     public ResultForm attendanceAlreadyProcessed() { return ResultFormUtils.getFailResultForm(ErrorCode.ATTENDANCE_ALREADY_PROCESSED); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoStudentsRegisteredForTheCourse.class)
+    public ResultForm noStudentsRegisteredForTheCourse() { return ResultFormUtils.getFailResultForm(ErrorCode.NO_STUDENTS_REGISTERED_FOR_THE_COURSE); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DoNotTakeTheCourse.class)
+    public ResultForm doNotTakeTheCourse() { return ResultFormUtils.getFailResultForm(ErrorCode.DO_NOT_TAKE_THE_COURSE); }
 }

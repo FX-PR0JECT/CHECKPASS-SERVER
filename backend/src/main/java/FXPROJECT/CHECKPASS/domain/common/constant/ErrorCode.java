@@ -45,6 +45,7 @@ public enum ErrorCode {
     NO_PERMISSION_TO_ENROLLMENT(403, -93, "No permission to enrollment", "수강신청 권한이 없습니다.\n" +
             "관리자에게 문의하세요."),
     NO_COURSE_HISTORY(400, -94, "No course history", "수강 내역이 없습니다."),
+    NO_STUDENTS_REGISTERED_FOR_THE_COURSE(400, -95, "No students registered for the course", "해당 강의의 수강인원이 없습니다."),
     NON_EXISTENT_LECTURE(400, -100, "Non-Existent Lecture", "Database에 등록되지 않은 강의\n" + "해결 방법 : 확인 후 재 요청"),
     EXISTING_LECTURE(400, -101, "Existing Lecture", "Database에 이미 등록된 강의\n" + "해결 방법 : 확인 후 재 요청"),
     NO_LECTURES_OFFERED(400, -102, "No lectures offered", "개설한 강의가 없습니다."),
@@ -54,6 +55,7 @@ public enum ErrorCode {
     NOT_ATTENDANCE_CHECK_TIME(400, -140, "Not attendance check time", "출석체크 시간이 아닙니다."),
     ATTENDANCE_CODE_MISMATCH(400, -141, "Attendance code mismatch", "출석코드가 일치하지 않습니다."),
     ATTENDANCE_ALREADY_PROCESSED(400, -142, "Attendance already processed", "이미 처리된 출석입니다."),
+    DO_NOT_TAKE_THE_COURSE(400, -143, "Do not take the course", "수강과목이 아니므로 출석할 수 없습니다." ),
     OK(200,-1000,"OK","OK");
 
 
