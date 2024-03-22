@@ -3,6 +3,7 @@ package FXPROJECT.CHECKPASS.domain.repository;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.NoLecturesOffered;
+import FXPROJECT.CHECKPASS.domain.common.exception.NoStudentsRegisteredForTheCourse;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
@@ -309,6 +310,10 @@ public class QueryRepository {
                 .from(attendance)
                 .where(likeAttendanceIdByLectureCode(lectureCode, day, week), eqAttendanceStatus(1))
                 .fetch();
+        if (result.isEmpty()) {
+            throw new NoStudentsRegisteredForTheCourse();
+        }
+
         return result;
     }
 
@@ -320,6 +325,10 @@ public class QueryRepository {
                 .from(attendance)
                 .where(likeAttendanceIdByLectureCodeAndWeek(lectureCode, week))
                 .fetch();
+        if (result.isEmpty()) {
+            throw new NoStudentsRegisteredForTheCourse();
+        }
+
         return result;
     }
 
