@@ -22,6 +22,8 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public static final QLecture lecture = new QLecture("lecture");
 
+    public final FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon beacon;
+
     public final StringPath dayOrNight = createString("dayOrNight");
 
     public final FXPROJECT.CHECKPASS.domain.entity.college.QDepartments departments;
@@ -34,21 +36,19 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public final NumberPath<Integer> lectureFull = createNumber("lectureFull", Integer.class);
 
-    public final StringPath lectureGrade = createString("lectureGrade");
+    public final NumberPath<Integer> lectureGrade = createNumber("lectureGrade", Integer.class);
 
-    public final StringPath lectureGrades = createString("lectureGrades");
+    public final NumberPath<Integer> lectureGrades = createNumber("lectureGrades", Integer.class);
 
     public final StringPath lectureKind = createString("lectureKind");
 
     public final StringPath lectureName = createString("lectureName");
 
-    public final StringPath lectureRoom = createString("lectureRoom");
-
     public final ListPath<FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode> lectureTimeCode = this.<FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode>createList("lectureTimeCode", FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode.class, FXPROJECT.CHECKPASS.domain.dto.QLectureTimeCode.class, PathInits.DIRECT2);
 
     public final FXPROJECT.CHECKPASS.domain.entity.users.QProfessor professor;
 
-    public final StringPath yearSemester = createString("yearSemester");
+    public final StringPath semester = createString("semester");
 
     public QLecture(String variable) {
         this(Lecture.class, forVariable(variable), INITS);
@@ -68,6 +68,7 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public QLecture(Class<? extends Lecture> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.beacon = inits.isInitialized("beacon") ? new FXPROJECT.CHECKPASS.domain.entity.beacon.QBeacon(forProperty("beacon"), inits.get("beacon")) : null;
         this.departments = inits.isInitialized("departments") ? new FXPROJECT.CHECKPASS.domain.entity.college.QDepartments(forProperty("departments"), inits.get("departments")) : null;
         this.professor = inits.isInitialized("professor") ? new FXPROJECT.CHECKPASS.domain.entity.users.QProfessor(forProperty("professor"), inits.get("professor")) : null;
     }

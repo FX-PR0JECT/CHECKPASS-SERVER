@@ -6,6 +6,7 @@ import FXPROJECT.CHECKPASS.domain.common.exception.DoNotTakeTheCourse;
 import FXPROJECT.CHECKPASS.domain.common.exception.NotAttendanceCheckTime;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
+import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceId;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceTokens;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
@@ -66,7 +67,7 @@ public class AttendanceService {
         Lecture lecture = lectureService.getLecture(lectureCode);
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
-        String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+        AttendanceId attendanceId = generateAttendanceId(loggedInUser, lectureCode);
 
         if (!isExistsInEnrollment(attendanceId)){
             throw new DoNotTakeTheCourse();
@@ -101,7 +102,7 @@ public class AttendanceService {
         Lecture lecture = attendanceToken.getLecture();
         Long lectureCode = lecture.getLectureCode();
 
-        String attendanceId = generateAttendanceId(loggedInUser, lectureCode);
+        AttendanceId attendanceId = generateAttendanceId(loggedInUser, lectureCode);
 
         if (!isExistsInEnrollment(attendanceId)) {
             throw new DoNotTakeTheCourse();
@@ -126,6 +127,10 @@ public class AttendanceService {
      * @return 사용자의 수강하고 있는 강의 출석현황 통계 Map
      */
     public Map<String, Map<Integer, Long>> getAllLectureAttendanceCounts(Students loggedInUser) {
+        Long studentId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade();
+        String studentSemester = loggedInUser.getStudentSemester();
+
         Map<String, Map<Integer, Long>> lectureAttendanceCounts = new TreeMap<>();
 
         List<Lecture> enrollmentList = queryRepository.getEnrollmentList(loggedInUser);
@@ -133,9 +138,7 @@ public class AttendanceService {
             String lectureName = lecture.getLectureName();
             Long lectureCode = lecture.getLectureCode();
 
-            String attendanceId = generateMatchingAttendanceId(loggedInUser, lectureCode);
-
-            List<Tuple> attendanceCountList = queryRepository.getAttendanceCountList(attendanceId);
+            List<Tuple> attendanceCountList = queryRepository.getAttendanceCountList(studentId, lectureCode, studentGrade, studentSemester);
             Map<Integer, Long> attendanceCounts = aggregateAndSortAttendanceCounts(attendanceCountList);
             lectureAttendanceCounts.put(lectureName, attendanceCounts);
         }
@@ -149,14 +152,17 @@ public class AttendanceService {
      * @return 각 주차마다 출석현황이 담겨져 있는 Map
      */
     public List<String> getLectureAttendanceCountList(Students loggedInUser, Long lectureCode) {
+        Long studentId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade();
+        String studentSemester = loggedInUser.getStudentSemester();
+
         int maxWeeks = 16; // 16주차
         List<String> lectureAttendanceStatusList = new ArrayList<>(Collections.nCopies(maxWeeks, ""));
 
-        String attendanceId = generateMatchingAttendanceId(loggedInUser, lectureCode);
-        List<Attendance> attendanceList = queryRepository.getAttendanceList(attendanceId);
+        List<Attendance> attendanceList = queryRepository.getAttendanceList(studentId, lectureCode, studentGrade, studentSemester);
 
         for (Attendance attendance : attendanceList) {
-            int attendanceWeek = Integer.parseInt(attendance.getAttendanceId().substring(20)) - 1; // 리스트 인덱스 0부터 시작해야하므로 1을 뺌
+            int attendanceWeek = attendance.getAttendanceId().getWeek() - 1; // 리스트 인덱스 0부터 시작해야하므로 1을 뺌
             String status = String.valueOf(attendance.getAttendanceStatus()); // 출석 상태를 문자열로 변환
             String existingStatus = lectureAttendanceStatusList.get(attendanceWeek);
             lectureAttendanceStatusList.set(attendanceWeek, existingStatus + status);
@@ -173,19 +179,17 @@ public class AttendanceService {
     public Map<Long, String> getPresentAttendanceUsers(Long lectureCode) {
         Map<Long, String> presentAttendanceUsers = new TreeMap<>();
 
-        String week = String.valueOf(lectureWeekUtils.getWeek()); // 현재 주차
+        int week = lectureWeekUtils.getWeek(); // 현재 주차
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
-        List<Attendance> attendanceList = queryRepository.getPresentAttendanceList(lectureCode.toString(), day, week);
+        List<Attendance> attendanceList = queryRepository.getPresentAttendanceList(lectureCode, day, week);
 
         for(Attendance attendance : attendanceList) {
-            String attendanceId = attendance.getAttendanceId();
-            Long userId = Long.valueOf(attendanceId.substring(0, 7));
-
-            Users user = userService.getUser(userId);
+            Long studentId = attendance.getAttendanceId().getStudentId();
+            Users user = userService.getUser(studentId);
             String userName = user.getUserName();
 
-            presentAttendanceUsers.put(userId, userName);
+            presentAttendanceUsers.put(studentId, userName);
         }
 
         return presentAttendanceUsers;
@@ -201,10 +205,10 @@ public class AttendanceService {
         List<AttendanceInformation> studentAttendanceInformationList = new ArrayList<>();
         Map<Long, String> attendanceStatusByStudentId = new TreeMap<>();
 
-        List<Attendance> attendanceList = queryRepository.getAttendanceListByLectureAndWeek(lectureCode.toString(), String.valueOf(week));
+        List<Attendance> attendanceList = queryRepository.getAttendanceListByLectureAndWeek(lectureCode, week);
 
         for (Attendance attendance : attendanceList) {
-            Long studentId = Long.valueOf(attendance.getAttendanceId().substring(0, 7));
+            Long studentId = attendance.getAttendanceId().getStudentId();
             String status = String.valueOf(attendance.getAttendanceStatus());
 
             if (attendanceStatusByStudentId.containsKey(studentId)) {
@@ -241,7 +245,7 @@ public class AttendanceService {
 
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
-        String week = String.valueOf(lectureWeekUtils.getWeek()); // 현재 주차
+        int week = lectureWeekUtils.getWeek(); // 현재 주차
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
@@ -266,7 +270,7 @@ public class AttendanceService {
             AttendanceTokens attendanceToken = new AttendanceTokens(attendanceCode, lecture, startDate, expirationDate);
             jpaAttendanceTokenRepository.save(attendanceToken);
 
-            queryRepository.setAbsent(lectureCode.toString(), day, week);
+            queryRepository.setAbsent(lectureCode, day, week);
 
             AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
             return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
@@ -281,11 +285,11 @@ public class AttendanceService {
      */
     @Transactional
     public void setAbsent(AttendanceInputForm form) {
-        Long userId = form.getUserId();
+        Long studentId = form.getUserId();
         Long lectureCode = form.getLectureCode();
 
-        Students student = (Students) userService.getUser(userId);
-        String attendanceId = generateAttendanceId(student, lectureCode);
+        Students student = (Students) userService.getUser(studentId);
+        AttendanceId attendanceId = generateAttendanceId(student, lectureCode);
         queryRepository.setAbsent(attendanceId);
     }
 
@@ -295,11 +299,11 @@ public class AttendanceService {
      */
     @Transactional
     public void setLateness(AttendanceInputForm form) {
-        Long userId = form.getUserId();
+        Long studentId = form.getUserId();
         Long lectureCode = form.getLectureCode();
 
-        Students student = (Students) userService.getUser(userId);
-        String attendanceId = generateAttendanceId(student, lectureCode);
+        Students student = (Students) userService.getUser(studentId);
+        AttendanceId attendanceId = generateAttendanceId(student, lectureCode);
         queryRepository.setLateness(attendanceId);
     }
 
@@ -309,11 +313,11 @@ public class AttendanceService {
      */
     @Transactional
     public void setAttend(AttendanceInputForm form) {
-        Long userId = form.getUserId();
+        Long studentId = form.getUserId();
         Long lectureCode = form.getLectureCode();
 
-        Students student = (Students) userService.getUser(userId);
-        String attendanceId = generateAttendanceId(student, lectureCode);
+        Students student = (Students) userService.getUser(studentId);
+        AttendanceId attendanceId = generateAttendanceId(student, lectureCode);
         queryRepository.setAttend(attendanceId);
     }
 
@@ -325,7 +329,7 @@ public class AttendanceService {
         return day.equals(lectureDay);
     }
 
-    private ResultForm checkAndSaveAttendance(String attendanceId, LocalTime currentTime, LectureTimeCode lectureTimeCode) {
+    private ResultForm checkAndSaveAttendance(AttendanceId attendanceId, LocalTime currentTime, LectureTimeCode lectureTimeCode) {
         // TO-BE : 시간을 확인하여 각 상황에 맞는 출석정보 저장
         String timeCode = lectureTimeCode.getLectureTimeCode();
         int lectureHour = Integer.parseInt(timeCode.substring(3, 5));
@@ -357,7 +361,7 @@ public class AttendanceService {
         return lectureMinute == 0 ? LocalTime.of(lectureHour, 21) : LocalTime.of(lectureHour, 51);
     }
 
-    private void saveAttendance(String attendanceId, int status) {
+    private void saveAttendance(AttendanceId attendanceId, int status) {
         // TO-BE : 출석정보 저장
         Attendance attendance = new Attendance(attendanceId, status);
         jpaAttendanceRepository.save(attendance);
@@ -392,7 +396,7 @@ public class AttendanceService {
         return jpaAttendanceTokenRepository.findByAttendanceCode(attendanceCode);
     }
 
-    private boolean isAttendanceChecked(String attendanceId) {
+    private boolean isAttendanceChecked(AttendanceId attendanceId) {
         if (!jpaAttendanceRepository.existsByAttendanceStatus(attendanceId)) {
             return false;
         }
@@ -400,9 +404,9 @@ public class AttendanceService {
         return true;
     }
 
-    private boolean isExistsInEnrollment(String attendanceId){
-        Long lectureCode = Long.valueOf(attendanceId.substring(7, 17));
-        log.info("lectureCode : {}" , lectureCode);
+    private boolean isExistsInEnrollment(AttendanceId attendanceId){
+        Long lectureCode = attendanceId.getLectureCode();
+
         if (!jpaEnrollmentRepository.existsByLectureCode(lectureCode)) {
             return false;
         }
@@ -410,26 +414,17 @@ public class AttendanceService {
         return true;
     }
 
-    private String generateAttendanceId(Students loggedInUser, Long lectureCode) {
-        Long userId = loggedInUser.getUserId();
-        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
-        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
+    private AttendanceId generateAttendanceId(Students loggedInUser, Long lectureCode) {
+        Long studentId = loggedInUser.getUserId();
+        String studentGrade = loggedInUser.getStudentGrade();
+        String studentSemester = loggedInUser.getStudentSemester();
 
         int week = lectureWeekUtils.getWeek(); // 현재 주차
         String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester + day + 0 + week;
+        AttendanceId attendanceId = new AttendanceId(studentId, lectureCode, studentGrade, studentSemester, day, week);
 
         return attendanceId;
     }
 
-    private String generateMatchingAttendanceId(Students loggedInUser, Long lectureCode) {
-        Long userId = loggedInUser.getUserId();
-        String studentGrade = loggedInUser.getStudentGrade().substring(0, 1);
-        String studentSemester = loggedInUser.getStudentSemester().substring(0, 1);
-
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
-
-        return attendanceId;
-    }
 }

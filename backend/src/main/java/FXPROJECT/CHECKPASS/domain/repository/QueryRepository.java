@@ -5,6 +5,7 @@ import FXPROJECT.CHECKPASS.domain.common.exception.NoCourseHistory;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoLecturesOffered;
 import FXPROJECT.CHECKPASS.domain.common.exception.NoStudentsRegisteredForTheCourse;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
+import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceId;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Enrollment;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
@@ -264,20 +265,16 @@ public class QueryRepository {
         return result;
     }
 
-    public void deleteAttendanceWeek(Long userId, Long lectureCode, String studentGrade, String studentSemester){
-
-        // 학생이 수강신청 시 미리 생성한 강의 주차 정보를 삭제한다.
-        String attendanceId = userId.toString() + lectureCode.toString() + studentGrade + studentSemester;
-        query.delete(attendance).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
-    }
-
-    public List<Tuple> getAttendanceCountList(String attendanceId) {
+    public List<Tuple> getAttendanceCountList(Long studentId, Long lectureCode, String studentGrade, String studentSemester) {
 
         // 학생의 출석 상태를 계산하여 List<Tuple> 형식으로 반환한다.
         List<Tuple> result = query
                 .select(attendance.attendanceStatus, attendance.attendanceStatus.count())
                 .from(attendance)
-                .where(likeAttendanceIdByAttendanceId(attendanceId))
+                .where(eqAttendanceIdByStudentId(studentId),
+                        eqAttendanceIdByLectureCode(lectureCode),
+                        eqAttendanceIdByStudentGrade(studentGrade),
+                        eqAttendanceIdByStudentSemester(studentSemester))
                 .groupBy(attendance.attendanceStatus)
                 .fetch();
         if (result.isEmpty()) {
@@ -287,13 +284,16 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Attendance> getAttendanceList(String attendanceId) {
+    public List<Attendance> getAttendanceList(Long studentId, Long lectureCode, String studentGrade, String studentSemester) {
 
         // 학생의 출석 현황을 찾는다. (특정 강의의 16주차 출석 현황)
         List <Attendance> result = query
                 .select(attendance)
                 .from(attendance)
-                .where(likeAttendanceIdByAttendanceId(attendanceId))
+                .where(eqAttendanceIdByStudentId(studentId),
+                        eqAttendanceIdByLectureCode(lectureCode),
+                        eqAttendanceIdByStudentGrade(studentGrade),
+                        eqAttendanceIdByStudentSemester(studentSemester))
                 .fetch();
         if (result.isEmpty()){
             throw new NoCourseHistory();
@@ -302,13 +302,16 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Attendance> getPresentAttendanceList(String lectureCode, String day, String week) {
+    public List<Attendance> getPresentAttendanceList(Long lectureCode, String day, int week) {
 
         // 해당 강의에 출석한 인원을 찾는다.
         List<Attendance> result = query
                 .select(attendance)
                 .from(attendance)
-                .where(likeAttendanceIdByLectureCode(lectureCode, day, week), eqAttendanceStatus(1))
+                .where(eqAttendanceIdByLectureCode(lectureCode),
+                        eqAttendanceIdByDay(day),
+                        eqAttendanceIdByWeek(week),
+                        eqAttendanceStatus(1))
                 .fetch();
         if (result.isEmpty()) {
             throw new NoStudentsRegisteredForTheCourse();
@@ -317,13 +320,13 @@ public class QueryRepository {
         return result;
     }
 
-    public List<Attendance> getAttendanceListByLectureAndWeek(String lectureCode, String week) {
+    public List<Attendance> getAttendanceListByLectureAndWeek(Long lectureCode, int week) {
 
         // 해당 강의의 해당 주차의 학생들의 출석 정보를 찾는다.
         List<Attendance> result = query
                 .select(attendance)
                 .from(attendance)
-                .where(likeAttendanceIdByLectureCodeAndWeek(lectureCode, week))
+                .where(eqAttendanceIdByLectureCode(lectureCode), eqAttendanceIdByWeek(week))
                 .fetch();
         if (result.isEmpty()) {
             throw new NoStudentsRegisteredForTheCourse();
@@ -332,20 +335,24 @@ public class QueryRepository {
         return result;
     }
 
-    public void setAbsent(String lectureCode, String day, String week) {
-        query.update(attendance).set(attendance.attendanceStatus, 3).where(likeAttendanceIdByLectureCode(lectureCode, day, week)).execute();
+    public void setAbsent(Long lectureCode, String day, int week) {
+        query.update(attendance).set(attendance.attendanceStatus, 3)
+                .where(eqAttendanceIdByLectureCode(lectureCode),
+                        eqAttendanceIdByDay(day),
+                        eqAttendanceIdByWeek(week))
+                .execute();
     }
 
-    public void setAbsent(String attendanceId) {
-        query.update(attendance).set(attendance.attendanceStatus, 3).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+    public void setAbsent(AttendanceId attendanceId) {
+        query.update(attendance).set(attendance.attendanceStatus, 3).where(eqAttendanceId(attendanceId)).execute();
     }
 
-    public void setLateness(String attendanceId) {
-        query.update(attendance).set(attendance.attendanceStatus, 2).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+    public void setLateness(AttendanceId attendanceId) {
+        query.update(attendance).set(attendance.attendanceStatus, 2).where(eqAttendanceId(attendanceId)).execute();
     }
 
-    public void setAttend(String attendanceId) {
-        query.update(attendance).set(attendance.attendanceStatus, 1).where(likeAttendanceIdByAttendanceId(attendanceId)).execute();
+    public void setAttend(AttendanceId attendanceId) {
+        query.update(attendance).set(attendance.attendanceStatus, 1).where(eqAttendanceId(attendanceId)).execute();
     }
 
     private BooleanExpression eqAttendanceStatus(int attendanceStatus) {
@@ -492,23 +499,51 @@ public class QueryRepository {
         return null;
     }
 
-    private BooleanExpression likeAttendanceIdByAttendanceId(String attendanceId) {
-        if (StringUtils.hasText(attendanceId)) {
-            return attendance.attendanceId.like(attendanceId + "%");
+    private BooleanExpression eqAttendanceId(AttendanceId attendanceId) {
+        if (attendanceId != null) {
+            return attendance.attendanceId.eq(attendanceId);
         }
         return null;
     }
 
-    private  BooleanExpression likeAttendanceIdByLectureCode(String lectureCode, String day, String week) {
-        if (StringUtils.hasText(lectureCode)) {
-            return attendance.attendanceId.like("%" + lectureCode + "%" + day + 0 + week);
+    private BooleanExpression eqAttendanceIdByStudentId(Long studentId) {
+        if (studentId != null && studentId > 0) {
+            return attendance.attendanceId.studentId.eq(studentId);
         }
         return null;
     }
 
-    private  BooleanExpression likeAttendanceIdByLectureCodeAndWeek(String lectureCode, String week) {
-        if (StringUtils.hasText(lectureCode)) {
-            return attendance.attendanceId.like("%" + lectureCode + "%" + 0 + week);
+    private  BooleanExpression eqAttendanceIdByLectureCode(Long lectureCode) {
+        if (lectureCode != null && lectureCode > 0) {
+            return attendance.attendanceId.lectureCode.eq(lectureCode);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqAttendanceIdByStudentGrade(String studentGrade) {
+        if (StringUtils.hasText(studentGrade)) {
+            return attendance.attendanceId.studentGrade.eq(studentGrade);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqAttendanceIdByStudentSemester(String studentSemester) {
+        if (StringUtils.hasText(studentSemester)) {
+            return attendance.attendanceId.studentSemester.eq(studentSemester);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqAttendanceIdByDay(String day) {
+        if (StringUtils.hasText(day)){
+            return attendance.attendanceId.lectureDay.eq(day);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqAttendanceIdByWeek(int week) {
+        if (week > 0) {
+            return attendance.attendanceId.week.eq(week);
         }
         return null;
     }

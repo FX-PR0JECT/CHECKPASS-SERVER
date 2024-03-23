@@ -140,7 +140,7 @@ public class AttendanceController {
      */
     @PostMapping("/setAbsent")
     public void setAbsent(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
-        if (!isStudent(loggedInUser)) {
+        if (!isProfessorOrStaff(loggedInUser)) {
             throw new NoPermission();
         }
 
@@ -153,7 +153,7 @@ public class AttendanceController {
      */
     @PostMapping("/setLateness")
     public void setLateness(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
-        if (!isStudent(loggedInUser)) {
+        if (!isProfessorOrStaff(loggedInUser)) {
             throw new NoPermission();
         }
 
@@ -162,11 +162,11 @@ public class AttendanceController {
 
     /**
      * 출석 처리(수동)
-     * @param form
+     * @param form 유저Id, 강의 코드가 담긴 form
      */
     @PostMapping("/setAttend")
     public void setAttend(@LoginUser Users loggedInUser, @RequestBody AttendanceInputForm form) {
-        if (!isStudent(loggedInUser)) {
+        if (!isProfessorOrStaff(loggedInUser)) {
             throw new NoPermission();
         }
 

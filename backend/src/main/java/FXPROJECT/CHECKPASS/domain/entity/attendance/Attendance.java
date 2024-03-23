@@ -1,7 +1,7 @@
 package FXPROJECT.CHECKPASS.domain.entity.attendance;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Attendance {
 
-    @Id
-    private String attendanceId;
+    @EmbeddedId
+    private AttendanceId attendanceId;
 
     private int attendanceStatus;
 

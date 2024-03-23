@@ -2,10 +2,10 @@ package FXPROJECT.CHECKPASS.web.service.attendance;
 
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
+import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceId;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
-import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceRepository;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import java.util.List;
 public class AttendanceWeekService {
 
     private final JpaAttendanceRepository jpaAttendanceRepository;
-    private final QueryRepository queryRepository;
     private final LectureService lectureService;
 
     /**
@@ -33,8 +32,8 @@ public class AttendanceWeekService {
 
         Students student = (Students)loggedInUser;
         Long studentId = student.getUserId();
-        String studentGrade = student.getStudentGrade().substring(0, 1);
-        String studentSemester = student.getStudentSemester().substring(0, 1);
+        String studentGrade = student.getStudentGrade();
+        String studentSemester = student.getStudentSemester();
 
         Lecture lecture = lectureService.getLecture(lectureCode);
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
@@ -46,7 +45,7 @@ public class AttendanceWeekService {
 
         for (int i = 1; i < 17; i++) {
             for (String lectureDay : lectureDays) {
-                String attendanceId = studentId.toString() + lectureCode.toString() + studentGrade + studentSemester + lectureDay + 0 + i;
+                AttendanceId attendanceId = new AttendanceId(studentId, lectureCode, studentGrade, studentSemester, lectureDay, i);
                 Attendance attendance = new Attendance(attendanceId, 0);
                 jpaAttendanceRepository.save(attendance);
             }
@@ -62,9 +61,22 @@ public class AttendanceWeekService {
 
         Students student = (Students)loggedInUser;
         Long studentId = student.getUserId();
-        String studentGrade = student.getStudentGrade().substring(0, 1);
-        String studentSemester = student.getStudentSemester().substring(0, 1);
+        String studentGrade = student.getStudentGrade();
+        String studentSemester = student.getStudentSemester();
 
-        queryRepository.deleteAttendanceWeek(studentId, lectureCode, studentGrade, studentSemester);
+        Lecture lecture = lectureService.getLecture(lectureCode);
+        List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
+        List<String> lectureDays = new ArrayList<>();
+        for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
+            String day = lectureTimeCode.getLectureTimeCode().substring(1, 2);
+            lectureDays.add(day);
+        }
+
+        for (int i = 1; i < 17; i++) {
+            for (String lectureDay : lectureDays) {
+                AttendanceId attendanceId = new AttendanceId(studentId, lectureCode, studentGrade, studentSemester, lectureDay, i);
+                jpaAttendanceRepository.deleteByAttendanceId(attendanceId);
+            }
+        }
     }
 }

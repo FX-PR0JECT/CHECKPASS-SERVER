@@ -86,7 +86,7 @@ public class EnrollmentService {
         Long enrollmentId = idGenerator(lectureCode, loggedInUser);
 
         if (!jpaEnrollmentRepository.existsById(enrollmentId)){
-            return ResultFormUtils.getFailResultForm(BAD_URI_REQUEST);
+            return ResultFormUtils.getFailResultForm(NO_COURSE_HISTORY);
         }
 
         attendanceWeekService.deleteAttendanceWeek(loggedInUser, lectureCode);
