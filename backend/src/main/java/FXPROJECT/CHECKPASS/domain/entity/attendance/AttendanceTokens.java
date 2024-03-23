@@ -16,7 +16,7 @@ public class AttendanceTokens {
     @Id
     private int attendanceCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Lecture lecture;
 
     @Column(nullable = false)

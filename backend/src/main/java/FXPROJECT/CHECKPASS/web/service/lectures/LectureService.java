@@ -2,6 +2,7 @@ package FXPROJECT.CHECKPASS.web.service.lectures;
 
 import FXPROJECT.CHECKPASS.domain.common.exception.*;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
+import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceTokens;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
 import FXPROJECT.CHECKPASS.domain.entity.users.Professor;
@@ -9,6 +10,7 @@ import FXPROJECT.CHECKPASS.domain.entity.users.Students;
 import FXPROJECT.CHECKPASS.domain.entity.users.Users;
 import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
+import FXPROJECT.CHECKPASS.domain.repository.attendance.JpaAttendanceTokenRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.searchCondition.lectures.LectureSearchCondition;
 import FXPROJECT.CHECKPASS.web.common.utils.LectureCodeUtils;
@@ -43,6 +45,7 @@ import static FXPROJECT.CHECKPASS.domain.common.constant.ErrorCode.*;
 public class LectureService {
 
     private final JpaLectureRepository jpaLectureRepository;
+    private final JpaAttendanceTokenRepository jpaAttendanceTokenRepository;
     private final UserService userService;
     private final BeaconService beaconService;
     private final QueryRepository queryRepository;
@@ -164,9 +167,10 @@ public class LectureService {
     @Transactional
     public ResultForm deleteLecture(Long lectureCode){
 
-        if(!existsLecture(lectureCode)){
-            return ResultFormUtils.getFailResultForm(NON_EXISTENT_LECTURE);
-        }
+        Lecture lecture = getLecture(lectureCode);
+
+        deleteAttendanceToken(lecture);
+
         jpaLectureRepository.deleteLectureByLectureCode(lectureCode);
 
         return ResultFormUtils.getSuccessResultForm(COMPLETE_DELETE.getDescription());
@@ -283,4 +287,11 @@ public class LectureService {
         return lectureMinute == 0 ? LocalTime.of(lectureHour, 31) : LocalTime.of(lectureHour + 1, 01);
     }
 
+    private void deleteAttendanceToken(Lecture lecture) {
+        if (jpaAttendanceTokenRepository.existsByLecture(lecture)){
+            AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+            int attendanceCode = attendanceToken.getAttendanceCode();
+            jpaAttendanceTokenRepository.deleteById(attendanceCode);
+        }
+    }
 }

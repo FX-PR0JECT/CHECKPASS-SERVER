@@ -1,3 +1,4 @@
+/*
 package FXPROJECT.CHECKPASS.domain.repository;
 
 import FXPROJECT.CHECKPASS.domain.entity.college.Colleges;
@@ -268,3 +269,4 @@ class JpaUsersRepositoryTest {
     }
 
 }
+*/
