@@ -240,8 +240,21 @@ public class AttendanceService {
      */
     @Transactional
     public ResultForm generateAttendanceToken(Long lectureCode) {
-        int attendanceCode = randomNumberUtils.generateAttendanceCode();
         Lecture lecture = lectureService.getLecture(lectureCode);
+        LocalDateTime now = LocalDateTime.now();
+
+        if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
+            // 새로고침하거나 재요청 시 출석토큰이 이미 있고 토큰이 만료되지 않았다면 기존에 있는 토큰을 다시 보낸다.
+            AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+            LocalDateTime expirationDate = findAttendanceToken.getExpirationDate();
+
+            if (now.isBefore(expirationDate)) {
+                AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(findAttendanceToken, AttendanceTokenInformation.class);
+                return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
+            }
+        }
+
+        int attendanceCode = randomNumberUtils.generateAttendanceCode(); // 출결코드 생성
 
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
@@ -253,8 +266,7 @@ public class AttendanceService {
                 continue;
             }
 
-            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime startDate = now.truncatedTo(ChronoUnit.MINUTES);
+            LocalDateTime startDate = now.truncatedTo(ChronoUnit.SECONDS);
             LocalDateTime expirationDate = startDate.plusMinutes(3);
 
             if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
