@@ -20,16 +20,14 @@ public class AttendanceTokens {
     @OneToOne
     private Lecture lecture;
 
-    @Column(nullable = false)
-    private int attendanceCode;
+    @Column
+    private Integer attendanceCode;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime startDate;
 
-    public AttendanceTokens(Lecture lecture, int attendanceCode, LocalDateTime startDate) {
+    public AttendanceTokens(Lecture lecture) {
         this.lecture = lecture;
-        this.attendanceCode = attendanceCode;
-        this.startDate = startDate;
     }
 
 }

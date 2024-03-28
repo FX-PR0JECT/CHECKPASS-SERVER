@@ -231,20 +231,31 @@ public class AttendanceService {
     public void generateAttendanceToken(Long lectureCode) {
         Lecture lecture = lectureService.getLecture(lectureCode);
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
+        List<String> lectureDayList = new ArrayList<>();
+        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
 
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
-            if (isCurrentLectureDay(lectureTimeCode)) {
-                int attendanceCode = randomNumberUtils.generateAttendanceCode(); // 출결코드 생성
 
-                LocalDateTime now = LocalDateTime.now();
-                LocalDateTime startDate = now.truncatedTo(ChronoUnit.SECONDS);
+            String timeCode = lectureTimeCode.getLectureTimeCode();
+            String lectureDay = timeCode.substring(1, 2);
 
-                AttendanceTokens attendanceToken = new AttendanceTokens(lecture, attendanceCode, startDate);
-                jpaAttendanceTokenRepository.save(attendanceToken);
-            }
+            lectureDayList.add(lectureDay);
         }
 
-        throw new NotAttendanceCheckTime();
+        if (!lectureDayList.contains(day)) {
+            throw new NotAttendanceCheckTime();
+        }
+
+        int attendanceCode = randomNumberUtils.generateAttendanceCode(); // 출결코드 생성
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startDate = now.truncatedTo(ChronoUnit.SECONDS);
+
+        AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+        attendanceToken.setAttendanceCode(attendanceCode);
+        attendanceToken.setStartDate(startDate);
+
+        jpaAttendanceTokenRepository.save(attendanceToken);
     }
 
     /**
@@ -255,11 +266,12 @@ public class AttendanceService {
     public AttendanceTokenInformation getAttendanceToken(Long lectureCode) {
         Lecture lecture = lectureService.getLecture(lectureCode);
 
-        if (!jpaAttendanceTokenRepository.existsByLecture(lecture)) {
+        AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+
+        if (attendanceToken.getAttendanceCode() == null) {
             throw new NoSuchAttendanceToken();
         }
 
-        AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
         AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
 
         return attendanceTokenInformation;

@@ -65,7 +65,10 @@ public class LectureService {
             throw new ExistingLecture();
         }
 
-        return jpaLectureRepository.save(lecture);
+        Lecture savedLecture = jpaLectureRepository.save(lecture);
+        registerAttendanceToken(lecture);
+
+        return savedLecture;
     }
 
 
@@ -287,9 +290,16 @@ public class LectureService {
         return lectureMinute == 0 ? LocalTime.of(lectureHour, 31) : LocalTime.of(lectureHour + 1, 01);
     }
 
-    private void deleteAttendanceToken(Lecture lecture) {
+    @Transactional
+    public void deleteAttendanceToken(Lecture lecture) {
         if (jpaAttendanceTokenRepository.existsByLecture(lecture)){
             jpaAttendanceTokenRepository.deleteByLecture(lecture);
         }
+    }
+
+    @Transactional
+    public void registerAttendanceToken(Lecture lecture) {
+        AttendanceTokens attendanceToken = new AttendanceTokens(lecture);
+        jpaAttendanceTokenRepository.save(attendanceToken);
     }
 }
