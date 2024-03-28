@@ -56,6 +56,7 @@ public enum ErrorCode {
     ATTENDANCE_CODE_MISMATCH(400, -141, "Attendance code mismatch", "출석코드가 일치하지 않습니다."),
     ATTENDANCE_ALREADY_PROCESSED(400, -142, "Attendance already processed", "이미 처리된 출석입니다."),
     DO_NOT_TAKE_THE_COURSE(400, -143, "Do not take the course", "수강과목이 아니므로 출석할 수 없습니다." ),
+    NO_SUCH_ATTENDANCE_TOKEN(400, -144, "No such AttendanceToken", "해당 강의의 출석토큰이 없습니다."),
     OK(200,-1000,"OK","OK");
 
 

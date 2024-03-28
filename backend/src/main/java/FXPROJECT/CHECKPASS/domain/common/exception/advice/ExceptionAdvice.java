@@ -248,4 +248,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DoNotTakeTheCourse.class)
     public ResultForm doNotTakeTheCourse() { return ResultFormUtils.getFailResultForm(ErrorCode.DO_NOT_TAKE_THE_COURSE); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchAttendanceToken.class)
+    public ResultForm noSuchAttendanceToken() { return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_ATTENDANCE_TOKEN); }
 }
