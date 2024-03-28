@@ -1,9 +1,6 @@
 package FXPROJECT.CHECKPASS.web.service.attendance;
 
-import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceAlreadyProcessed;
-import FXPROJECT.CHECKPASS.domain.common.exception.AttendanceCodeMismatch;
-import FXPROJECT.CHECKPASS.domain.common.exception.DoNotTakeTheCourse;
-import FXPROJECT.CHECKPASS.domain.common.exception.NotAttendanceCheckTime;
+import FXPROJECT.CHECKPASS.domain.common.exception.*;
 import FXPROJECT.CHECKPASS.domain.dto.LectureTimeCode;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.Attendance;
 import FXPROJECT.CHECKPASS.domain.entity.attendance.AttendanceId;
@@ -92,24 +89,17 @@ public class AttendanceService {
      * @return 성공 : 출석체크가 완료되었습니다  실패 : 출석체크 시간이 아닙니다. 또는 출석코드가 일치하지 않습니다.
      */
     @Transactional
-    public ResultForm attend(Students loggedInUser, int attendanceCode) {
-        AttendanceTokens attendanceToken = getAttendanceToken(attendanceCode);
-        LocalDateTime expirationDate = attendanceToken.getExpirationDate();
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime currentDate = now.truncatedTo(ChronoUnit.MINUTES);
-
-        Lecture lecture = attendanceToken.getLecture();
-        Long lectureCode = lecture.getLectureCode();
-
+    public ResultForm attend(Students loggedInUser, Long lectureCode, int attendanceCode) {
+        Lecture lecture = lectureService.getLecture(lectureCode);
+        AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
         AttendanceId attendanceId = generateAttendanceId(loggedInUser, lectureCode);
 
         if (!isExistsInEnrollment(attendanceId)) {
             throw new DoNotTakeTheCourse();
         }
 
-        if (currentDate.isAfter(expirationDate)) {
-            throw new NotAttendanceCheckTime();
+        if (attendanceCode != attendanceToken.getAttendanceCode()) {
+            throw new AttendanceCodeMismatch();
         }
 
         if (isAttendanceChecked(attendanceId)) {
@@ -236,59 +226,43 @@ public class AttendanceService {
     /**
      * 출석코드 생성하기
      * @param lectureCode 강의코드
-     * @return 생성한 출석코드 객체
      */
     @Transactional
-    public ResultForm generateAttendanceToken(Long lectureCode) {
+    public void generateAttendanceToken(Long lectureCode) {
         Lecture lecture = lectureService.getLecture(lectureCode);
-        LocalDateTime now = LocalDateTime.now();
-
-        if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
-            // 새로고침하거나 재요청 시 출석토큰이 이미 있고 토큰이 만료되지 않았다면 기존에 있는 토큰을 다시 보낸다.
-            AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
-            LocalDateTime expirationDate = findAttendanceToken.getExpirationDate();
-
-            if (now.isBefore(expirationDate)) {
-                AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(findAttendanceToken, AttendanceTokenInformation.class);
-                return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
-            }
-        }
-
-        int attendanceCode = randomNumberUtils.generateAttendanceCode(); // 출결코드 생성
-
         List<LectureTimeCode> lectureTimeCodeList = lecture.getLectureTimeCode();
 
-        int week = lectureWeekUtils.getWeek(); // 현재 주차
-        String day = String.valueOf(LocalDateTime.now().getDayOfWeek().getValue() - 1); // 월(0) ~ 금(5)
-
         for (LectureTimeCode lectureTimeCode : lectureTimeCodeList) {
-            if (!isCurrentLectureDay(lectureTimeCode)) {
-                continue;
+            if (isCurrentLectureDay(lectureTimeCode)) {
+                int attendanceCode = randomNumberUtils.generateAttendanceCode(); // 출결코드 생성
+
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime startDate = now.truncatedTo(ChronoUnit.SECONDS);
+
+                AttendanceTokens attendanceToken = new AttendanceTokens(lecture, attendanceCode, startDate);
+                jpaAttendanceTokenRepository.save(attendanceToken);
             }
-
-            LocalDateTime startDate = now.truncatedTo(ChronoUnit.SECONDS);
-            LocalDateTime expirationDate = startDate.plusMinutes(3);
-
-            if (jpaAttendanceTokenRepository.existsByLecture(lecture)) {
-                AttendanceTokens findAttendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
-                int findAttendanceTokenCode = findAttendanceToken.getAttendanceCode();
-                jpaAttendanceTokenRepository.deleteById(findAttendanceTokenCode);
-            }
-
-            while (jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
-                attendanceCode = randomNumberUtils.generateAttendanceCode();
-            }
-
-            AttendanceTokens attendanceToken = new AttendanceTokens(attendanceCode, lecture, startDate, expirationDate);
-            jpaAttendanceTokenRepository.save(attendanceToken);
-
-            queryRepository.setAbsent(lectureCode, day, week);
-
-            AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
-            return ResultFormUtils.getSuccessResultForm(attendanceTokenInformation);
         }
 
         throw new NotAttendanceCheckTime();
+    }
+
+    /**
+     * 출석코드 보내주기
+     * @param lectureCode 강의코드
+     * @return AttendanceTokens 객체
+     */
+    public AttendanceTokenInformation getAttendanceToken(Long lectureCode) {
+        Lecture lecture = lectureService.getLecture(lectureCode);
+
+        if (!jpaAttendanceTokenRepository.existsByLecture(lecture)) {
+            throw new NoSuchAttendanceToken();
+        }
+
+        AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
+        AttendanceTokenInformation attendanceTokenInformation = conversionService.convert(attendanceToken, AttendanceTokenInformation.class);
+
+        return attendanceTokenInformation;
     }
 
     /**
@@ -398,14 +372,6 @@ public class AttendanceService {
             attendanceCounts.put(attendanceCode, count);
         }
         return attendanceCounts;
-    }
-
-    private AttendanceTokens getAttendanceToken(int attendanceCode) {
-        if (!jpaAttendanceTokenRepository.existsByAttendanceCode(attendanceCode)) {
-            throw new AttendanceCodeMismatch();
-        }
-
-        return jpaAttendanceTokenRepository.findByAttendanceCode(attendanceCode);
     }
 
     private boolean isAttendanceChecked(AttendanceId attendanceId) {

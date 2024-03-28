@@ -14,15 +14,22 @@ import java.time.LocalDateTime;
 public class AttendanceTokens {
 
     @Id
-    private int attendanceCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long attendanceTokenId;
 
     @OneToOne
     private Lecture lecture;
 
     @Column(nullable = false)
-    private LocalDateTime startDate;
+    private int attendanceCode;
 
     @Column(nullable = false)
-    private LocalDateTime expirationDate;
+    private LocalDateTime startDate;
+
+    public AttendanceTokens(Lecture lecture, int attendanceCode, LocalDateTime startDate) {
+        this.lecture = lecture;
+        this.attendanceCode = attendanceCode;
+        this.startDate = startDate;
+    }
 
 }

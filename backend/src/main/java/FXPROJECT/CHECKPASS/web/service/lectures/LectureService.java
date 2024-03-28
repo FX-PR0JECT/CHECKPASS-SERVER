@@ -289,9 +289,7 @@ public class LectureService {
 
     private void deleteAttendanceToken(Lecture lecture) {
         if (jpaAttendanceTokenRepository.existsByLecture(lecture)){
-            AttendanceTokens attendanceToken = jpaAttendanceTokenRepository.findByLecture(lecture);
-            int attendanceCode = attendanceToken.getAttendanceCode();
-            jpaAttendanceTokenRepository.deleteById(attendanceCode);
+            jpaAttendanceTokenRepository.deleteByLecture(lecture);
         }
     }
 }

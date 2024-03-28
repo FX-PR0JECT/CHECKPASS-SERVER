@@ -46,13 +46,13 @@ public class AttendanceController {
      * @param attendanceCode 출석코드
      * @return 성공 : 출석체크가 완료되었습니다  실패 : 출석체크 시간이 아닙니다. 또는 출석코드가 일치하지 않습니다.
      */
-    @PostMapping
-    public ResultForm attendance(@LoginUser Users loggedInUser, @RequestParam("attendanceCode") int attendanceCode) {
+    @PostMapping("/token/{lectureCode}")
+    public ResultForm attendance(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode, @RequestParam("attendanceCode") int attendanceCode) {
         if (!isStudent(loggedInUser)) {
             throw new NoPermission();
         }
 
-        return attendanceService.attend((Students) loggedInUser, attendanceCode);
+        return attendanceService.attend((Students) loggedInUser, lectureCode, attendanceCode);
     }
 
     /**
@@ -117,21 +117,6 @@ public class AttendanceController {
 
         List<AttendanceInformation> attendanceInformationList = attendanceService.getStudentAttendanceInformationList(lectureCode, week);
         return ResultFormUtils.getSuccessResultForm(attendanceInformationList);
-    }
-
-    /**
-     * 생성한 출석코드 보내주기
-     * @param loggedInUser 로그인된 유저
-     * @param lectureCode 강의코드
-     * @return 생성한 출석코드 객체 정보
-     */
-    @PostMapping("/token/{lectureCode}")
-    public ResultForm getAttendanceToken(@LoginUser Users loggedInUser, @PathVariable("lectureCode") Long lectureCode) {
-        if (!isProfessorOrStaff(loggedInUser)) {
-            throw new NoPermission();
-        }
-
-        return attendanceService.generateAttendanceToken(lectureCode);
     }
 
     /**
