@@ -1,7 +1,6 @@
 package FXPROJECT.CHECKPASS.web.form.responseForm.resultForm;
 
 import FXPROJECT.CHECKPASS.domain.enums.Job;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

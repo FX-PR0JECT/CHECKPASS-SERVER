@@ -54,6 +54,7 @@ public class UserController {
         LoginUserForm loginUserForm = new LoginUserForm().builder()
                 .userId(user.getUserId())
                 .userName(user.getUserName())
+                .userJob(user.getUserJob())
                 .build();
         return ResultFormUtils.getSuccessResultForm(loginUserForm);
     }
