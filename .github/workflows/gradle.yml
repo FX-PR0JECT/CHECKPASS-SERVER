@@ -1,0 +1,57 @@
+name: Java CI with Gradle  
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+      branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: make application.yml
+        run: |
+          cd ./backend/src/main/resources
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          
+      - name: Grant execute permission for gradlew
+        run: |
+          cd ./backend/
+          chmod +x gradlew
+      
+      - name : Build with Gradle
+        run: |
+          cd ./backend/
+          ./gradlew build -x test
+          
+      - name: Docker image build
+        run: |
+          cd ./backend
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t checkpass .
+          docker tag checkpass jiungyang/checkpass:${GITHUB_SHA::7}
+          docker push jiungyang/checkpass:${GITHUB_SHA::7}
+          
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: GITHUB_SHA
+          script: |
+            docker stop checkpass
+            docker rm checkpass
+            docker pull jiungyang/checkpass:${GITHUB_SHA::7}
+            docker tag jiungyang/checkpass:${GITHUB_SHA::7} checkpass
+            docker run -d --name checkpass -p 80:8080 checkpass
