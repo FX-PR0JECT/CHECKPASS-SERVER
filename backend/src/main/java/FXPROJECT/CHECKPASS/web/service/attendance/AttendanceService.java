@@ -16,9 +16,7 @@ import FXPROJECT.CHECKPASS.web.common.utils.LectureWeekUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.RandomNumberUtils;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceInformation;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceTokenInformation;
-import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.*;
 import FXPROJECT.CHECKPASS.web.service.lectures.LectureService;
 import FXPROJECT.CHECKPASS.web.service.users.UserService;
 import com.querydsl.core.Tuple;
@@ -116,23 +114,27 @@ public class AttendanceService {
      * @param loggedInUser 로그인된 유저
      * @return 사용자의 수강하고 있는 강의 출석현황 통계 Map
      */
-    public Map<String, Map<Integer, Long>> getAllLectureAttendanceCounts(Students loggedInUser) {
+    public List<AttendanceStatisticsInformation> getAllLectureAttendanceCounts(Students loggedInUser) {
         Long studentId = loggedInUser.getUserId();
         String studentGrade = loggedInUser.getStudentGrade();
         String studentSemester = loggedInUser.getStudentSemester();
 
-        Map<String, Map<Integer, Long>> lectureAttendanceCounts = new TreeMap<>();
+        List<AttendanceStatisticsInformation> lectureAttendanceInformationList = new ArrayList<>();
 
         List<Lecture> enrollmentList = queryRepository.getEnrollmentList(loggedInUser);
         for (Lecture lecture : enrollmentList) {
             String lectureName = lecture.getLectureName();
             Long lectureCode = lecture.getLectureCode();
+            String professorName = lecture.getProfessor().getUserName();
+            String division = lecture.getDivision();
 
             List<Tuple> attendanceCountList = queryRepository.getAttendanceCountList(studentId, lectureCode, studentGrade, studentSemester);
             Map<Integer, Long> attendanceCounts = aggregateAndSortAttendanceCounts(attendanceCountList);
-            lectureAttendanceCounts.put(lectureName, attendanceCounts);
+
+            AttendanceStatisticsInformation lectureAttendanceInformation = new AttendanceStatisticsInformation(lectureName, lectureCode, professorName, division, attendanceCounts);
+            lectureAttendanceInformationList.add(lectureAttendanceInformation);
         }
-        return lectureAttendanceCounts;
+        return lectureAttendanceInformationList;
     }
 
     /**
@@ -141,10 +143,12 @@ public class AttendanceService {
      * @param lectureCode 강의코드
      * @return 각 주차마다 출석현황이 담겨져 있는 Map
      */
-    public List<String> getLectureAttendanceCountList(Students loggedInUser, Long lectureCode) {
+    public AttendanceStatusInformation getLectureAttendanceCountList(Students loggedInUser, Long lectureCode) {
         Long studentId = loggedInUser.getUserId();
         String studentGrade = loggedInUser.getStudentGrade();
         String studentSemester = loggedInUser.getStudentSemester();
+        Lecture lecture = lectureService.getLecture(lectureCode);
+        String lectureName = lecture.getLectureName();
 
         int maxWeeks = 16; // 16주차
         List<String> lectureAttendanceStatusList = new ArrayList<>(Collections.nCopies(maxWeeks, ""));
@@ -158,7 +162,9 @@ public class AttendanceService {
             lectureAttendanceStatusList.set(attendanceWeek, existingStatus + status);
         }
 
-        return lectureAttendanceStatusList;
+        AttendanceStatusInformation attendanceStatusInformation = new AttendanceStatusInformation(lectureName, lectureAttendanceStatusList);
+
+        return attendanceStatusInformation;
     }
 
     /**

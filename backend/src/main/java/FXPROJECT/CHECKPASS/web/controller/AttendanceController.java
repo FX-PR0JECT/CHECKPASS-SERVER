@@ -8,6 +8,8 @@ import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.attendance.AttendanceInputForm;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceInformation;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceStatisticsInformation;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.AttendanceStatusInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +68,7 @@ public class AttendanceController {
             throw new NoPermission();
         }
 
-        Map<String, Map<Integer, Long>> allAttendanceList = attendanceService.getAllLectureAttendanceCounts((Students)loggedInUser);
+        List<AttendanceStatisticsInformation> allAttendanceList = attendanceService.getAllLectureAttendanceCounts((Students)loggedInUser);
         return ResultFormUtils.getSuccessResultForm(allAttendanceList);
     }
 
@@ -82,8 +84,8 @@ public class AttendanceController {
             throw new NoPermission();
         }
 
-        List<String> attendanceStatusList = attendanceService.getLectureAttendanceCountList((Students)loggedInUser, lectureCode);
-        return ResultFormUtils.getSuccessResultForm(attendanceStatusList);
+        AttendanceStatusInformation attendanceStatusInformation = attendanceService.getLectureAttendanceCountList((Students)loggedInUser, lectureCode);
+        return ResultFormUtils.getSuccessResultForm(attendanceStatusInformation);
     }
 
     /**
