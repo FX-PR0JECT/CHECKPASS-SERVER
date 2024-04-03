@@ -96,6 +96,10 @@ public class AttendanceService {
             throw new DoNotTakeTheCourse();
         }
 
+        if (attendanceToken.getAttendanceCode() == null) {
+            throw new NotAttendanceCheckTime();
+        }
+
         if (attendanceCode != attendanceToken.getAttendanceCode()) {
             throw new AttendanceCodeMismatch();
         }
