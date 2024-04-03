@@ -52,6 +52,7 @@ public enum ErrorCode {
     NON_EXISTENT_BEACON(400, -120, "Non-Existent Beacon", "Database에 등록되지 않은 비콘입니다.\n" +
             "해결 방법 : 관리자에게 문의하거나 신규 비콘일 경우 비콘 등록 후 재시도."),
     EXISTING_BEACON(400, -121, "Existing Beacon", "Database에 이미 등록된 비콘입니다.\n" + "해결 방법 : 확인 후 재 요청"),
+    NO_COURSES_MATCHED_TO_BEACON(400, -122, "No courses matched to beacon", "비콘과 메칭된 강의가 없습니다."),
     NOT_ATTENDANCE_CHECK_TIME(400, -140, "Not attendance check time", "출석체크 시간이 아닙니다."),
     ATTENDANCE_CODE_MISMATCH(400, -141, "Attendance code mismatch", "출석코드가 일치하지 않습니다."),
     ATTENDANCE_ALREADY_PROCESSED(400, -142, "Attendance already processed", "이미 처리된 출석입니다."),

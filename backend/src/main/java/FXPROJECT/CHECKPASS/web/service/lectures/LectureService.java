@@ -217,6 +217,11 @@ public class LectureService {
                 }
             }
         }
+
+        if (lectureInformationList.isEmpty()) {
+            throw new NoCoursesMatchedToBeacon();
+        }
+
         return lectureInformationList;
     }
 

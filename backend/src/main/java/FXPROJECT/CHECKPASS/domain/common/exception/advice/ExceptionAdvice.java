@@ -252,4 +252,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoSuchAttendanceToken.class)
     public ResultForm noSuchAttendanceToken() { return ResultFormUtils.getFailResultForm(ErrorCode.NO_SUCH_ATTENDANCE_TOKEN); }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoCoursesMatchedToBeacon.class)
+    public ResultForm noCoursesMatchedToBeacon() { return ResultFormUtils.getFailResultForm(ErrorCode.NO_COURSES_MATCHED_TO_BEACON); }
 }
