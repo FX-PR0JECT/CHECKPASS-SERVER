@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/checkpass
+    username: postgres
+    password: shin
+  #Swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+jwt:
+  secret : b3b5b54a6368e00231f2b6bf8e706fdbca3c746ec5e1308ff239d7e0d6dadb3e
+
+server.servlet.session.cookie:
+  path: /
+  http-only: true
+  secure: true
+  sameSite : None
