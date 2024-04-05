@@ -39,7 +39,8 @@ public class ConfigConst {
             "/*.ico",
             "/error",
             "/viewElement/*",
-            "/viewElement/*/*"
+            "/viewElement/*/*",
+            "/aws"
     };
 
 }
