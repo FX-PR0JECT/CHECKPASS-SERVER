@@ -91,6 +91,7 @@ public class EnrollmentService {
 
         attendanceWeekService.deleteAttendanceWeek(loggedInUser, lectureCode);
         jpaEnrollmentRepository.deleteById(enrollmentId);
+        lectureService.decreaseLectureCount(lectureCode);
 
         return ResultFormUtils.getSuccessResultForm(COURSE_CANCELLATION_COMPLETED.getDescription());
     }
