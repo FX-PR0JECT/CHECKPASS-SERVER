@@ -54,4 +54,4 @@ jobs:
             docker rm checkpass
             docker pull jiungyang/checkpass:${GITHUB_SHA::7}
             docker tag jiungyang/checkpass:${GITHUB_SHA::7} checkpass
-            docker run -d --name checkpass -p 80:8080 checkpass
+            docker run -d --name checkpass -e TZ=Asia/Seoul -p 80:8080 checkpass
