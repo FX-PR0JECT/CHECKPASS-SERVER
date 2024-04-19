@@ -5,18 +5,21 @@ import FXPROJECT.CHECKPASS.domain.common.exception.NonExistentBeacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.Beacon;
 import FXPROJECT.CHECKPASS.domain.entity.beacon.BeaconPK;
 import FXPROJECT.CHECKPASS.domain.entity.lectures.Lecture;
+import FXPROJECT.CHECKPASS.domain.enums.BuildingsEnum;
 import FXPROJECT.CHECKPASS.domain.repository.beacon.JpaBeaconRepository;
 import FXPROJECT.CHECKPASS.domain.repository.QueryRepository;
 import FXPROJECT.CHECKPASS.domain.repository.building.JpaBuildingRepository;
 import FXPROJECT.CHECKPASS.domain.repository.lectures.JpaLectureRepository;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.BeaconInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static FXPROJECT.CHECKPASS.domain.common.constant.CommonMessage.*;
@@ -57,6 +60,22 @@ public class BeaconService {
      * @param minor 비콘 minor
      * @return 조회된 비콘
      */
+    public BeaconInformation getBeaconInformation(int major, int minor){
+        BeaconPK beaconPK = new BeaconPK(major, minor);
+
+        if (!existsBeacon(beaconPK)) {
+            throw new NonExistentBeacon();
+        }
+
+        BeaconInformation beaconInformation = new BeaconInformation().builder()
+                .major(major)
+                .minor(minor)
+                .buildingName(getBuilding(major))
+                .build();
+
+        return beaconInformation;
+    }
+
     public Beacon getBeacon(int major, int minor){
         BeaconPK beaconPK = new BeaconPK(major, minor);
 
@@ -71,9 +90,24 @@ public class BeaconService {
      * 비콘 목록 조회
      * @return DB에 저장되어 있는 비콘 List
      */
-    public List<Beacon> getBeaconList(){
+    public List<BeaconInformation> getBeaconList(){
         List<Beacon> beaconList = queryRepository.getBeaconList();
-        return beaconList;
+        List<BeaconInformation> beaconInformationList = new ArrayList<>();
+        for (Beacon beacon : beaconList) {
+            BeaconPK beaconPK = beacon.getBeaconPK();
+            int major = beaconPK.getMajor();
+            int minor = beaconPK.getMinor();
+            String buildingName = getBuilding(major);
+
+            BeaconInformation beaconInformation = new BeaconInformation().builder()
+                    .major(major)
+                    .minor(minor)
+                    .buildingName(buildingName)
+                    .build();
+
+            beaconInformationList.add(beaconInformation);
+        }
+        return beaconInformationList;
     }
 
     /**
@@ -116,9 +150,13 @@ public class BeaconService {
     public String getLectureRoom(BeaconPK beaconPK) {
         int major = beaconPK.getMajor();
         int minor = beaconPK.getMinor();
-        String buildingName = jpaBuildingRepository.findBuildingNameByBuildingCode(major);
+        String buildingName = getBuilding(major);
         String lectureRoom = buildingName + " (" + minor + ")";
 
         return lectureRoom;
+    }
+
+    public String getBuilding(int major) {
+        return jpaBuildingRepository.findBuildingNameByBuildingCode(major);
     }
 }

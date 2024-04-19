@@ -8,6 +8,7 @@ import FXPROJECT.CHECKPASS.domain.enums.Job;
 import FXPROJECT.CHECKPASS.web.common.annotation.LoginUser;
 import FXPROJECT.CHECKPASS.web.common.utils.ResultFormUtils;
 import FXPROJECT.CHECKPASS.web.form.requestForm.beacon.register.BeaconRegisterForm;
+import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.BeaconInformation;
 import FXPROJECT.CHECKPASS.web.form.responseForm.resultForm.ResultForm;
 import FXPROJECT.CHECKPASS.web.service.beacon.BeaconService;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,7 @@ public class BeaconController {
             throw new NoPermission();
         }
 
-        return ResultFormUtils.getSuccessResultForm(beaconService.getBeacon(major, minor));
+        return ResultFormUtils.getSuccessResultForm(beaconService.getBeaconInformation(major, minor));
     }
 
     /**
@@ -74,7 +75,7 @@ public class BeaconController {
             throw new NoPermission();
         }
 
-        List<Beacon> beaconList = beaconService.getBeaconList();
+        List<BeaconInformation> beaconList = beaconService.getBeaconList();
 
         return ResultFormUtils.getSuccessResultForm(beaconList);
     }
