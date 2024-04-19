@@ -307,4 +307,12 @@ public class LectureService {
         AttendanceTokens attendanceToken = new AttendanceTokens(lecture);
         jpaAttendanceTokenRepository.save(attendanceToken);
     }
+
+    @Transactional
+    public void decreaseLectureCount(Long lectureCode) {
+        Lecture lecture = jpaLectureRepository.findLectureByLectureCode(lectureCode);
+        int lectureCount = lecture.getLectureCount();
+        lecture.setLectureCount(lectureCount - 1);
+        jpaLectureRepository.save(lecture);
+    }
 }
